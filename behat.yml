@@ -4,13 +4,13 @@ default:
     '': '%paths.base%/tests'
   formatters:
     progress: true
-    pretty: true
+#    pretty: true
   suites:
     default:
       paths:
         - '%paths.base%/features/'
       contexts:
-        - Features\VisualizePointsContext
+        - Features\CurrentWeatherContext
 #  extensions:
 #    DVDoug\Behat\CodeCoverage\Extension:
 #      filter:
