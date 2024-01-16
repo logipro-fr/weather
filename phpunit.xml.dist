@@ -17,4 +17,10 @@
       <directory suffix=".php">src</directory>
     </include>
   </source>
+  <php>
+    <env name="DOC_ROOT_DIR" value="vfs://VFSDir"/>
+    <env name="APP_ENV" value="test" force="true"/>
+    <env name="KERNEL_CLASS" value="Weather\Infrastructure\Web\Symfony\KernelWeb"/>
+    <env name="DATABASE_URL" value="sqlite:///var/sqlite-unit-test.db"/>
+  </php>
 </phpunit>

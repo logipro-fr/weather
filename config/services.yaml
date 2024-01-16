@@ -1,0 +1,36 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    currentweather.repository:
+        autowire: true
+        class: Weather\WeatherStack\Infrastructure\Persistence\CurrentWeather\CurrentWeatherRepositoryDoctrine
+
+    historicalday.repository:
+        autowire: true
+        class: Weather\WeatherStack\Infrastructure\Persistence\HistoricalDay\HistoricalDayRepositoryStore
+
+    currentweather.api:
+        autowire: true
+        class: Weather\WeatherStack\CurrentWeatherApi
+        arguments:
+            - '%env(WEATHERSTACK_API)%'
+    
+    Weather\WeatherStack\Application\Service\CleanHistoricalDay:
+        public: true
+        autowire: true
+        arguments:
+            - "@historicalday.repository"
+
+    Weather\WeatherStack\Infrastructure\Command\:
+        resource: '../src/WeatherStack/Infrastructure/Command/*Command*'
+        tags: ['controller.service_command_weatherstack']

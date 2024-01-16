@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+                          
+    <entity name="Weather\WeatherStack\Domain\Model\CurrentWeather\CurrentWeather" table="currentweathers"
+            repository-class="Weather\WeatherStack\Infrastructure\Persistence\CurrentWeatherRepositoryDoctrine">
+        <id name="currentWeatherId" type="current_weather_id" column="current_weather_id">
+            <generator strategy="NONE"/>
+        </id>
+        <embedded name="requestedAt" class="Weather\Share\Domain\LocationTime" nullable="false" column-prefix="requested_"/>
+        <field name="jsonCurrentWeather" type="text" column="json_current_weather"/>
+        <indexes>
+            <index name="currentweathers_idx_latitude" columns="requested_latitude"/>
+            <index name="currentweathers_idx_longitude" columns="requested_longitude"/>
+            <index name="currentweathers_idx_date" columns="requested_date"/>
+            <index name="currentweathers_idx_location_time" columns="requested_latitude,requested_longitude,requested_date"/>
+        </indexes>
+    </entity>
+</doctrine-mapping>
