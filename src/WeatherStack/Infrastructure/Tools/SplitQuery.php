@@ -4,7 +4,7 @@ namespace Weather\WeatherStack\Infrastructure\Tools;
 
 class SplitQuery
 {
-    const MAX_QUERY_LENGTH = 1800;
+    private const MAX_QUERY_LENGTH = 1800;
 
     public function __construct(private int $maxQueryLength = self::MAX_QUERY_LENGTH)
     {

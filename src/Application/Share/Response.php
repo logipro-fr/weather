@@ -4,6 +4,6 @@ namespace Weather\Application\Share;
 
 interface Response
 {
-    const SUCCESS = 200;
-    const FAILED = 400;
+    public const SUCCESS = 200;
+    public const FAILED = 400;
 }

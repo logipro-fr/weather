@@ -2,7 +2,7 @@
 
 namespace Weather\Tests\WeatherStack;
 
-use AccidentPrediction\Infrastructure\PredictiveModel\PredictiveModelTools;
+use Weather\Infrastructure\PredictiveModel\PredictiveModelTools;
 use Weather\Share\Domain\Point;
 use Weather\WeatherStack\WeatherStackApi;
 use Weather\Tests\WeatherStack\TestTools\FakeGenerator;
@@ -129,7 +129,7 @@ class WeatherStackAPITest extends TestCase
     {
 
         $point2500 = PredictiveModelTools::convertJsonHotPoints2String((string)file_get_contents(
-            __DIR__ . '/../../Infrastructure/PredictiveModel/resources/list-of-2500-hotpoints.json'
+            __DIR__ . '/resources/list-of-2500-hotpoints.json'
         ));
 
         $response = $this->api->request($point2500);
@@ -220,7 +220,7 @@ class WeatherStackAPITest extends TestCase
 
         $query = PredictiveModelTools::convertJsonHotPoints2String(
             (string)file_get_contents(
-                __DIR__ . '/../../Infrastructure/PredictiveModel/resources/list-of-2500-hotpoints.json'
+                __DIR__ . '/resources/list-of-2500-hotpoints.json'
             )
         );
 

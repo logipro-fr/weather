@@ -7,7 +7,7 @@ use Safe\DateTimeImmutable;
 
 class HistoricalHourId
 {
-    const DATETIME_FORMAT = 'Y-m-d H';
+    private const DATETIME_FORMAT = 'Y-m-d H';
 
     public function __construct(
         private LocationTime $locationTime,

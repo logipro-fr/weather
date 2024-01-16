@@ -6,9 +6,9 @@ use Weather\WeatherStack\Domain\Model\HistoricalDayId;
 
 class StoreFileName
 {
-    const STORAGE_FILE_PREFIX = "documents/weatherstack";
+    private const STORAGE_FILE_PREFIX = "documents/weatherstack";
 
-    const FILENAME_PREFIX = 'P';
+    private const FILENAME_PREFIX = 'P';
 
     public static function getFileName(HistoricalDayId $id): string
     {

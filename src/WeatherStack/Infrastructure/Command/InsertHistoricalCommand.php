@@ -24,6 +24,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use function Safe\file_get_contents;
 use function Safe\file_put_contents;
 use function Safe\getcwd;
+use function SafePHP\intval;
+use function SafePHP\strval;
 
 #[AsCommand(
     name: 'ap:weather:insert-historical',
@@ -32,9 +34,9 @@ use function Safe\getcwd;
 )]
 class InsertHistoricalCommand extends Command
 {
-    const CSV_FILENAME_ARG_NAME = 'csvFileName';
-    const CSV_OUTPUT_FILENAME_ARG_NAME = 'outputFilename';
-    const TIMES = 'times';
+    public const CSV_FILENAME_ARG_NAME = 'csvFileName';
+    public const CSV_OUTPUT_FILENAME_ARG_NAME = 'outputFilename';
+    public const TIMES = 'times';
 
     private string $csvFileName = "";
 
@@ -95,11 +97,11 @@ class InsertHistoricalCommand extends Command
 
         $output->writeln("API : " . substr($this->getApiKey(), 0, 3) . "(...)");
 
-        $this->csvFileName = SafeFunction::strval($input->getArgument(self::CSV_FILENAME_ARG_NAME));
+        $this->csvFileName = strval($input->getArgument(self::CSV_FILENAME_ARG_NAME));
 
-        $this->csvOutputFileName = SafeFunction::strval($input->getArgument(self::CSV_OUTPUT_FILENAME_ARG_NAME));
+        $this->csvOutputFileName = strval($input->getArgument(self::CSV_OUTPUT_FILENAME_ARG_NAME));
 
-        $this->numberOfLineToCompute = SafeFunction::intval($input->getOption("numberOfLineToCompute"));
+        $this->numberOfLineToCompute = intval($input->getOption("numberOfLineToCompute"));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

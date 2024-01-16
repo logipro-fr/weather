@@ -2,7 +2,6 @@
 
 namespace Weather\WeatherStack\Infrastructure\Command;
 
-use Weather\PresenterFile;
 use Weather\WeatherStack\Application\Service\GetCurrentWeather\GetCurrentWeather;
 use Weather\WeatherStack\Application\Service\GetCurrentWeather\GetCurrentWeatherRequest;
 use Weather\WeatherStack\Application\Service\WeatherAPIInterface;
@@ -12,6 +11,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Weather\WeatherStack\PresenterFile;
 
 #[AsCommand(
     name: 'ap:weather:query',

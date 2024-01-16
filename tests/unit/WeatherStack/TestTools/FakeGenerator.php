@@ -54,7 +54,9 @@ class FakeGenerator
         $queryParam = strval(is_array($params['query']) ? "" : $params['query']);
         if (isset($params['historical_date'])) {
             $filename = $queryParam . '.json';
-            $expectedResponse = $this->unsetGPS((string)file_get_contents(__DIR__ . '/resources/historical/' . $filename));
+            $expectedResponse = $this->unsetGPS(
+                (string)file_get_contents(__DIR__ . '/resources/historical/' . $filename)
+            );
             return new MockResponse($expectedResponse);
         }
         $filename = __DIR__ . '/resources/query/' . $queryParam . '.json';

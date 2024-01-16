@@ -11,9 +11,6 @@ use function Safe\preg_match;
 
 class HistoricalHour implements HistoricalWeatherInterface
 {
-    const FIRST_DAY_HOUR = 0;
-    const LAST_DAY_HOUR = 23;
-
     public function __construct(
         private HistoricalHourId $id,
         private HistoricalDay $day,

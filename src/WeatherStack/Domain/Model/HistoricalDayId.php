@@ -7,7 +7,7 @@ use Safe\DateTimeImmutable;
 
 class HistoricalDayId
 {
-    const DATE_FORMAT = 'Y-m-d';
+    private const DATE_FORMAT = 'Y-m-d';
 
     public function __construct(
         private Point $location,

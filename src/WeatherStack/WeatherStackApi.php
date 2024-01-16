@@ -2,7 +2,7 @@
 
 namespace Weather\WeatherStack;
 
-use AccidentPrediction\Infrastructure\PredictiveModel\PredictiveModelTools;
+use Weather\Infrastructure\PredictiveModel\PredictiveModelTools;
 use Weather\Share\Domain\Point;
 use Weather\WeatherStack\Application\Service\WeatherAPIInterface;
 use Weather\WeatherStack\Infrastructure\Tools\SplitQuery;
@@ -15,8 +15,6 @@ use function Safe\json_encode;
 
 class WeatherStackApi implements WeatherAPIInterface
 {
-    const MAX_QUERY_LENGTH = 1800;
-
     private int $lastRequestNumber = 0;
 
     private function __construct(private string $weatherStackApiKey, private HttpClientInterface $httpClient)

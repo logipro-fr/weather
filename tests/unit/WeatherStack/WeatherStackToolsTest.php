@@ -35,7 +35,7 @@ class WeatherStackToolsTest extends TestCase
     {
         $GPSPoints = explode(";", PredictiveModelTools::convertJsonHotPoints2String(
             (string)file_get_contents(
-                __DIR__ . '/../../Infrastructure/PredictiveModel/resources/list-of-2500-hotpoints.json'
+                __DIR__ . '/resources/list-of-2500-hotpoints.json'
             )
         ));
         /** @var array<string,\stdClass> */

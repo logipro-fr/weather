@@ -8,10 +8,10 @@ use function SafePHP\intval;
 
 class LocationTime
 {
-    const MAX_DISTANCE_BETWEEN_SIMILAR = 1000;
-    const MAX_DELAY_BETWEEN_SIMILAR = 30;
-    const ZERO_MICROSECOND = 0;
-    const SECONDS_IN_MINUTE = 60;
+    private const MAX_DISTANCE_BETWEEN_SIMILAR = 1000;
+    private const MAX_DELAY_BETWEEN_SIMILAR = 30;
+    private const ZERO_MICROSECOND = 0;
+    private const SECONDS_IN_MINUTE = 60;
 
     public function __construct(
         private float $latitude,

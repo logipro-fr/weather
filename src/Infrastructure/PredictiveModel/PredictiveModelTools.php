@@ -4,8 +4,7 @@ namespace Weather\Infrastructure\PredictiveModel;
 
 class PredictiveModelTools
 {
-
-    public static function convertJsonHotPoints2String(string $jsonHotpoints):string
+    public static function convertJsonHotPoints2String(string $jsonHotpoints): string
     {
         /** @var array<string,mixed> */
         $hotpoints = json_decode($jsonHotpoints, true);

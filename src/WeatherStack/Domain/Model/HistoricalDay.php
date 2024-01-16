@@ -12,8 +12,8 @@ use function Safe\json_encode;
 
 class HistoricalDay implements HistoricalWeatherInterface
 {
-    const FIRST_DAY_HOUR = 0;
-    const LAST_DAY_HOUR = 23;
+    private const FIRST_DAY_HOUR = 0;
+    private const LAST_DAY_HOUR = 23;
 
     public function __construct(
         private HistoricalDayId $id,

@@ -8,8 +8,8 @@ use Monolog\Logger;
 
 class BaseException extends Exception
 {
-    const ZERO_CODE = 0;
-    const LOG_FILE = '/log/exceptions.log';
+    private const ZERO_CODE = 0;
+    private const LOG_FILE = '/log/exceptions.log';
     public function __construct(string $message = "", int $code = self::ZERO_CODE)
     {
         parent::__construct($message, $code);
