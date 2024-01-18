@@ -15,7 +15,9 @@
         }
     ],
     "require": {
-        "php": ">=8.3"
+        "php": ">=8.3",
+        "phariscope/safephp": "^1.0",
+        "phariscope/event-store-doctrine": "^1.0"
     },
     "require-dev": {
         "infection/extension-installer": "0.1.2",
@@ -33,7 +35,8 @@
     },
     "autoload-dev": {
         "psr-4" : {
-            "Weather\\Tests\\" : "tests/"
+            "Weather\\Tests\\" : "tests/unit/",
+            "Weather\\Tests\\Features\\" : "tests/Features/"
         }
     },
     "config": {

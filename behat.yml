@@ -10,7 +10,7 @@ default:
       paths:
         - '%paths.base%/features/'
       contexts:
-        - Features\CurrentWeatherContext
+        - Weather\Tests\Features\CurrentWeatherContext
 #  extensions:
 #    DVDoug\Behat\CodeCoverage\Extension:
 #      filter:
