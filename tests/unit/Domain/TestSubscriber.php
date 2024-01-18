@@ -12,7 +12,7 @@ class TestSubscriber implements EventSubscriber
     public int $handleCallCount = 0;
 
     /** @var array<EventAbstract> */
-    public array $traces;
+    public array $traces = [];
 
     public function handle(EventAbstract $aDomainEvent): bool
     {

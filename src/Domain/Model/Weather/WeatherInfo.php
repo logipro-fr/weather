@@ -8,7 +8,6 @@ use Weather\Domain\Model\Event\WeatherInfoCreated;
 
 class WeatherInfo
 {
-    // TODO add event
     public function __construct(
         private readonly Point $point,
         private readonly DateTimeImmutable $date,

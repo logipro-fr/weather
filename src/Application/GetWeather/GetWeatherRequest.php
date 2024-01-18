@@ -8,22 +8,24 @@ use Safe\DateTimeImmutable;
 class GetWeatherRequest
 {
     /**
-     * @param array<Point> $points
+     * @param array<Point> $requestedPoints
      */
-    public function __construct(private readonly array $points, private readonly DateTimeImmutable $date)
-    {
+    public function __construct(
+        private readonly array $requestedPoints,
+        private readonly DateTimeImmutable $requestedDate
+    ) {
     }
 
     /**
      * @return array<Point>
      */
-    public function getPoints(): array
+    public function getRequestedPoints(): array
     {
-        return $this->points;
+        return $this->requestedPoints;
     }
 
-    public function getDate(): DateTimeImmutable
+    public function getRequestedDate(): DateTimeImmutable
     {
-        return $this->date;
+        return $this->requestedDate;
     }
 }

@@ -6,7 +6,7 @@ class WeatherInfoId
 {
     private string $id;
 
-    public const PREFIX_NAME = "dm_weather_";
+    public const PREFIX_NAME = "weather_";
     public const CHAR_AMOUNT = 32; // does not include prefix
     public const BYTE_PER_CHAR = 2;
     public const SIZE = WeatherInfoId::CHAR_AMOUNT / WeatherInfoId::BYTE_PER_CHAR;

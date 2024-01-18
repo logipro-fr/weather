@@ -18,7 +18,7 @@ class GetWeather
 
     public function execute(GetWeatherRequest $request): void
     {
-        $infoArray = $this->api->getFromPoints($request->getPoints(), $request->getDate());
+        $infoArray = $this->api->getFromPoints($request->getRequestedPoints(), $request->getRequestedDate());
         $this->savePoints($infoArray);
     }
 
@@ -27,11 +27,11 @@ class GetWeather
      */
     private function savePoints(array $infoArray): void
     {
-        $dataArray = [];
-        foreach ($infoArray as $info) {
-            $this->repository->add($info);
-            array_push($dataArray, $info->getData());
+        $weatherInfoDataArray = [];
+        foreach ($infoArray as $weatherInfo) {
+            $this->repository->save($weatherInfo);
+            array_push($weatherInfoDataArray, $weatherInfo->getData());
         }
-        $this->presenter->write(new GetWeatherResponse("[" . implode(",", $dataArray) . "]"));
+        $this->presenter->write(new GetWeatherResponse("[" . implode(",", $weatherInfoDataArray) . "]"));
     }
 }
