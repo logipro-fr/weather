@@ -14,7 +14,7 @@ class WeatherInfoRepositoryInMemory implements WeatherInfoRepositoryInterface
      */
     private array $repository = [];
 
-    public function add(WeatherInfo $info): void
+    public function save(WeatherInfo $info): void
     {
         array_push($this->repository, $info);
     }

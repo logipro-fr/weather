@@ -20,7 +20,7 @@ class InfoRepositoryInMemoryTest extends TestCase
         $date = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
 
-        $repository->add($info);
+        $repository->save($info);
         $info_returned = $repository->findById($info->getId());
         $this->assertEquals($info, $info_returned);
     }
@@ -35,8 +35,8 @@ class InfoRepositoryInMemoryTest extends TestCase
         $infoa = new WeatherInfo($pointa, $datea, "{\"weather\":\"great\"}");
         $infob = new WeatherInfo($pointb, $dateb, "{\"weather\":\"bad\"}");
 
-        $repository->add($infoa);
-        $repository->add($infob);
+        $repository->save($infoa);
+        $repository->save($infob);
         $info_returned = $repository->findById($infob->getId());
         $this->assertEquals($infob, $info_returned);
     }
@@ -47,7 +47,7 @@ class InfoRepositoryInMemoryTest extends TestCase
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
-        $repository->add($info);
+        $repository->save($info);
 
         $returned = $repository->findById($info->getId());
 
@@ -73,10 +73,10 @@ class InfoRepositoryInMemoryTest extends TestCase
         $infob = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $infoc = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $infod = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
-        $repository->add($infoa);
-        $repository->add($infob);
-        $repository->add($infoc);
-        $repository->add($infod);
+        $repository->save($infoa);
+        $repository->save($infob);
+        $repository->save($infoc);
+        $repository->save($infod);
 
         $this->expectException(WeatherInfoNotFoundException::class);
         $repository->findById(new WeatherInfoId());

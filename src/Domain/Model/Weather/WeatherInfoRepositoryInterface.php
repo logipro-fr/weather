@@ -8,7 +8,7 @@ use Weather\Domain\Model\Weather\WeatherInfo;
 
 interface WeatherInfoRepositoryInterface
 {
-    public function add(WeatherInfo $info): void;
+    public function save(WeatherInfo $info): void;
 
     /**
      * @throws WeatherInfoNotFoundException
