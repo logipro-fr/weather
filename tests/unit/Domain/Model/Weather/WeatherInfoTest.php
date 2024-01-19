@@ -19,10 +19,13 @@ class WeatherInfoTest extends TestCase
         $createdDate = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
         $info = new WeatherInfo($point, $createdDate, $data);
+        $info2 = new WeatherInfo($point, $createdDate, $data, true);
 
         $this->assertEquals($point, $info->getPoint());
         $this->assertEquals($createdDate, $info->getDate());
         $this->assertEquals($data, $info->getData());
+        $this->assertEquals(false, $info->isHistorical());
+        $this->assertEquals(true, $info2->isHistorical());
         $this->assertInstanceOf(WeatherInfoId::class, $info->getId());
     }
 

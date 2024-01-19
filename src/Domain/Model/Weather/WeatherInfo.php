@@ -12,6 +12,7 @@ class WeatherInfo
         private readonly Point $point,
         private readonly DateTimeImmutable $date,
         private readonly string $data,
+        private readonly bool $isHistorical = false,
         private readonly WeatherInfoId $identifier = new WeatherInfoId()
     ) {
         EventPublisher::instance()->publish(new WeatherInfoCreated($identifier));
@@ -35,5 +36,9 @@ class WeatherInfo
     public function getId(): WeatherInfoId
     {
         return $this->identifier;
+    }
+
+    public function isHistorical(){
+        return $this->isHistorical;
     }
 }
