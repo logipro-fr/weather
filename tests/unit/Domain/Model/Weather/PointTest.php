@@ -22,4 +22,10 @@ class PointTest extends TestCase
         $this->assertEquals(1.5, $point->getLatitude());
         $this->assertEquals(2.5, $point->getLongitude());
     }
+
+    public function testToString():void{
+        $point= new Point(12.5,35.486);
+
+        $this->assertEquals("12.5,35.486", $point->__toString());
+    }
 }

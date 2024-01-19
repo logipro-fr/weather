@@ -17,7 +17,8 @@
     "require": {
         "php": ">=8.3",
         "phariscope/safephp": "^1.0",
-        "phariscope/event-store-doctrine": "^1.0"
+        "phariscope/event-store-doctrine": "^1.0",
+        "symfony/http-client": "^7.0"
     },
     "require-dev": {
         "infection/extension-installer": "0.1.2",

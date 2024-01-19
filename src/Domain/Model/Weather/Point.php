@@ -2,9 +2,11 @@
 
 namespace Weather\Domain\Model\Weather;
 
+use function SafePHP\strval;
+
 class Point
 {
-    //private const PATTERN_STRING = "[%g,%g]";
+    private const DELIMITER = ",";
 
     public function __construct(
         private readonly float $latitude,
@@ -19,5 +21,10 @@ class Point
     public function getLongitude(): float
     {
         return $this->longitude;
+    }
+
+    public function __toString()
+    {
+        return strval($this->getLatitude()) . Point::DELIMITER . strval($this->getLongitude());
     }
 }
