@@ -40,7 +40,8 @@ class ImportLegacy
     {
         $files = [];
         $entries = scandir($dirPath);
-        $entries = array_diff($entries, [".", ".."]); //remove linux self and parent directory, we only want *sub*directories
+        //remove linux self and parent directory, we only want *sub*directories
+        $entries = array_diff($entries, [".", ".."]);
         foreach ($entries as $entry) {
             if (is_dir($dirPath . $entry)) {
                 $files = array_merge($files, $this->getSubFilesRecursively($dirPath . $entry . "/"));
