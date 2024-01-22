@@ -7,8 +7,6 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Safe\DateTimeImmutable;
 
-use function SafePHP\floatval;
-
 class SafeDateTimeImmutableType extends Type{
     public function getName(): string
     {

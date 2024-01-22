@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Infrastructure\Persistence\Doctrine\Types\PointType;
 
-class SafeDateTimeImmutableTypeTest extends TestCase{
+class PointTypeTest extends TestCase{
     public function testGetName(): void
     {
         $this->assertEquals("point", (new PointType())->getName());

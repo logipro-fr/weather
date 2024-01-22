@@ -3,7 +3,7 @@ doctrine:
     url: "%env(resolve:DATABASE_URL)%"
     types:
       weather_info_id: Weather\Infrastructure\Persistence\Doctrine\Types\WeatherInfoIdType
-      datetime_immutable: Weather\Infrastructure\Persistence\Doctrine\Types\DateTimeImmutableType
+      datetime_immutable: Weather\Infrastructure\Persistence\Doctrine\Types\SafeDateTimeImmutableTypeTest
       point: Weather\Infrastructure\Persistence\Doctrine\Types\PointType
   orm:
     auto_generate_proxy_classes: true

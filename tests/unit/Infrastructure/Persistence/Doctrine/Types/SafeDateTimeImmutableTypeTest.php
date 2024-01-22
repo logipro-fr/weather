@@ -12,18 +12,18 @@ use Weather\Infrastructure\Persistence\Doctrine\Types\SafeDateTimeImmutableType;
 class SafeDateTimeImmutableTypeTest extends TestCase{
     public function testGetName(): void
     {
-        $this->assertEquals("point", (new SafeDateTimeImmutableType())->getName());
+        $this->assertEquals("datetime_immutable", (new SafeDateTimeImmutableType())->getName());
     }
 
     public function testConvertToDatabaseValue(): void
     {
-        $id = new Point(3.621,69.420);
+        $date = new DateTimeImmutable("2024-01-01 00:00");
         $platform = $this->createMock(AbstractPlatform::class);
 
-        $result = (new SafeDateTimeImmutableType())->convertToDatabaseValue($id, $platform);
+        $result = (new SafeDateTimeImmutableType())->convertToDatabaseValue($date, $platform);
 
         $this->assertIsString($result);
-        $this->assertEquals($id->__toString(), $result);
+        $this->assertEquals($date->format("Y-m-d H:i:s"), $result);
     }
 
     public function testConvertToPHPValue(): void
