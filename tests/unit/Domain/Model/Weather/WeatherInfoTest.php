@@ -22,7 +22,7 @@ class WeatherInfoTest extends TestCase
         $info2 = new WeatherInfo($point, $createdDate, $data, true);
 
         $this->assertEquals($point, $info->getPoint());
-        $this->assertEquals($createdDate, $info->getDate());
+        $this->assertEquals($createdDate, $info->getdate());
         $this->assertEquals($data, $info->getData());
         $this->assertEquals(false, $info->isHistorical());
         $this->assertEquals(true, $info2->isHistorical());
@@ -45,5 +45,57 @@ class WeatherInfoTest extends TestCase
         $this->assertInstanceOf(WeatherInfoCreated::class, $event);
         /** @var WeatherInfoCreated $event */
         $this->assertEquals((string)$info->getId(), $event->id);
+    }
+
+    public function testCloseTo(): void
+    {
+        $pointA = new Point(0.01, 0.05);
+        $dateA = new DateTimeImmutable("2020-01-01 12:00");
+        $data = "{}";
+        $info = new WeatherInfo($pointA, $dateA, $data);
+
+        $pointB = new Point(0.01 + 0.05, 0.0);
+        $dateB = new DateTimeImmutable("2020-01-01 12:30");
+
+        $this->assertTrue($info->closeTo($pointB, $dateB));
+    }
+
+    public function testNotCloseToLat(): void
+    {
+        $pointA = new Point(1.01, 0.05);
+        $dateA = new DateTimeImmutable("2020-01-01 12:00");
+        $data = "{}";
+        $info = new WeatherInfo($pointA, $dateA, $data);
+
+        $pointB = new Point(0.008, 0.053);
+        $dateB = new DateTimeImmutable("2020-01-01 12:15");
+
+        $this->assertFalse($info->closeTo($pointB, $dateB));
+    }
+
+    public function testNotCloseToLong(): void
+    {
+        $pointA = new Point(0.01, -1.05);
+        $dateA = new DateTimeImmutable("2020-01-01 12:00");
+        $data = "{}";
+        $info = new WeatherInfo($pointA, $dateA, $data);
+
+        $pointB = new Point(0.008, 0.053);
+        $dateB = new DateTimeImmutable("2020-01-01 12:15");
+
+        $this->assertFalse($info->closeTo($pointB, $dateB));
+    }
+
+    public function testNotCloseToTime(): void
+    {
+        $pointA = new Point(0.01, 0.05);
+        $dateA = new DateTimeImmutable("2020-01-01 12:00");
+        $data = "{}";
+        $info = new WeatherInfo($pointA, $dateA, $data);
+
+        $pointB = new Point(0.008, 0.053);
+        $dateB = new DateTimeImmutable("2020-01-01 13:00");
+
+        $this->assertFalse($info->closeTo($pointB, $dateB));
     }
 }
