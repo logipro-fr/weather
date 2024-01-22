@@ -14,6 +14,10 @@ use function Safe\scandir;
 
 class ImportLegacy
 {
+    private const CURRENT_DIRECTORY_ACCESS = ".";
+    private const PARENT_DIRECTORY_ACCESS = "..";
+    private const FILESYSTEM_SEPARATOR = "/";
+
     public function __construct(
         private readonly PresenterInterface $presenter,
         private readonly WeatherInfoRepositoryInterface $repository
@@ -36,20 +40,31 @@ class ImportLegacy
     /**
      * @return array<string>
      */
-    private function getSubFilesRecursively(string $dirPath): array
+    private function getSubFilesRecursively(string $directoryPath): array
     {
         $files = [];
-        $entries = scandir($dirPath);
-        //remove linux self and parent directory, we only want *sub*directories
-        $entries = array_diff($entries, [".", ".."]);
+        $entries = $this->getDirectoryContents($directoryPath);
         foreach ($entries as $entry) {
-            if (is_dir($dirPath . $entry)) {
-                $files = array_merge($files, $this->getSubFilesRecursively($dirPath . $entry . "/"));
+            $fullPath = $directoryPath . $entry;
+            if (is_dir($fullPath)) {
+                $files = array_merge($files, $this->getSubFilesRecursively($fullPath . self::FILESYSTEM_SEPARATOR));
             } else {
-                array_push($files, $dirPath . $entry);
+                array_push($files, $fullPath);
             }
         }
         return $files;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getDirectoryContents(string $directoryPath): array
+    {
+        $entries = scandir($directoryPath);
+        return array_diff(
+            $entries,
+            [self::CURRENT_DIRECTORY_ACCESS, self::PARENT_DIRECTORY_ACCESS]
+        );
     }
 
     private function saveFile(string $filePath): int
