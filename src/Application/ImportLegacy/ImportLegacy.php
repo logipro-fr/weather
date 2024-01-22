@@ -40,7 +40,7 @@ class ImportLegacy
     {
         $files = [];
         $entries = scandir($dirPath);
-        $entries = array_diff($entries, [".", ".."]);
+        $entries = array_diff($entries, [".", ".."]); //remove linux self and parent directory, we only want *sub*directories
         foreach ($entries as $entry) {
             if (is_dir($dirPath . $entry)) {
                 $files = array_merge($files, $this->getSubFilesRecursively($dirPath . $entry . "/"));
@@ -53,10 +53,16 @@ class ImportLegacy
 
     private function saveFile(string $filePath): int
     {
+        /**
+         * @var \stdClass $json
+         * @property \stdClass $weatherHotPoints
+         * @property string $report->requestedAt->date
+         */
         $json = json_decode(file_get_contents($filePath));
 
         $date = new DateTimeImmutable($json->report->requestedAt->date);
 
+        /** @var array<string,string> $weatherDataPoints */
         $weatherDataPoints = get_object_vars($json->weatherHotPoints);
 
         foreach ($weatherDataPoints as $coordinatesString => $data) {
@@ -64,7 +70,13 @@ class ImportLegacy
             $lattitude = floatval($coordinates[0]);
             $longitude = floatval($coordinates[1]);
             $point = new Point($lattitude, $longitude);
-            $date = new DateTimeImmutable(json_decode($data)->location->localtime);
+
+            /**
+             * @var \stdClass $jsonData
+             * @property string $location->localtime
+             */
+            $jsonData = json_decode($data);
+            $date = new DateTimeImmutable($jsonData->location->localtime);
 
             $this->repository->save(new WeatherInfo($point, $date, $data, false));
         }

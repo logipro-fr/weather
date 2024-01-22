@@ -39,7 +39,7 @@ class LegacyImportContext implements Context
     /**
      * @Given there is a path :arg1 containing the data
      */
-    public function thereIsAPathContainingTheData(string $arg1)
+    public function thereIsAPathContainingTheData(string $arg1): void
     {
         $this->source = $arg1;
     }
@@ -47,7 +47,7 @@ class LegacyImportContext implements Context
     /**
      * @When the user request to have it imported
      */
-    public function theUserRequestToHaveItImported()
+    public function theUserRequestToHaveItImported(): void
     {
         $this->request = new ImportLegacyRequest($this->source);
     }
@@ -55,7 +55,7 @@ class LegacyImportContext implements Context
     /**
      * @Then the data should be imported in the new repository
      */
-    public function theDataShouldBeImportedInTheNewRepository()
+    public function theDataShouldBeImportedInTheNewRepository(): void
     {
         $this->service->execute($this->request);
     }
@@ -63,7 +63,7 @@ class LegacyImportContext implements Context
     /**
      * @Given there is data contained in a :database
      */
-    public function thereIsDataContainedInADatabase()
+    public function thereIsDataContainedInADatabase(): void
     {
         throw new PendingException();
     }
@@ -71,7 +71,7 @@ class LegacyImportContext implements Context
     /**
      * @When the user request to have it extracted
      */
-    public function theUserRequestToHaveItExtracted()
+    public function theUserRequestToHaveItExtracted(): void
     {
         throw new PendingException();
     }
