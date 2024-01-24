@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Weather\Domain\Model\Weather\WeatherInfoId;
 use Weather\Infrastructure\Persistence\Doctrine\Types\WeatherInfoIdType;
 
-class WeatherInfoIdTypeTest extends TestCase{
+class WeatherInfoIdTypeTest extends TestCase
+{
     public function testGetName(): void
     {
         $this->assertEquals("weather_info_id", (new WeatherInfoIdType())->getName());

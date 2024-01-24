@@ -39,7 +39,7 @@ class WeatherInfoRepositoryInMemory implements WeatherInfoRepositoryInterface
             }
         }
         throw new WeatherInfoNotFoundException("WeatherInfo of point \"" .
-            $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found");
+            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
     }
 
     public function findByDateAndPoint(Point $point, DateTimeImmutable $date): WeatherInfo
@@ -53,6 +53,6 @@ class WeatherInfoRepositoryInMemory implements WeatherInfoRepositoryInterface
             }
         }
         throw new WeatherInfoNotFoundException("WeatherInfo of point \"" .
-            $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found");
+            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
     }
 }
