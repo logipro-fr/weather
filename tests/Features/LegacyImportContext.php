@@ -4,8 +4,6 @@ namespace Weather\Tests\Features;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Weather\Application\ImportLegacy\ImportLegacy;
 use Weather\Application\ImportLegacy\ImportLegacyRequest;
 use Weather\Application\Presenter\PresenterObject;

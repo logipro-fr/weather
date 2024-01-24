@@ -22,7 +22,7 @@ class WeatherInfoTest extends TestCase
         $info2 = new WeatherInfo($point, $createdDate, $data, true);
 
         $this->assertEquals($point, $info->getPoint());
-        $this->assertEquals($createdDate, $info->getdate());
+        $this->assertEquals($createdDate, $info->getDate());
         $this->assertEquals($data, $info->getData());
         $this->assertEquals(false, $info->isHistorical());
         $this->assertEquals(true, $info2->isHistorical());

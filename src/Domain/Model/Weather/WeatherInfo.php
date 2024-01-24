@@ -27,7 +27,7 @@ class WeatherInfo
         return $this->point;
     }
 
-    public function getdate(): DateTimeImmutable
+    public function getDate(): DateTimeImmutable
     {
         return $this->date;
     }

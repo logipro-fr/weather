@@ -19,7 +19,7 @@ class GetWeatherTest extends TestCase
     {
         //setup
         $point = new Point(0, 0);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:00:00.000000");
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
 
         $api = $this->createMock(WeatherApiInterface::class);
@@ -46,13 +46,13 @@ class GetWeatherTest extends TestCase
         //setup
 
         $pointA = new Point(0, 0);
-        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
+        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:00:00.000000");
         $infoA = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
 
         $requestA = new GetWeatherRequest(array($pointA), $dateA);
 
         $pointB = new Point(1, 1);
-        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-02 12:00");
+        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 13:00:00.000000");
         $infoB = new WeatherInfo($pointB, $dateB, "{\"weather\":\"great\"}");
 
         $requestB = new GetWeatherRequest(array($pointB), $dateB);

@@ -24,5 +24,5 @@ interface WeatherInfoRepositoryInterface
     /**
      * @throws WeatherInfoNotFoundException
      */
-    public function findCloseByDateAndPoint(Point $point, DateTimeImmutable $date): WeatherInfo
+    public function findCloseByDateAndPoint(Point $point, DateTimeImmutable $date): WeatherInfo;
 }

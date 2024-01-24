@@ -67,7 +67,6 @@ class ImportLegacyTest extends TestCase
 
         $service->execute($request);
 
-        $files = [];
         $size = 0;
         foreach ($this->getSubFilesRecursively($filePath) as $file) {
             /**
