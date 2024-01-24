@@ -2,12 +2,10 @@
 
 namespace Weather\Tests\Infrastructure\Persistence\Doctrine\Types;
 
-use DateTimeImmutable as GlobalDateTimeImmutable;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Types;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
-use Weather\Domain\Model\Weather\Point;
 use Weather\Infrastructure\Persistence\Doctrine\Types\SafeDateTimeImmutableType;
 
 class SafeDateTimeImmutableTypeTest extends TestCase

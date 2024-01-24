@@ -3,12 +3,9 @@
 namespace Weather\Tests\Features;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use PHPUnit\Framework\Assert;
 use Safe\DateTimeImmutable;
-use Weather\APIs\WeatherApiInterface;
 use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterObject;

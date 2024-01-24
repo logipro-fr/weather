@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Safe\DateTime;
 use Safe\DateTimeImmutable;
 use Weather\Domain\Model\Exceptions\WeatherInfoNotFoundException;
 use Weather\Domain\Model\Weather\Point;
@@ -20,7 +19,7 @@ use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
  */
 class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherInfoRepositoryInterface
 {
-    private const TIME_LOOKUP_RANGE_String = "PT1800S";
+    private const TIME_LOOKUP_RANGE_STRING = "PT1800S";
     private static DateInterval $TIME_LOOKUP_RANGE;
 
     public function __construct(EntityManagerInterface $manager)
@@ -28,7 +27,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         /** @var ClassMetadata<WeatherInfo> */
         $class = $manager->getClassMetadata(WeatherInfo::class);
         parent::__construct($manager, $class);
-        self::$TIME_LOOKUP_RANGE = new DateInterval(self::TIME_LOOKUP_RANGE_String);
+        self::$TIME_LOOKUP_RANGE = new DateInterval(self::TIME_LOOKUP_RANGE_STRING);
     }
 
     public function save(WeatherInfo $info): void

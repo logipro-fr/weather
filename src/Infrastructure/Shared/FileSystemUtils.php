@@ -10,6 +10,7 @@ class FileSystemUtils
     private const PARENT_DIRECTORY_ACCESS = "..";
     private const FILESYSTEM_SEPARATOR = "/";
 
+    /** @codeCoverageIgnore */
     private function __construct()
     {
     }
@@ -19,18 +20,15 @@ class FileSystemUtils
      */
     public static function getFilesRecursive(string $directoryPath): array
     {
-        $directoryPath = self::addSeparator($directoryPath);
         $files = [];
-        $entries = self::getDirectoryContents($directoryPath);
-        foreach ($entries as $entry) {
-            $fullPath = $directoryPath . $entry;
-            if (is_dir($fullPath)) {
+        foreach (self::getDirectoryContents($directoryPath) as $entry) {
+            if (is_dir($entry)) {
                 $files = array_merge(
                     $files,
-                    self::getFilesRecursive(self::addSeparator($fullPath))
+                    self::getFilesRecursive(self::addSeparator($entry))
                 );
             } else {
-                array_push($files, $fullPath);
+                array_push($files, $entry);
             }
         }
         return $files;
@@ -42,7 +40,7 @@ class FileSystemUtils
         if (str_ends_with($path, self::FILESYSTEM_SEPARATOR)) {
             return $path;
         }
-        return $path . self::FILESYSTEM_SEPARATOR;
+        return sprintf("%s%s",$path,self::FILESYSTEM_SEPARATOR);
     }
 
     /**
@@ -50,10 +48,18 @@ class FileSystemUtils
      */
     private static function getDirectoryContents(string $directoryPath): array
     {
+        $directoryPath = self::addSeparator($directoryPath);
         $entries = scandir($directoryPath);
-        return array_diff(
+        $entries = array_diff(
             $entries,
             [self::CURRENT_DIRECTORY_ACCESS, self::PARENT_DIRECTORY_ACCESS]
         );
+
+        $res = [];
+
+        foreach ($entries as $entry) {
+            array_push($res, sprintf("%s%s",$directoryPath,$entry));
+        }
+        return $res;
     }
 }

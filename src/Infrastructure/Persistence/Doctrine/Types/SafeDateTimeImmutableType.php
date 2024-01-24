@@ -2,7 +2,6 @@
 
 namespace Weather\Infrastructure\Persistence\Doctrine\Types;
 
-use DateTimeImmutable as GlobalDateTimeImmutable;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;

@@ -22,15 +22,15 @@ class ImportLegacy
 
     public function execute(ImportLegacyRequest $request): void
     {
-        $totalFiles = 0;
+        $totalEntries = 0;
         if (is_dir($request->getPath())) {
             foreach (FileSystemUtils::getFilesRecursive($request->getPath()) as $file) {
-                $totalFiles += $this->saveFile($file);
+                $totalEntries += $this->saveFile($file);
             }
         } else {
-            $totalFiles = $this->saveFile($request->getPath());
+            $totalEntries = $this->saveFile($request->getPath());
         }
-        $this->presenter->write(new ImportLegacyResponse($totalFiles));
+        $this->presenter->write(new ImportLegacyResponse($totalEntries));
     }
 
     private function saveFile(string $filePath): int

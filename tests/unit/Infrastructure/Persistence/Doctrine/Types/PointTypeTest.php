@@ -33,7 +33,7 @@ class PointTypeTest extends TestCase
         $platform = $this->createMock(AbstractPlatform::class);
 
         $result = (new PointType())->convertToPHPValue($id, $platform);
-        
+
         $this->assertInstanceOf(Point::class, $result);
         $this->assertEquals($target, $result);
     }
