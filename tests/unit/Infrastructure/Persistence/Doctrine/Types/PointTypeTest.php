@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Infrastructure\Persistence\Doctrine\Types\PointType;
 
-class PointTypeTest extends TestCase{
+class PointTypeTest extends TestCase
+{
     public function testGetName(): void
     {
         $this->assertEquals("point", (new PointType())->getName());
@@ -16,7 +17,7 @@ class PointTypeTest extends TestCase{
 
     public function testConvertToDatabaseValue(): void
     {
-        $id = new Point(3.621,69.420);
+        $id = new Point(3.621, 69.420);
         $platform = $this->createMock(AbstractPlatform::class);
 
         $result = (new PointType())->convertToDatabaseValue($id, $platform);
@@ -28,11 +29,11 @@ class PointTypeTest extends TestCase{
     public function testConvertToPHPValue(): void
     {
         $id = "3.621,69.420";
-        $target = new Point(3.621,69.420);
+        $target = new Point(3.621, 69.420);
         $platform = $this->createMock(AbstractPlatform::class);
 
         $result = (new PointType())->convertToPHPValue($id, $platform);
-
+        
         $this->assertInstanceOf(Point::class, $result);
         $this->assertEquals($target, $result);
     }

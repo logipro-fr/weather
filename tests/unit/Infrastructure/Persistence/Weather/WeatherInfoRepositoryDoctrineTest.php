@@ -2,12 +2,16 @@
 
 namespace Weather\Tests\Infrastructure\Persistence\Weather;
 
-use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryDoctrine;
+use DoctrineTestingTools\DoctrineRepositoryTesterTrait;
 
 class WeatherInfoRepositoryDoctrineTest extends WeatherInfoRepositoryInMemoryTest
 {
+    use DoctrineRepositoryTesterTrait;
+
     protected function setUp(): void
     {
-        $this->repository = new WeatherInfoRepositoryDoctrine();
+        $this->initDoctrineTester();
+        $this->clearTables(["weatherinfos"]);
+        $this->repository = new WeatherInfoRepositoryDoctrineFake($this->getEntityManager());
     }
 }

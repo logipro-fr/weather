@@ -14,14 +14,16 @@ use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
 class WeatherInfoRepositoryInMemoryTest extends TestCase
 {
     protected WeatherInfoRepositoryInterface $repository;
+
     protected function setUp(): void
     {
         $this->repository = new WeatherInfoRepositoryInMemory();
     }
+
     public function testAdd(): void
     {
         $point = new Point(0, 0);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
 
         $this->repository->save($info);
@@ -33,8 +35,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     {
         $pointa = new Point(0, 0);
         $pointb = new Point(0, 0);
-        $datea = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
-        $dateb = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 13:00");
+        $datea = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
+        $dateb = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 13:00:01.222333");
         $infoa = new WeatherInfo($pointa, $datea, "{\"weather\":\"great\"}");
         $infob = new WeatherInfo($pointb, $dateb, "{\"weather\":\"bad\"}");
 
@@ -44,10 +46,10 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $this->assertEquals($infob, $info_returned);
     }
 
-    public function testFind(): void
+    public function testFindByID(): void
     {
         $point = new Point(0, 0);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $this->repository->save($info);
 
@@ -68,7 +70,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     public function testDoesNotFindFilled(): void
     {
         $point = new Point(0, 0);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
         $infoa = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $infob = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $infoc = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
@@ -80,5 +82,79 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $this->expectException(WeatherInfoNotFoundException::class);
         $this->repository->findById(new WeatherInfoId());
+    }
+
+    public function testFindFromDateAndPoint(): void
+    {
+        $point = new Point(0, 0);
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s", "2024-01-01 12:00:01");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $this->repository->save($info);
+
+        $returned = $this->repository->findByDateAndPoint($point, $date);
+
+        $this->assertEquals($returned->getId(), $info->getId());
+    }
+
+    public function testFindFromDateAndPointMicro(): void
+    {
+        $point = new Point(0, 0);
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222555");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $this->repository->save($info);
+
+        $returned = $this->repository->findByDateAndPoint($point, $date);
+
+        $this->assertEquals($returned->getId(), $info->getId());
+    }
+
+    public function testDoesNotFindByDateAndPoint(): void
+    {
+        $this->expectException(WeatherInfoNotFoundException::class);
+
+        $pointA = new Point(0, 0);
+        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
+        $pointB = new Point(1, 1);
+        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:50:01.222333");
+
+        $this->expectExceptionMessage("WeatherInfo of point \"" .
+        $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
+
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
+        $this->repository->save($info);
+
+        $this->repository->findByDateAndPoint($pointB, $dateB);
+    }
+
+    public function testFindFromImpreciseDateAndPoint(): void
+    {
+        $pointA = new Point(0.123, 4.621);
+        $pointB = new Point(0.124, 4.620);
+        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
+        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:10:01.222333");
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
+        $this->repository->save($info);
+
+        $returned = $this->repository->findCloseByDateAndPoint($pointB, $dateB);
+
+        $this->assertEquals($returned->getId(), $info->getId());
+    }
+
+    public function testDoesNotFindByImpreciseDateAndPoint(): void
+    {
+        $this->expectException(WeatherInfoNotFoundException::class);
+
+        $pointA = new Point(0, 0);
+        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
+        $pointB = new Point(1, 1);
+        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:50:01.222333");
+
+        $this->expectExceptionMessage("WeatherInfo of point \"" .
+        $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
+
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
+        $this->repository->save($info);
+
+        $this->repository->findCloseByDateAndPoint($pointB, $dateB);
     }
 }

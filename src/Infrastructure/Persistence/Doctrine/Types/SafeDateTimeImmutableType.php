@@ -2,15 +2,18 @@
 
 namespace Weather\Infrastructure\Persistence\Doctrine\Types;
 
+use DateTimeImmutable as GlobalDateTimeImmutable;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Safe\DateTimeImmutable;
 
-class SafeDateTimeImmutableType extends Type{
+class SafeDateTimeImmutableType extends Type
+{
     public function getName(): string
     {
-        return "datetime_immutable";
+        return "safe_datetime_immutable";
     }
 
     /**
@@ -19,7 +22,7 @@ class SafeDateTimeImmutableType extends Type{
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        return $value->format("Y-m-d H:i:s");
+        return $value->format("Y-m-d H:i:s.u");
     }
 
     /**
@@ -36,6 +39,6 @@ class SafeDateTimeImmutableType extends Type{
      */
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return Types::STRING;
+        return Types::DATETIME_IMMUTABLE;
     }
 }

@@ -8,12 +8,12 @@
 
     <entity name="Weather\Domain\Model\Weather\WeatherInfo" table="weatherinfos"
             repository-class="Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryDoctrine">
-        <id name="weatherInfoId" type="weather_info_id" column="weather_info_id">
+        <id name="identifier" type="weather_info_id" column="weather_info_id">
             <generator strategy="NONE"/>
         </id>
         <field name="point" type="point" column="point"/>
-        <field name="date" type="datetime_immutable" column="date"/>
+        <field name="date" type="safe_datetime_immutable" column="date"/>
         <field name="data" type="text" column="data"/>
-        <field name="isHistorical" type="bool" column="is_historical"/>
+        <field name="isHistorical" type="boolean" column="is_historical"/>
     </entity>
 </doctrine-mapping>
