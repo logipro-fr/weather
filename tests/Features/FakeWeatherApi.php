@@ -7,11 +7,14 @@ use Weather\APIs\WeatherApiInterface;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 
+use function Safe\json_encode;
+
 class FakeWeatherApi implements WeatherApiInterface
 {
     private const POSSIBLE_WEATHER_TEMPERATURE = [-2,5,10,20,12];
     private const POSSIBLE_WEATHER_SKY = ["Clear", "Cloudy", "Rainfall", "Thunderstorm"];
     private const POSSIBLE_WEATHER_HUMIITY = [12,25,1,8,7,4];
+    private const NAME = "fake API for tests";
 
     /**
      * @var array<WeatherInfo> $lastMultipleReturn
@@ -21,14 +24,17 @@ class FakeWeatherApi implements WeatherApiInterface
 
     private function getFromSingularPoint(Point $point, DateTimeImmutable $date): WeatherInfo
     {
-        $jsonData = "{\"Forecast\":\"" .
-            FakeWeatherApi::POSSIBLE_WEATHER_SKY[rand(0, sizeof(FakeWeatherApi::POSSIBLE_WEATHER_SKY) - 1)] .
-        "\",\"Temperature\":" .
-        FakeWeatherApi::POSSIBLE_WEATHER_TEMPERATURE[
-            rand(0, sizeof(FakeWeatherApi::POSSIBLE_WEATHER_TEMPERATURE) - 1)] .
-        "\",\"Temperature\":" .
-        FakeWeatherApi::POSSIBLE_WEATHER_HUMIITY[
-            rand(0, sizeof(FakeWeatherApi::POSSIBLE_WEATHER_HUMIITY) - 1)] . "%\"}";
+        $data = ["Forecast" =>
+            self::POSSIBLE_WEATHER_SKY[rand(0, sizeof(FakeWeatherApi::POSSIBLE_WEATHER_SKY) - 1)],
+        "Temperature" =>
+        self::POSSIBLE_WEATHER_TEMPERATURE[
+            rand(0, sizeof(self::POSSIBLE_WEATHER_TEMPERATURE) - 1)],
+        "Humidity" =>
+        self::POSSIBLE_WEATHER_HUMIITY[
+            rand(0, sizeof(self::POSSIBLE_WEATHER_HUMIITY) - 1)]
+        ];
+
+        $jsonData = json_encode($data);
 
         $res = new WeatherInfo($point, $date, $jsonData);
         $this->lastReturn = $res;
@@ -60,5 +66,10 @@ class FakeWeatherApi implements WeatherApiInterface
     public function getLastReturnFromPoint(): WeatherInfo
     {
         return $this->lastReturn;
+    }
+
+    public function getName(): string
+    {
+        return self::NAME;
     }
 }

@@ -44,9 +44,9 @@ class ImportLegacyTest extends TestCase
              */
             $dataObject = json_decode($data);
             $coordinates = explode(",", $coordinates);
-            $lattitude = floatval($coordinates[0]);
+            $latitude = floatval($coordinates[0]);
             $longitude = floatval($coordinates[1]);
-            $point = new Point($lattitude, $longitude);
+            $point = new Point($latitude, $longitude);
             $date = new DateTimeImmutable($dataObject->location->localtime);
             $this->assertEquals($data, $repository->findByDateAndPoint($point, $date)->getData());
             $this->assertFalse($repository->findByDateAndPoint($point, $date)->isHistorical());
@@ -80,6 +80,17 @@ class ImportLegacyTest extends TestCase
 
         $expectedResponseString = new ImportLegacyResponse($size);
         $this->assertEquals($expectedResponseString->getData(), $presenter->read()->getData());
+    }
+
+    public function testGetPresenter(): void
+    {
+
+        $repository = new WeatherInfoRepositoryInMemory();
+        $presenter = new PresenterObject();
+
+        $service = new ImportLegacy($presenter, $repository);
+
+        $this->assertEquals($presenter, $service->getPresenter());
     }
 
     /**

@@ -1,0 +1,220 @@
+openapi: 3.0.3
+info:
+  title: Weather API
+  version: 1.0.0
+  description: >-
+    Documentation for Weather API.
+
+    Weather is a service of Logipro company.
+
+paths:
+  /api/v1/hello:
+    get:
+      tags:
+        - Misc
+      summary: Returns Hello World
+      description: >-
+        Returns a simple hello world json
+      responses:
+        "200":
+          description: Hello World
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Hello"  
+
+  /api/v1/search/{amount}:
+    get:
+      tags:
+        - Maps
+      summary: Return maps data
+      description: >-
+        Get *amount* maps from the youngest to the *amount* youngest
+      parameters:
+        - name: amount
+          in: path
+          required: false
+          example: 1
+          schema:
+            type: int
+      responses:
+        "200":
+          description: Map data
+          content:
+            application/json:
+              schema:
+                properties:
+                  success:
+                    example: "true"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Map"
+                  error_code:
+                    example: 200
+                  message:
+                    example: ""
+        "422":
+          description: "Error 422: Empty repository"
+          content:
+            application/json:
+              schema:
+                properties:
+                  success:
+                    example: "false"
+                  data:
+                    example: {}
+                  error_code:
+                    example: 422
+                  message:
+                    example: "Can't retrieve data from an empty repository"
+  /api/v1/create:
+    post:
+      tags:
+        - Maps
+      summary: Create map
+      description: >-
+        Create a new map with given data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                mapId:
+                  type: string
+                  example: france
+                bounds:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: integer
+                    minItems: 2
+                    maxItems: 2
+                  minItems: 2
+                  maxItems: 2
+                  example: [[42, -5], [50, 10]]
+                layers:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Layer"
+      responses:
+        "200":
+          description: Map id and url to display the map
+          content:
+            application/json:
+              schema:
+                properties:
+                  success:
+                    example: "true"
+                  data:
+                    type: object
+                    properties:
+                      mapId:
+                        type: string
+                        example: france
+                      url:
+                        type: string
+                        example: /api/v1/display/france
+                  error_code:
+                    example: 200
+                  message:
+                    example: ""
+        "409":
+          description: "Error 409: Map already exists"
+          content:
+            application/json:
+              schema:
+                properties:
+                  success:
+                    example: "false"
+                  data:
+                    example: {}
+                  error_code:
+                    example: 409
+                  message:
+                    example: "Can't create map: map already exists"
+
+components:
+  schemas:
+    Hello:
+      type: object
+      properties: 
+        Hello:
+          type: string
+          example: World!
+    Map:
+      type: object
+      properties:
+        mapId:
+          type: string
+          example: france
+        bounds:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+            minItems: 2
+            maxItems: 2
+          minItems: 2
+          maxItems: 2
+          example: [[42, -5], [50, 10]]
+        createdAt:
+          type: string
+          example: 17/10/2023-15:10:10
+        layers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Layer"
+          example:
+            - name: main
+              markers:
+                - point: [45.73, 4.84]
+                  description: Lyon
+                  color: red
+                - point: [47.22, -1.54]
+                  description: Nantes
+                  color: red
+            - name: capital
+              markers:
+                - point: [48.86, 2.35]
+                  description: Paris
+                  color: blue
+
+    Layer:
+      type: object
+      properties:
+        name:
+          type: string
+          example: main
+        markers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Marker"
+          example:
+            - point: [45.73, 4.84]
+              description: Lyon
+              color: red
+            - point: [47.22, -1.54]
+              description: Nantes
+              color: red
+    Marker:
+      type: object
+      properties:
+        point:
+          type: array
+          items:
+            type: integer
+          minItems: 2
+          maxItems: 2
+          example: [45.73, 4.84]
+        description:
+          type: string
+          example: Lyon
+        color:
+          type: string
+          example: red

@@ -98,4 +98,23 @@ class WeatherInfoTest extends TestCase
 
         $this->assertFalse($info->closeTo($pointB, $dateB));
     }
+
+    public function testJsonSerialize(): void
+    {
+        $point = new Point(1.256, 5.156);
+        $date = new DateTimeImmutable("2020-01-01 13:00");
+        $historical = true;
+        $result = '{"this":"is","ok!":5}';
+        $info = new WeatherInfo($point, $date, $result, $historical);
+        $target = [
+            "id" => $info->getId(),
+            "latitude" => $point->getLatitude(),
+            "longitude" => $point->getLongitude(),
+            "date" => $date->format("Y-m-d H:i:s.u"),
+            "historical" => $historical,
+            "result" => json_decode($result)
+        ];
+
+        $this->assertEquals($target, $info->jsonSerialize());
+    }
 }

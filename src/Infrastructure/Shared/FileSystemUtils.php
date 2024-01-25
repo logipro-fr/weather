@@ -40,7 +40,7 @@ class FileSystemUtils
         if (str_ends_with($path, self::FILESYSTEM_SEPARATOR)) {
             return $path;
         }
-        return sprintf("%s%s",$path,self::FILESYSTEM_SEPARATOR);
+        return sprintf("%s%s", $path, self::FILESYSTEM_SEPARATOR);
     }
 
     /**
@@ -58,7 +58,7 @@ class FileSystemUtils
         $res = [];
 
         foreach ($entries as $entry) {
-            array_push($res, sprintf("%s%s",$directoryPath,$entry));
+            array_push($res, sprintf("%s%s", $directoryPath, $entry));
         }
         return $res;
     }

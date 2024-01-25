@@ -3,20 +3,25 @@
 namespace Weather\Application\GetWeather;
 
 use Weather\APIs\WeatherApiInterface;
-use Weather\Application\Presenter\PresenterInterface;
+use Weather\Application\Presenter\AbstractPresenter;
+use Weather\Application\Presenter\RequestInterface;
+use Weather\Application\ServiceInterface;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 
-class GetWeather
+class GetWeather implements ServiceInterface
 {
     public function __construct(
-        private PresenterInterface $presenter,
+        private AbstractPresenter $presenter,
         private WeatherApiInterface $api,
         private WeatherInfoRepositoryInterface $repository
     ) {
     }
 
-    public function execute(GetWeatherRequest $request): void
+    /**
+     * @param GetWeatherRequest $request
+     */
+    public function execute(RequestInterface $request): void
     {
         $infoArray = $this->api->getFromPoints($request->getRequestedPoints(), $request->getRequestedDate());
         $this->savePoints($infoArray);
@@ -27,11 +32,14 @@ class GetWeather
      */
     private function savePoints(array $infoArray): void
     {
-        $weatherInfoDataArray = [];
         foreach ($infoArray as $weatherInfo) {
             $this->repository->save($weatherInfo);
-            array_push($weatherInfoDataArray, $weatherInfo->getData());
         }
-        $this->presenter->write(new GetWeatherResponse("[" . implode(",", $weatherInfoDataArray) . "]"));
+        $this->presenter->write(new GetWeatherResponse($infoArray));
+    }
+
+    public function getPresenter(): AbstractPresenter
+    {
+        return $this->presenter;
     }
 }
