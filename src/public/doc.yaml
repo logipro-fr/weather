@@ -25,118 +25,37 @@ paths:
                   data:
                     $ref: "#/components/schemas/Hello"  
 
-  /api/v1/search/{amount}:
+  /api/v1/fetch:
     get:
       tags:
-        - Maps
-      summary: Return maps data
+        - Weather
+      summary: Return weather from outside API
       description: >-
-        Get *amount* maps from the youngest to the *amount* youngest
+        Fetches the weather based on point(s) and a date.
       parameters:
-        - name: amount
-          in: path
-          required: false
-          example: 1
+        - in:  paths
+          name: date
+          date: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
+          description: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
+          required: true
+          example: "2024-01-01 12:30:00.000000"
           schema:
-            type: int
+            type: string
+        - in:  paths
+          name: points
+          points: point as "[lat],[lon]", separated by ";"
+          description: point as "[lat],[lon]", separated by ";"
+          required: true
+          example: 48.867,2.333
+          schema:
+            type: string
       responses:
         "200":
-          description: Map data
+          description: Weather data
           content:
             application/json:
               schema:
-                properties:
-                  success:
-                    example: "true"
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Map"
-                  error_code:
-                    example: 200
-                  message:
-                    example: ""
-        "422":
-          description: "Error 422: Empty repository"
-          content:
-            application/json:
-              schema:
-                properties:
-                  success:
-                    example: "false"
-                  data:
-                    example: {}
-                  error_code:
-                    example: 422
-                  message:
-                    example: "Can't retrieve data from an empty repository"
-  /api/v1/create:
-    post:
-      tags:
-        - Maps
-      summary: Create map
-      description: >-
-        Create a new map with given data.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              properties:
-                mapId:
-                  type: string
-                  example: france
-                bounds:
-                  type: array
-                  items:
-                    type: array
-                    items:
-                      type: integer
-                    minItems: 2
-                    maxItems: 2
-                  minItems: 2
-                  maxItems: 2
-                  example: [[42, -5], [50, 10]]
-                layers:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/Layer"
-      responses:
-        "200":
-          description: Map id and url to display the map
-          content:
-            application/json:
-              schema:
-                properties:
-                  success:
-                    example: "true"
-                  data:
-                    type: object
-                    properties:
-                      mapId:
-                        type: string
-                        example: france
-                      url:
-                        type: string
-                        example: /api/v1/display/france
-                  error_code:
-                    example: 200
-                  message:
-                    example: ""
-        "409":
-          description: "Error 409: Map already exists"
-          content:
-            application/json:
-              schema:
-                properties:
-                  success:
-                    example: "false"
-                  data:
-                    example: {}
-                  error_code:
-                    example: 409
-                  message:
-                    example: "Can't create map: map already exists"
+                $ref: "#/components/schemas/Weather"
 
 components:
   schemas:
@@ -146,75 +65,30 @@ components:
         Hello:
           type: string
           example: World!
-    Map:
-      type: object
-      properties:
-        mapId:
-          type: string
-          example: france
-        bounds:
-          type: array
-          items:
-            type: array
-            items:
-              type: integer
-            minItems: 2
-            maxItems: 2
-          minItems: 2
-          maxItems: 2
-          example: [[42, -5], [50, 10]]
-        createdAt:
-          type: string
-          example: 17/10/2023-15:10:10
-        layers:
-          type: array
-          items:
-            $ref: "#/components/schemas/Layer"
-          example:
-            - name: main
-              markers:
-                - point: [45.73, 4.84]
-                  description: Lyon
-                  color: red
-                - point: [47.22, -1.54]
-                  description: Nantes
-                  color: red
-            - name: capital
-              markers:
-                - point: [48.86, 2.35]
-                  description: Paris
-                  color: blue
+    Weather:
+      type: array
+      items:
+        $ref: "#/components/schemas/WeatherInfo"
 
-    Layer:
+    WeatherInfo:
       type: object
       properties:
-        name:
+        id:
           type: string
-          example: main
-        markers:
-          type: array
-          items:
-            $ref: "#/components/schemas/Marker"
-          example:
-            - point: [45.73, 4.84]
-              description: Lyon
-              color: red
-            - point: [47.22, -1.54]
-              description: Nantes
-              color: red
-    Marker:
-      type: object
-      properties:
-        point:
-          type: array
-          items:
-            type: integer
-          minItems: 2
-          maxItems: 2
-          example: [45.73, 4.84]
-        description:
+          example: weather_db6e3f314cd5134de351a135fb315a35
+        latitude:
+          type: float
+          example: 41.867
+        longitude:
+          type: float
+          example: 2.333
+        date:
           type: string
-          example: Lyon
-        color:
-          type: string
-          example: red
+          example: 2024_01_01 12:00:00.000000
+        historical:
+          type: boolean
+          example: false
+        result:
+          type: object
+          example: {weather: good, temperature: 0.4}
+          description: the result of the API query
