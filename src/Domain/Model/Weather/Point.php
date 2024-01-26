@@ -23,13 +23,8 @@ class Point
 
     public function equals(Point $other): bool
     {
-        if (
-            $this->getLatitude() == $other->getLatitude() &&
-            $this->getLongitude() == $other->getLongitude()
-        ) {
-            return true;
-        }
-        return false;
+        return $this->getLatitude() == $other->getLatitude() &&
+            $this->getLongitude() == $other->getLongitude();
     }
 
     public function __toString()

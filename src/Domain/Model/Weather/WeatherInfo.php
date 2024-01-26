@@ -47,8 +47,14 @@ class WeatherInfo
         return $this->isHistorical;
     }
 
-    public function closeTo(Point $point, DateTimeImmutable $date): bool
+    /**
+     * @param null|bool $isHistorical null if does not matter
+     */
+    public function closeTo(Point $point, DateTimeImmutable $date, ?bool $isHistorical = null): bool
     {
+        if ($isHistorical != null && $isHistorical != $this->isHistorical()) {
+            return false;
+        }
         if (abs($this->point->getLatitude() - $point->getLatitude()) > WeatherInfo::ACCEPTABLE_LATTITUDE_DIFF) {
             return false;
         }

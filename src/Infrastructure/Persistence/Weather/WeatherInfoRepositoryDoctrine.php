@@ -51,7 +51,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
     /**
      * @throws WeatherInfoNotFoundException
      */
-    public function findByDateAndPoint(Point $point, DateTimeImmutable $date): WeatherInfo
+    public function findByDateAndPoint(Point $point, DateTimeImmutable $date, ?bool $historical = null): WeatherInfo
     {
         /** @var EntityManager $manager */
         $manager = $this->getEntityManager();
@@ -61,14 +61,20 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
             ->eq("w.point", "'" . $point->__toString() . "'");
         $conditionB = $qb->expr()
             ->eq("w.date", $date->format("'Y-m-d H:i:s.u'"));
+        if ($historical != null) {
+            $conditionC = $qb->expr()
+            ->eq("w.isHistorical", $historical);
 
-        $info = $qb->select("w")
+            $info = $qb->select("w")
+            ->from(WeatherInfo::class, "w")->where($conditionA, $conditionB, $conditionC);
+        } else {
+            $info = $qb->select("w")
             ->from(WeatherInfo::class, "w")->where($conditionA, $conditionB);
-
+        }
         /** @var array<WeatherInfo> $result */
         $result = $info->getQuery()->getResult();
         if ($result == null) {
-            throw new WeatherInfoNotFoundException("WeatherInfo of point \"" .
+            throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
                 $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
         }
         return $result[0];
@@ -77,8 +83,11 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
     /**
      * @throws WeatherInfoNotFoundException
      */
-    public function findCloseByDateAndPoint(Point $point, DateTimeImmutable $date): WeatherInfo
-    {
+    public function findCloseByDateAndPoint(
+        Point $point,
+        DateTimeImmutable $date,
+        ?bool $historical = null
+    ): WeatherInfo {
         /** @var EntityManager $manager */
         $manager = $this->getEntityManager();
         $qb = $manager->createQueryBuilder();
@@ -86,15 +95,23 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         $before = $date->sub(self::$TIME_LOOKUP_RANGE);
         $after = $date->add(self::$TIME_LOOKUP_RANGE);
 
-        $condition = $qb->expr()
+        $conditionA = $qb->expr()
             ->between(
                 "w.date",
                 $before->format("'Y-m-d H:i:s'"),
                 $after->format("'Y-m-d H:i:s'")
             );
 
-        $query = $qb->select("w")
-            ->from(WeatherInfo::class, "w")->where($condition);
+        if ($historical != null) {
+            $conditionB = $qb->expr()
+                ->eq("w.isHistorical", $historical);
+
+            $query = $qb->select("w")
+                ->from(WeatherInfo::class, "w")->where($conditionA, $conditionB);
+        } else {
+            $query = $qb->select("w")
+                ->from(WeatherInfo::class, "w")->where($conditionA);
+        }
 
         /** @var array<WeatherInfo> $result */
         $result = $query->getQuery()->getResult();
@@ -104,7 +121,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
                 return $info;
             }
         }
-        throw new WeatherInfoNotFoundException("WeatherInfo of point \"" .
+        throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
             $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
     }
 }
