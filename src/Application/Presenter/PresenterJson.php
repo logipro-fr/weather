@@ -2,13 +2,15 @@
 
 namespace Weather\Application\Presenter;
 
-class PresenterObject extends AbstractPresenter
+use function Safe\json_encode;
+
+class PresenterJson extends AbstractPresenter
 {
     private AbstractResponse $response;
 
-    public function read(): AbstractResponse
+    public function read(): string
     {
-        return $this->response;
+        return json_encode($this->response, JSON_UNESCAPED_UNICODE);
     }
 
     public function write(AbstractResponse $response): void
@@ -18,6 +20,6 @@ class PresenterObject extends AbstractPresenter
 
     public function getHeaders(): array
     {
-        return ["Content-Type" => "text/plain"];
+        return ["Content-Type" => "application/json"];
     }
 }

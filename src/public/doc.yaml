@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: Weather API
+  version: 1.0.0
+  description: >-
+    Documentation for Weather API.
+
+    Weather is a service of Logipro company.
+
+paths:
+  /api/v1/hello:
+    get:
+      tags:
+        - Misc
+      summary: Returns Hello World
+      description: >-
+        Returns a simple hello world json
+      responses:
+        "200":
+          description: Hello World
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Hello"  
+
+  /api/v1/fetch:
+    get:
+      tags:
+        - Weather
+      summary: Return weather from outside API
+      description: >-
+        Fetches the weather based on point(s) and a date.
+      parameters:
+        - in:  paths
+          name: date
+          date: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
+          description: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
+          required: true
+          example: "2024-01-01 12:30:00.000000"
+          schema:
+            type: string
+        - in:  paths
+          name: points
+          points: point as "[lat],[lon]", separated by ";"
+          description: point as "[lat],[lon]", separated by ";"
+          required: true
+          example: 48.867,2.333
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Weather"
+
+components:
+  schemas:
+    Hello:
+      type: object
+      properties: 
+        Hello:
+          type: string
+          example: World!
+    Weather:
+      type: array
+      items:
+        $ref: "#/components/schemas/WeatherInfo"
+
+    WeatherInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          example: weather_db6e3f314cd5134de351a135fb315a35
+        latitude:
+          type: float
+          example: 41.867
+        longitude:
+          type: float
+          example: 2.333
+        date:
+          type: string
+          example: 2024_01_01 12:00:00.000000
+        historical:
+          type: boolean
+          example: false
+        result:
+          type: object
+          example: {weather: good, temperature: 0.4}
+          description: the result of the API query

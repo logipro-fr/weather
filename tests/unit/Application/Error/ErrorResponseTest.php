@@ -1,20 +1,21 @@
 <?php
 
-namespace Weather\Tests\Application\ImportLegacy;
+namespace Weather\Tests\Application\Error;
 
 use PHPUnit\Framework\TestCase;
-use Weather\Application\ImportLegacy\ImportLegacyResponse;
+use Weather\Application\Error\ErrorResponse;
 
 use function Safe\json_encode;
 
-class ImportLegacyResponseTest extends TestCase
+class ErrorResponseTest extends TestCase
 {
     public function testResponse(): void
     {
         $expectedArray = [
-            "size" => 25
+            "code" => 404,
+            "message" => "not found"
         ];
-        $response = new ImportLegacyResponse(25);
+        $response = new ErrorResponse($expectedArray["code"], $expectedArray["message"]);
         $this->assertEquals($expectedArray, $response->getData());
         $this->assertEquals(json_encode($expectedArray), json_encode($response));
     }
