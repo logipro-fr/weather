@@ -36,7 +36,7 @@ class ImportLegacyTest extends TestCase
         /** @var array<string,string> $points */
         $points = get_object_vars($json->weatherHotPoints);
 
-        foreach (array_slice($points, 512, $lengthToTest) as $coordinates => $data) {
+        foreach (array_slice($points, 256, $lengthToTest) as $coordinates => $data) {
             /**
              * @var \stdClass $dataObject
              * @property \stdClass $location
@@ -48,8 +48,9 @@ class ImportLegacyTest extends TestCase
             $longitude = floatval($coordinates[1]);
             $point = new Point($lattitude, $longitude);
             $date = new DateTimeImmutable($dataObject->location->localtime);
-            $this->assertEquals($data, $repository->findByDateAndPoint($point, $date)->getData());
-            $this->assertFalse($repository->findByDateAndPoint($point, $date)->isHistorical());
+            $info = $repository->findByDateAndPoint($point, $date);
+            $this->assertEquals($data, $info->getData());
+            $this->assertFalse($info->isHistorical());
         }
 
         $expectedResponseString = new ImportLegacyResponse(sizeof($points));
