@@ -96,6 +96,18 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $this->assertEquals($returned->getId(), $info->getId());
     }
 
+    public function testFindFromDateAndPointHistorical(): void
+    {
+        $point = new Point(0, 0);
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s", "2024-01-01 12:00:01");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", true);
+        $this->repository->save($info);
+
+        $returned = $this->repository->findByDateAndPoint($point, $date, true);
+
+        $this->assertEquals($returned->getId(), $info->getId());
+    }
+
     public function testFindFromDateAndPointMicro(): void
     {
         $point = new Point(0, 0);
@@ -140,6 +152,20 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $this->assertEquals($returned->getId(), $info->getId());
     }
 
+    public function testFindFromImpreciseDateAndPointHistorical(): void
+    {
+        $pointA = new Point(0.123, 4.621);
+        $pointB = new Point(0.124, 4.620);
+        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
+        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:10:01.222333");
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", true);
+        $this->repository->save($info);
+
+        $returned = $this->repository->findCloseByDateAndPoint($pointB, $dateB, true);
+
+        $this->assertEquals($returned->getId(), $info->getId());
+    }
+
     public function testDoesNotFindByImpreciseDateAndPoint(): void
     {
         $this->expectException(WeatherInfoNotFoundException::class);
@@ -156,5 +182,37 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $this->repository->save($info);
 
         $this->repository->findCloseByDateAndPoint($pointB, $dateB);
+    }
+
+    public function testDoesNotFindByImpreciseDateAndPointHistorical(): void
+    {
+        $this->expectException(WeatherInfoNotFoundException::class);
+
+        $point = new Point(0, 0);
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
+
+        $this->expectExceptionMessage("Historical WeatherInfo of point \"" .
+        $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
+
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $this->repository->save($info);
+
+        $this->repository->findCloseByDateAndPoint($point, $date, true);
+    }
+
+    public function testDoesNotFindByDateAndPointHistorical(): void
+    {
+        $this->expectException(WeatherInfoNotFoundException::class);
+
+        $point = new Point(0, 0);
+        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-01 12:00:01.222333");
+
+        $this->expectExceptionMessage("Historical WeatherInfo of point \"" .
+        $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
+
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $this->repository->save($info);
+
+        $this->repository->findByDateAndPoint($point, $date, true);
     }
 }

@@ -99,6 +99,18 @@ class WeatherInfoTest extends TestCase
         $this->assertFalse($info->closeTo($pointB, $dateB));
     }
 
+    public function testNotCloseTohistorical(): void
+    {
+        $pointA = new Point(0.01, 0.05);
+        $dateA = new DateTimeImmutable("2020-01-01 12:00");
+        $data = "{}";
+        $info = new WeatherInfo($pointA, $dateA, $data);
+
+        $pointB = new Point(0.01, 0.05);
+        $dateB = new DateTimeImmutable("2020-01-01 12:00");
+
+        $this->assertFalse($info->closeTo($pointB, $dateB, true));
+      
     public function testJsonSerialize(): void
     {
         $point = new Point(1.256, 5.156);
