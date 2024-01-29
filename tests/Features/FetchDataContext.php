@@ -3,9 +3,6 @@
 namespace Weather\Tests\Features;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use PHPUnit\Framework\Assert;
 use Safe\DateTimeImmutable;
 use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPoint;

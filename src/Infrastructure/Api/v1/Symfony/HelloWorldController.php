@@ -1,6 +1,6 @@
 <?php
 
-namespace Weather\Infrastructure\Api\v1;
+namespace Weather\Infrastructure\Api\v1\Symfony;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

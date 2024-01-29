@@ -1,6 +1,6 @@
 <?php
 
-namespace Weather\Infrastructure\Api\v1;
+namespace Weather\Infrastructure\Api\v1\Symfony;
 
 use Safe\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +14,7 @@ use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
+use Weather\Infrastructure\Api\v1\Controller;
 use Weather\Tests\Features\FakeWeatherApi;
 
 class GetNewWeatherController extends AbstractController

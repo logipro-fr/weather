@@ -4,7 +4,7 @@ namespace Weather\Tests\Infrastructure\Api\v1;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Weather\Infrastructure\Api\v1\HelloWorldController;
+use Weather\Infrastructure\Api\v1\Symfony\HelloWorldController;
 
 class HelloWorldControllerTest extends TestCase
 {

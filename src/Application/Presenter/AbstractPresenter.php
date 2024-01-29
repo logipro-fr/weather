@@ -16,4 +16,8 @@ abstract class AbstractPresenter
     {
         return $this->statusCode;
     }
+    public function writeSatusCode(int $code): void
+    {
+        $this->statusCode = $code;
+    }
 }

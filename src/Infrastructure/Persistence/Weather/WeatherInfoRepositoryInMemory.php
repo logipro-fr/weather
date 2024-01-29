@@ -28,7 +28,7 @@ class WeatherInfoRepositoryInMemory implements WeatherInfoRepositoryInterface
                 return $info;
             }
         }
-        throw new WeatherInfoNotFoundException("Object WeatherInfo of ID \"" . $id . "\" not found");
+        throw new WeatherInfoNotFoundException("Object WeatherInfo of ID \"" . $id . "\" not found", 404);
     }
 
     public function findCloseByDateAndPoint(
@@ -42,7 +42,7 @@ class WeatherInfoRepositoryInMemory implements WeatherInfoRepositoryInterface
             }
         }
         throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
-            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
+            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found", 404);
     }
 
     public function findByDateAndPoint(Point $point, DateTimeImmutable $date, ?bool $historical = null): WeatherInfo
@@ -57,6 +57,6 @@ class WeatherInfoRepositoryInMemory implements WeatherInfoRepositoryInterface
             }
         }
         throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
-            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
+            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found", 404);
     }
 }

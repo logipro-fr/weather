@@ -3,9 +3,10 @@
 namespace Weather\Application\FetchData\ByDateAndPoint;
 
 use Safe\DateTimeImmutable;
+use Weather\Application\Presenter\RequestInterface;
 use Weather\Domain\Model\Weather\Point;
 
-class FetchDataByDateAndPointRequest
+class FetchDataByDateAndPointRequest implements RequestInterface
 {
     public function __construct(
         private readonly Point $point,

@@ -110,7 +110,8 @@ class WeatherInfoTest extends TestCase
         $dateB = new DateTimeImmutable("2020-01-01 12:00");
 
         $this->assertFalse($info->closeTo($pointB, $dateB, true));
-      
+    }
+
     public function testJsonSerialize(): void
     {
         $point = new Point(1.256, 5.156);

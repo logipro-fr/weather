@@ -33,6 +33,7 @@ class Controller
             $e->getMessage()
         );
         $this->getPresenter()->write($badResponse);
+        $this->getPresenter()->writeSatusCode($e->getCode());
     }
 
     private function getPresenter(): AbstractPresenter

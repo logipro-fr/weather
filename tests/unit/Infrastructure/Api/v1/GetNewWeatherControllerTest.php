@@ -7,12 +7,10 @@ use Safe\DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
-use Weather\Infrastructure\Api\v1\GetNewWeatherController;
-use Weather\Infrastructure\Api\v1\HelloWorldController;
+use Weather\Infrastructure\Api\v1\Symfony\GetNewWeatherController;
 use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
 use Weather\Tests\Features\FakeWeatherApi;
 
-use function Safe\json_decode;
 use function Safe\json_encode;
 
 class GetNewWeatherControllerTest extends TestCase
@@ -47,6 +45,7 @@ class GetNewWeatherControllerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals("application/json", $response->headers->get("Content-Type"));
     }
+
     public function testExecuteOnTwo(): void
     {
         $api = new FakeWeatherApi();
