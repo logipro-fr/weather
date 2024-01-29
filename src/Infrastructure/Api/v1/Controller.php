@@ -12,6 +12,10 @@ use function SafePHP\strval;
 
 class Controller
 {
+    private const CODE_RANGE_LOW = 100;
+    private const CODE_RANGE_HIGH = 599;
+    private const CODE_UNKNOWN_INTERNAL = 500;
+
     public function __construct(
         private ServiceInterface $service
     ) {
@@ -48,8 +52,8 @@ class Controller
     public function readStatus(): int
     {
         $code = $this->getPresenter()->getCode();
-        if($code < 100 || $code > 599){
-            return 500;
+        if ($code < self::CODE_RANGE_LOW || $code > self::CODE_RANGE_HIGH) {
+            return self::CODE_UNKNOWN_INTERNAL;
         }
         return $code;
     }

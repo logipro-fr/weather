@@ -37,10 +37,11 @@ class ControllerTest extends TestCase
         assertEquals(json_encode($target), $controller->readResponse());
     }
 
-    public function testReadStatus1(){
+    public function testReadStatus1(): void
+    {
         $service = $this->createMock(ServiceInterface::class);
-        $service->method("execute")->willThrowException(new Exception("message",99));
-        $presenter = new PresenterObject;
+        $service->method("execute")->willThrowException(new Exception("message", 99));
+        $presenter = new PresenterObject();
         $service->method("getPresenter")->willReturn($presenter);
 
         $controller = new Controller($service);
@@ -49,10 +50,11 @@ class ControllerTest extends TestCase
         $this->assertEquals(500, $controller->readStatus());
     }
 
-    public function testReadStatus2(){
+    public function testReadStatus2(): void
+    {
         $service = $this->createMock(ServiceInterface::class);
-        $service->method("execute")->willThrowException(new Exception("message",600));
-        $presenter = new PresenterObject;
+        $service->method("execute")->willThrowException(new Exception("message", 600));
+        $presenter = new PresenterObject();
         $service->method("getPresenter")->willReturn($presenter);
 
         $controller = new Controller($service);
@@ -61,10 +63,11 @@ class ControllerTest extends TestCase
         $this->assertEquals(500, $controller->readStatus());
     }
 
-    public function testReadStatus3(){
+    public function testReadStatus3(): void
+    {
         $service = $this->createMock(ServiceInterface::class);
-        $service->method("execute")->willThrowException(new Exception("message",100));
-        $presenter = new PresenterObject;
+        $service->method("execute")->willThrowException(new Exception("message", 100));
+        $presenter = new PresenterObject();
         $service->method("getPresenter")->willReturn($presenter);
 
         $controller = new Controller($service);
@@ -73,10 +76,11 @@ class ControllerTest extends TestCase
         $this->assertEquals(100, $controller->readStatus());
     }
 
-    public function testReadStatus4(){
+    public function testReadStatus4(): void
+    {
         $service = $this->createMock(ServiceInterface::class);
         $service->method("execute")->willThrowException(new Exception("message", 599));
-        $presenter = new PresenterObject;
+        $presenter = new PresenterObject();
         $service->method("getPresenter")->willReturn($presenter);
 
         $controller = new Controller($service);

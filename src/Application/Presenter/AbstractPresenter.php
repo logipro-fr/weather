@@ -12,7 +12,8 @@ abstract class AbstractPresenter
      * @return array<string,string>
      */
     abstract public function getHeaders(): array;
-    public function getCode(): int{
+    public function getCode(): int
+    {
         return $this->response->getCode();
     }
 }

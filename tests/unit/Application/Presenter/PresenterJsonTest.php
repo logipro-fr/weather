@@ -25,7 +25,7 @@ class PresenterJsonTest extends TestCase
         $response->method("jsonSerialize")->willReturn($target);
         $presenter = new PresenterJson();
         $presenter->write($response);
-        
+
         $this->assertEquals(json_encode($target), $presenter->read());
         $this->assertEquals(["Content-Type" => "application/json"], $presenter->getHeaders());
     }
