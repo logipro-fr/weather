@@ -8,6 +8,106 @@ info:
     Weather is a service of Logipro company.
 
 paths:
+  /api/v1/fetch:
+    get:
+      tags:
+        - Weather
+      summary: Return weather from outside API
+      description: >-
+        Fetches the weather based on point(s) and a date.
+      parameters:
+        - in:  query
+          name: date
+          date: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
+          description: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
+          required: true
+          example: "2024-01-01 12:30:00.000000"
+          schema:
+            type: string
+        - in:  query
+          name: points
+          points: point as "[lat],[lon]", separated by ";"
+          description: point as "[lat],[lon]", separated by ";"
+          required: true
+          example: 48.867,2.333
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Weather"
+
+  /api/v1/data/by-id:
+    get:
+      tags:
+        - Weather
+      summary: Return weather with the corresponding ID
+      description: >-
+        Searches database for the weather based on it's ID.
+      parameters:
+        - in:  query
+          name: id
+          date: id of the corresponding weather
+          description: identifier of the corresponding weather
+          required: true
+          example: "weather_db6e3f314cd5134de351a135fb315a35"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeatherInfo"
+        "404":
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+
+  /api/v1/data/by-date-point:
+    get:
+      tags:
+        - Weather
+      summary: Return weather for the corresponding date and point
+      description: >-
+        Searches database for the weather based on it's date and point.
+      parameters:
+        - in:  query
+          name: point
+          date: point researched
+          description: point for which we want to know the weather
+          required: true
+          example: "48.867,2.333"
+          schema:
+            type: string
+        - in:  query
+          name: date
+          date: date researched
+          description: date for which we want to know the weather
+          required: true
+          example: "2024-01-01 12:00:00.000000"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeatherInfo"
+        "404":
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+
   /api/v1/hello:
     get:
       tags:
@@ -25,51 +125,8 @@ paths:
                   data:
                     $ref: "#/components/schemas/Hello"  
 
-  /api/v1/fetch:
-    get:
-      tags:
-        - Weather
-      summary: Return weather from outside API
-      description: >-
-        Fetches the weather based on point(s) and a date.
-      parameters:
-        - in:  paths
-          name: date
-          date: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
-          description: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
-          required: true
-          example: "2024-01-01 12:30:00.000000"
-          schema:
-            type: string
-        - in:  paths
-          name: points
-          points: point as "[lat],[lon]", separated by ";"
-          description: point as "[lat],[lon]", separated by ";"
-          required: true
-          example: 48.867,2.333
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Weather data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Weather"
-
 components:
   schemas:
-    Hello:
-      type: object
-      properties: 
-        Hello:
-          type: string
-          example: World!
-    Weather:
-      type: array
-      items:
-        $ref: "#/components/schemas/WeatherInfo"
-
     WeatherInfo:
       type: object
       properties:
@@ -84,7 +141,7 @@ components:
           example: 2.333
         date:
           type: string
-          example: 2024_01_01 12:00:00.000000
+          example: 2024-01-01 12:00:00.000000
         historical:
           type: boolean
           example: false
@@ -92,3 +149,25 @@ components:
           type: object
           example: {weather: good, temperature: 0.4}
           description: the result of the API query
+
+    NotFound:
+      type: object
+      properties:
+        code: 
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: "Object WeatherInfo of ID \"weather_db6e3f314cd5134de351a135fb315a35\" not found"
+
+    Weather:
+      type: array
+      items:
+        $ref: "#/components/schemas/WeatherInfo"
+    
+    Hello:
+      type: object
+      properties: 
+        Hello:
+          type: string
+          example: World!
