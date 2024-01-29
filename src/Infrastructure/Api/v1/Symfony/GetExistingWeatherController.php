@@ -25,7 +25,7 @@ class GetExistingWeatherController extends AbstractController
     {
     }
 
-    #[Route('/api/v1/data/by-id', name: "get stared weather data from ID", methods: ['GET'])]
+    #[Route('/api/v1/data/by-id', name: "get stored weather data from ID", methods: ['GET'])]
     public function getWeatherFromApiById(Request $request): Response
     {
         $controller = $this->createIDController();
@@ -33,7 +33,7 @@ class GetExistingWeatherController extends AbstractController
         return new Response($controller->readResponse(), $controller->readStatus(), $controller->readHeaders());
     }
 
-    #[Route('/api/v1/data/by-date-point', name: "get stared weather data from ID", methods: ['GET'])]
+    #[Route('/api/v1/data/by-date-point', name: "get stored weather data from date and point", methods: ['GET'])]
     public function getWeatherFromApiByDateAndPoint(Request $request): Response
     {
         $controller = $this->createDateAndPointController();

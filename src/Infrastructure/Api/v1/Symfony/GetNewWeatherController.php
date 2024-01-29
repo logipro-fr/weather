@@ -21,14 +21,13 @@ class GetNewWeatherController extends AbstractController
 {
     private const DATE_FORMAT = "Y-m-d H:i:s.u";
 
-    protected WeatherApiInterface $api;
-
-    public function __construct(protected WeatherInfoRepositoryInterface $repository)
-    {
-        $this->api = new FakeWeatherApi(); // TODO default to actual API
+    public function __construct(
+        protected WeatherInfoRepositoryInterface $repository,
+        protected WeatherApiInterface $api = new FakeWeatherApi()
+    ) {
     }
 
-    #[Route('/api/v1/weather', name: "get new weather", methods: ['GET'])]
+    #[Route('/api/v1/fetch', name: "get new weather", methods: ['GET'])]
     public function getWeatherFromApi(Request $request): Response
     {
         $controller = $this->createController();

@@ -2,7 +2,9 @@
 
 namespace Weather\Domain\Model\Weather;
 
-class WeatherInfoId
+use JsonSerializable;
+
+class WeatherInfoId implements JsonSerializable
 {
     private string $id;
 
@@ -33,6 +35,11 @@ class WeatherInfoId
     }
 
     public function __toString(): string
+    {
+        return $this->getId();
+    }
+
+    public function jsonSerialize(): mixed
     {
         return $this->getId();
     }

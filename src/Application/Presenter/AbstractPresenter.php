@@ -4,20 +4,15 @@ namespace Weather\Application\Presenter;
 
 abstract class AbstractPresenter
 {
-    private int $statusCode = 200;
+    protected AbstractResponse $response;
 
     abstract public function read(): mixed;
-    abstract public function write(AbstractResponse $responce): void;
+    abstract public function write(AbstractResponse $response): void;
     /**
      * @return array<string,string>
      */
     abstract public function getHeaders(): array;
-    public function getCode(): int
-    {
-        return $this->statusCode;
-    }
-    public function writeSatusCode(int $code): void
-    {
-        $this->statusCode = $code;
+    public function getCode(): int{
+        return $this->response->getCode();
     }
 }

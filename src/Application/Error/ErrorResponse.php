@@ -7,9 +7,10 @@ use Weather\Application\Presenter\AbstractResponse;
 class ErrorResponse extends AbstractResponse
 {
     public function __construct(
-        private int $errorCode,
+        int $errorCode,
         private string $message
     ) {
+        $this->statusCode = $errorCode;
     }
 
     /**
@@ -17,6 +18,6 @@ class ErrorResponse extends AbstractResponse
      */
     public function getData(): array
     {
-        return ["code" => $this->errorCode, "message" => $this->message];
+        return ["code" => $this->statusCode, "message" => $this->message];
     }
 }

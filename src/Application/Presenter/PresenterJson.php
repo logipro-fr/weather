@@ -6,8 +6,6 @@ use function Safe\json_encode;
 
 class PresenterJson extends AbstractPresenter
 {
-    private AbstractResponse $response;
-
     public function read(): string
     {
         return json_encode($this->response, JSON_UNESCAPED_UNICODE);

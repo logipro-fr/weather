@@ -6,6 +6,7 @@ use Safe\DateTimeImmutable;
 use Weather\APIs\WeatherApiInterface;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
+use Weather\Domain\Model\Weather\WeatherInfoId;
 
 use function Safe\json_encode;
 
@@ -21,6 +22,7 @@ class FakeWeatherApi implements WeatherApiInterface
      */
     private array $lastMultipleReturn;
     private WeatherInfo $lastReturn;
+    private int $count = 0;
 
     private function getFromSingularPoint(Point $point, DateTimeImmutable $date): WeatherInfo
     {
@@ -36,7 +38,8 @@ class FakeWeatherApi implements WeatherApiInterface
 
         $jsonData = json_encode($data);
 
-        $res = new WeatherInfo($point, $date, $jsonData);
+        $res = new WeatherInfo($point, $date, $jsonData, false, new WeatherInfoId("fake_" . $this->count++));
+
         $this->lastReturn = $res;
         return $res;
     }

@@ -63,6 +63,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $this->expectException(WeatherInfoNotFoundException::class);
         $id = new WeatherInfoId();
         $this->expectExceptionMessage("Object WeatherInfo of ID \"" . $id . "\" not found");
+        $this->expectExceptionCode(404);
 
         $this->repository->findById($id);
     }
@@ -81,6 +82,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $this->repository->save($infod);
 
         $this->expectException(WeatherInfoNotFoundException::class);
+        $this->expectExceptionCode(404);
         $this->repository->findById(new WeatherInfoId());
     }
 
@@ -131,6 +133,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $this->expectExceptionMessage("WeatherInfo of point \"" .
         $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
+        $this->expectExceptionCode(404);
 
         $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
         $this->repository->save($info);
@@ -177,6 +180,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $this->expectExceptionMessage("WeatherInfo of point \"" .
         $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
+        $this->expectExceptionCode(404);
 
         $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
         $this->repository->save($info);
@@ -193,6 +197,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $this->expectExceptionMessage("Historical WeatherInfo of point \"" .
         $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
+        $this->expectExceptionCode(404);
 
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $this->repository->save($info);
@@ -212,6 +217,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $this->repository->save($info);
+        $this->expectExceptionCode(404);
 
         $this->repository->findByDateAndPoint($point, $date, true);
     }

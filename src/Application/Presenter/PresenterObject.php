@@ -4,8 +4,6 @@ namespace Weather\Application\Presenter;
 
 class PresenterObject extends AbstractPresenter
 {
-    private AbstractResponse $response;
-
     public function read(): AbstractResponse
     {
         return $this->response;

@@ -33,7 +33,6 @@ class Controller
             $e->getMessage()
         );
         $this->getPresenter()->write($badResponse);
-        $this->getPresenter()->writeSatusCode($e->getCode());
     }
 
     private function getPresenter(): AbstractPresenter
@@ -48,7 +47,11 @@ class Controller
 
     public function readStatus(): int
     {
-        return $this->getPresenter()->getCode();
+        $code = $this->getPresenter()->getCode();
+        if($code < 100 || $code > 599){
+            return 500;
+        }
+        return $code;
     }
 
     /**

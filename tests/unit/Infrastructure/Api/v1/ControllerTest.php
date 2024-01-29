@@ -2,9 +2,11 @@
 
 namespace Weather\Tests\Infrastructure\Api\v1;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Weather\Application\Error\ErrorResponse;
 use Weather\Application\Presenter\PresenterJson;
+use Weather\Application\Presenter\PresenterObject;
 use Weather\Application\Presenter\RequestInterface;
 use Weather\Application\ServiceInterface;
 use Weather\Domain\Model\Exceptions\BaseException;
@@ -33,5 +35,53 @@ class ControllerTest extends TestCase
             "the server refuses to brew coffee because it is, permanently, a teapot."
         );
         assertEquals(json_encode($target), $controller->readResponse());
+    }
+
+    public function testReadStatus1(){
+        $service = $this->createMock(ServiceInterface::class);
+        $service->method("execute")->willThrowException(new Exception("message",99));
+        $presenter = new PresenterObject;
+        $service->method("getPresenter")->willReturn($presenter);
+
+        $controller = new Controller($service);
+        $controller->execute($this->createMock(RequestInterface::class));
+
+        $this->assertEquals(500, $controller->readStatus());
+    }
+
+    public function testReadStatus2(){
+        $service = $this->createMock(ServiceInterface::class);
+        $service->method("execute")->willThrowException(new Exception("message",600));
+        $presenter = new PresenterObject;
+        $service->method("getPresenter")->willReturn($presenter);
+
+        $controller = new Controller($service);
+        $controller->execute($this->createMock(RequestInterface::class));
+
+        $this->assertEquals(500, $controller->readStatus());
+    }
+
+    public function testReadStatus3(){
+        $service = $this->createMock(ServiceInterface::class);
+        $service->method("execute")->willThrowException(new Exception("message",100));
+        $presenter = new PresenterObject;
+        $service->method("getPresenter")->willReturn($presenter);
+
+        $controller = new Controller($service);
+        $controller->execute($this->createMock(RequestInterface::class));
+
+        $this->assertEquals(100, $controller->readStatus());
+    }
+
+    public function testReadStatus4(){
+        $service = $this->createMock(ServiceInterface::class);
+        $service->method("execute")->willThrowException(new Exception("message", 599));
+        $presenter = new PresenterObject;
+        $service->method("getPresenter")->willReturn($presenter);
+
+        $controller = new Controller($service);
+        $controller->execute($this->createMock(RequestInterface::class));
+
+        $this->assertEquals(599, $controller->readStatus());
     }
 }
