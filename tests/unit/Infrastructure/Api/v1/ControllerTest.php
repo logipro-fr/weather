@@ -53,7 +53,7 @@ class ControllerTest extends TestCase
     public function testReadStatus2(): void
     {
         $service = $this->createMock(ServiceInterface::class);
-        $service->method("execute")->willThrowException(new Exception("message", 600));
+        $service->method("execute")->willThrowException(new Exception("message", 700));
         $presenter = new PresenterObject();
         $service->method("getPresenter")->willReturn($presenter);
 
@@ -79,13 +79,13 @@ class ControllerTest extends TestCase
     public function testReadStatus4(): void
     {
         $service = $this->createMock(ServiceInterface::class);
-        $service->method("execute")->willThrowException(new Exception("message", 599));
+        $service->method("execute")->willThrowException(new Exception("message", 699));
         $presenter = new PresenterObject();
         $service->method("getPresenter")->willReturn($presenter);
 
         $controller = new Controller($service);
         $controller->execute($this->createMock(RequestInterface::class));
 
-        $this->assertEquals(599, $controller->readStatus());
+        $this->assertEquals(699, $controller->readStatus());
     }
 }

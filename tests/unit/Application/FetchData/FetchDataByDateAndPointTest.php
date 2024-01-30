@@ -2,6 +2,7 @@
 
 namespace Weather\Tests\Application\FetchData;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPointRequest;
@@ -20,7 +21,11 @@ class FetchDataByDateAndPointTest extends TestCase
     public function setUp(): void
     {
         $this->repository = new WeatherInfoRepositoryInMemory();
-        $date = DateTimeImmutable::createFromFormat("Y-m-d i", "2024-01-01 01");
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d i",
+            "2024-01-01 01",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $this->info = new WeatherInfo(new Point(41.867, 2.333), $date, "{\"weather\":\"good\"}");
         $this->repository->save($this->info);
     }
@@ -29,7 +34,11 @@ class FetchDataByDateAndPointTest extends TestCase
     {
         $presenter = new PresenterObject();
         $service = new FetchDataByDateAndPoint($presenter, $this->repository);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d i", "2024-01-01 11");
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d i",
+            "2024-01-01 01",
+            new DateTimeZone(date_default_timezone_get())
+        );
 
         $request = new FetchDataByDateAndPointRequest(new Point(41.865, 2.335), $date);
 
@@ -42,7 +51,11 @@ class FetchDataByDateAndPointTest extends TestCase
     {
         $presenter = new PresenterObject();
         $service = new FetchDataByDateAndPoint($presenter, $this->repository);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d i", "2024-01-01 01");
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d i",
+            "2024-01-01 01",
+            new DateTimeZone(date_default_timezone_get())
+        );
 
         $request = new FetchDataByDateAndPointRequest(new Point(41.867, 2.333), $date, null, true);
 

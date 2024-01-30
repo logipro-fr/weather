@@ -7,13 +7,14 @@ use Exception;
 use Weather\Application\Error\ErrorResponse;
 use Weather\Application\Presenter\RequestInterface;
 use Weather\Application\ServiceInterface;
+use Weather\Domain\Model\Exceptions\BaseException;
 
 use function SafePHP\strval;
 
 class Controller
 {
     private const CODE_RANGE_LOW = 100;
-    private const CODE_RANGE_HIGH = 599;
+    private const CODE_RANGE_HIGH = 699;
     private const CODE_UNKNOWN_INTERNAL = 500;
 
     public function __construct(

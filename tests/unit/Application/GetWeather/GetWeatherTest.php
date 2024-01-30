@@ -2,6 +2,7 @@
 
 namespace Weather\Tests\Application\GetWeather;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Weather\APIs\WeatherApiInterface;
@@ -19,7 +20,11 @@ class GetWeatherTest extends TestCase
     {
         //setup
         $point = new Point(0, 0);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:00:00.000000");
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            "2024-01-02 12:00:00",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
 
         $api = $this->createMock(WeatherApiInterface::class);
@@ -46,13 +51,21 @@ class GetWeatherTest extends TestCase
         //setup
 
         $pointA = new Point(0, 0);
-        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:00:00.000000");
+        $dateA = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            "2024-01-02 12:00:00",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $infoA = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
 
         $requestA = new GetWeatherRequest(array($pointA), $dateA);
 
         $pointB = new Point(1, 1);
-        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 13:00:00.000000");
+        $dateB = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            "2024-01-02 13:00:00",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $infoB = new WeatherInfo($pointB, $dateB, "{\"weather\":\"great\"}");
 
         $requestB = new GetWeatherRequest(array($pointB), $dateB);

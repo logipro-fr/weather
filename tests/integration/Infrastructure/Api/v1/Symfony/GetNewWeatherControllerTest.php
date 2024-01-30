@@ -23,7 +23,7 @@ class GetNewWeatherControllerTest extends WebTestCase
     {
         $query = [
             "points" => '2.1,40.531',
-            "date" => "2024-01-01 12:30:00.000000"
+            "date" => "2024-01-01 12:30:00"
         ];
         $this->client->request("GET", '/api/v1/weather', $query);
         /** @var FakeWeatherApi $api */
@@ -46,7 +46,7 @@ class GetNewWeatherControllerTest extends WebTestCase
 
         $query = [
             "points" => '2.1,40.531;5.652,41.666',
-            "date" => "2024-01-02 12:30:10.153684"
+            "date" => "2024-01-02 12:30:10"
         ];
 
         $this->client->request("GET", '/api/v1/weather', $query);
@@ -59,12 +59,12 @@ class GetNewWeatherControllerTest extends WebTestCase
         $target = [
             new WeatherInfo(
                 new Point(2.1, 40.531),
-                DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:30:10.153684"),
+                DateTimeImmutable::createFromFormat("Y-m-d H:i:s", "2024-01-02 12:30:10"),
                 $api->getLastReturnFromMultiplePoints()[0]->getData()
             ),
             new WeatherInfo(
                 new Point(5.652, 41.666),
-                DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:30:10.153684"),
+                DateTimeImmutable::createFromFormat("Y-m-d H:i:s", "2024-01-02 12:30:10"),
                 $api->getLastReturnFromMultiplePoints()[1]->getData()
             )
         ];

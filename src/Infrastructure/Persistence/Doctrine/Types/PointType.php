@@ -41,6 +41,6 @@ class PointType extends Type
      */
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return Types::STRING;
+        return Types::TEXT;
     }
 }

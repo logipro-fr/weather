@@ -2,6 +2,7 @@
 
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
+use DateTimeZone;
 use Safe\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
@@ -82,7 +83,11 @@ class GetExistingWeatherController extends AbstractController
         /** @var bool $exact */
             $exact = false;
         }
-        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", $dateString);
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            $dateString,
+            new DateTimeZone(date_default_timezone_get())
+        );
         return new FetchDataByDateAndPointRequest($point, $date, $historicalOnly, $exact);
     }
 }

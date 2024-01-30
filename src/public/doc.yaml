@@ -21,7 +21,7 @@ paths:
           date: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
           description: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
           required: true
-          example: "2024-01-01 12:30:00.000000"
+          example: "2024-01-01 12:30:00"
           schema:
             type: string
         - in:  query
@@ -91,7 +91,7 @@ paths:
           date: date researched
           description: date for which we want to know the weather
           required: true
-          example: "2024-01-01 12:00:00.000000"
+          example: "2024-01-01 12:00:00"
           schema:
             type: string
       responses:
@@ -121,9 +121,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Hello"  
+                $ref: "#/components/schemas/Hello"  
 
 components:
   schemas:

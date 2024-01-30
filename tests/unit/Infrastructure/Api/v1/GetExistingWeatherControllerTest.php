@@ -58,7 +58,7 @@ class GetExistingWeatherControllerTest extends TestCase
 
         $query = [
             "point" => '2.142,40.531',
-            "date" => "2024-01-01 12:35:00.000000"
+            "date" => "2024-01-01 12:35:00"
         ];
 
         $request = new Request($query);
@@ -84,7 +84,7 @@ class GetExistingWeatherControllerTest extends TestCase
 
         $query = [
             "point" => '2.1,40.531',
-            "date" => "2024-01-01 12:30:00.000000",
+            "date" => "2024-01-01 12:30:00",
             "exact" => true
         ];
 
@@ -111,7 +111,7 @@ class GetExistingWeatherControllerTest extends TestCase
 
         $query = [
             "point" => '2.142,40.531',
-            "date" => "2024-01-01 12:35:00.000000"
+            "date" => "2024-01-01 12:35:00"
         ];
 
         $request = new Request($query);
@@ -137,7 +137,7 @@ class GetExistingWeatherControllerTest extends TestCase
 
         $query = [
             "point" => '2.142,40.531',
-            "date" => "2024-01-01 12:35:00.000000",
+            "date" => "2024-01-01 12:35:00",
             "exact" => true
         ];
 
@@ -151,7 +151,7 @@ class GetExistingWeatherControllerTest extends TestCase
         );
         $this->repository->save($info);
         $target = '{"code":404,"message":"WeatherInfo of point \"2.142,40.531\" ' .
-            'at date 2024-01-01 12:35:00.000000 not found"}';
+            'at date 2024-01-01 12:35:00 not found"}';
 
         $route = new GetExistingWeatherController($this->repository);
         $response = $route->getWeatherFromApiByDateAndPoint($request);
@@ -166,7 +166,7 @@ class GetExistingWeatherControllerTest extends TestCase
 
         $query = [
             "point" => '2.142,40.531',
-            "date" => "2024-01-01 12:35:00.000000",
+            "date" => "2024-01-01 12:35:00",
             "historicalOnly" => true
         ];
 
@@ -179,7 +179,7 @@ class GetExistingWeatherControllerTest extends TestCase
         );
         $this->repository->save($info);
         $target = '{"code":404,"message":"Historical WeatherInfo of point \"2.142,40.531\"' .
-            ' at date 2024-01-01 12:35:00.000000 not found"}';
+            ' at date 2024-01-01 12:35:00 not found"}';
 
         $route = new GetExistingWeatherController($this->repository);
         $response = $route->getWeatherFromApiByDateAndPoint($request);

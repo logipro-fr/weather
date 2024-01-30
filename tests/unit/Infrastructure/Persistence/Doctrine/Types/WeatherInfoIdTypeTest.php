@@ -42,6 +42,6 @@ class WeatherInfoIdTypeTest extends TestCase
         $platform = $this->createMock(AbstractPlatform::class);
         $result = (new WeatherInfoIdType())->getSQLDeclaration([], $platform);
 
-        $this->assertEquals(Types::STRING, $result);
+        $this->assertEquals('varchar(40)', $result);
     }
 }

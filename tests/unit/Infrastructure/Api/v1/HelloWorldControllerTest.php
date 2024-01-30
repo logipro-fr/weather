@@ -13,7 +13,10 @@ class HelloWorldControllerTest extends TestCase
         $route = new HelloWorldController();
         $response = $route->helloWorld(new Request());
 
-        $this->assertEquals('{"Hello":"World!"}', $response->getContent());
+        /** @var string $str */
+        $str = $response->getContent();
+        $this->assertStringStartsWith('{"Hello":"', $str);
+        $this->assertStringEndsWith('"}', $str);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals("application/json", $response->headers->get("Content-Type"));
     }

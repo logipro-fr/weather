@@ -2,6 +2,7 @@
 
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
+use DateTimeZone;
 use Safe\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
@@ -19,7 +20,7 @@ use Weather\Tests\Features\FakeWeatherApi;
 
 class GetNewWeatherController extends AbstractController
 {
-    private const DATE_FORMAT = "Y-m-d H:i:s.u";
+    private const DATE_FORMAT = "Y-m-d H:i:s";
 
     public function __construct(
         protected WeatherInfoRepositoryInterface $repository,
@@ -48,7 +49,11 @@ class GetNewWeatherController extends AbstractController
         $points = $this->extractPoints($pointString);
         /** @var string $dateString */
         $dateString = $query->get("date");
-        $date = DateTimeImmutable::createFromFormat(self::DATE_FORMAT, $dateString);
+        $date = DateTimeImmutable::createFromFormat(
+            self::DATE_FORMAT,
+            $dateString,
+            new DateTimeZone(date_default_timezone_get())
+        );
         return new GetWeatherRequest($points, $date);
     }
 

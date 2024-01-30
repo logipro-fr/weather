@@ -29,7 +29,7 @@ class GetNewWeatherControllerTest extends TestCase
 
         $query = [
             "points" => '2.1,40.531',
-            "date" => "2024-01-01 12:30:00.000000"
+            "date" => "2024-01-01 12:30:00"
         ];
 
         $request = new Request($query);
@@ -41,7 +41,7 @@ class GetNewWeatherControllerTest extends TestCase
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             $api->getLastReturnFromPoint()->getData(),
             false,
-            new WeatherInfoId("fake_0")
+            $api->getLastReturnFromPoint()->getId()
         )
         ];
         $this->assertEquals(json_encode($target), $response->getContent());
@@ -56,7 +56,7 @@ class GetNewWeatherControllerTest extends TestCase
 
         $query = [
             "points" => '2.1,40.531;5.652,41.666',
-            "date" => "2024-01-02 12:30:10.153684"
+            "date" => "2024-01-02 12:30:10"
         ];
 
         $request = new Request($query);
@@ -66,17 +66,17 @@ class GetNewWeatherControllerTest extends TestCase
         $target = [
             new WeatherInfo(
                 new Point(2.1, 40.531),
-                DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:30:10.153684"),
+                DateTimeImmutable::createFromFormat("Y-m-d H:i:s", "2024-01-02 12:30:10"),
                 $api->getLastReturnFromMultiplePoints()[0]->getData(),
                 false,
-                new WeatherInfoId("fake_0")
+                $api->getLastReturnFromMultiplePoints()[0]->getId()
             ),
             new WeatherInfo(
                 new Point(5.652, 41.666),
-                DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", "2024-01-02 12:30:10.153684"),
+                DateTimeImmutable::createFromFormat("Y-m-d H:i:s", "2024-01-02 12:30:10"),
                 $api->getLastReturnFromMultiplePoints()[1]->getData(),
                 false,
-                new WeatherInfoId("fake_1")
+                $api->getLastReturnFromMultiplePoints()[1]->getId()
             )
         ];
         $this->assertEquals(json_encode($target), $response->getContent());

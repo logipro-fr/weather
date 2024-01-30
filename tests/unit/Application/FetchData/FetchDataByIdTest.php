@@ -2,6 +2,7 @@
 
 namespace Weather\Tests\Application\FetchData;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Weather\Application\FetchData\ById\FetchDataById;
@@ -20,7 +21,11 @@ class FetchDataByIdTest extends TestCase
     public function setUp(): void
     {
         $this->repository = new WeatherInfoRepositoryInMemory();
-        $date = DateTimeImmutable::createFromFormat("Y-m-d", "2024-01-01");
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d",
+            "2024-01-01",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $this->info = new WeatherInfo(new Point(41.867, 2.333), $date, "{\"weather\":\"good\"}");
         $this->repository->save($this->info);
     }
@@ -29,7 +34,11 @@ class FetchDataByIdTest extends TestCase
     {
         $presenter = new PresenterObject();
         $service = new FetchDataById($presenter, $this->repository);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d i", "2024-01-01 10");
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d i",
+            "2024-01-01 10",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $request = new FetchDataByIdRequest($this->info->getId()->__toString());
         $service->execute($request);
 
