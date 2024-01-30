@@ -11,6 +11,8 @@ default:
         - '%paths.base%/features/'
       contexts:
         - Weather\Tests\Features\CurrentWeatherContext
+        - Weather\Tests\Features\LegacyImportContext
+        - Weather\Tests\Features\FetchDataContext
 #  extensions:
 #    DVDoug\Behat\CodeCoverage\Extension:
 #      filter:

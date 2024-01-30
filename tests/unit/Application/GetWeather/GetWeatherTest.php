@@ -2,6 +2,7 @@
 
 namespace Weather\Tests\Application\GetWeather;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Weather\APIs\WeatherApiInterface;
@@ -19,7 +20,11 @@ class GetWeatherTest extends TestCase
     {
         //setup
         $point = new Point(0, 0);
-        $date = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
+        $date = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            "2024-01-02 12:00:00",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
 
         $api = $this->createMock(WeatherApiInterface::class);
@@ -37,7 +42,7 @@ class GetWeatherTest extends TestCase
 
         //tests
         $this->assertInstanceOf(GetWeatherResponse::class, $response);
-        $this->assertEquals("[" . $info->getData() . "]", $response->getData());
+        $this->assertEquals([$info], $response->getData());
         $this->assertEquals($info, $repository->findById($info->getId()));
     }
 
@@ -46,13 +51,21 @@ class GetWeatherTest extends TestCase
         //setup
 
         $pointA = new Point(0, 0);
-        $dateA = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:00");
+        $dateA = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            "2024-01-02 12:00:00",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $infoA = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
 
         $requestA = new GetWeatherRequest(array($pointA), $dateA);
 
         $pointB = new Point(1, 1);
-        $dateB = DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-02 12:00");
+        $dateB = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            "2024-01-02 13:00:00",
+            new DateTimeZone(date_default_timezone_get())
+        );
         $infoB = new WeatherInfo($pointB, $dateB, "{\"weather\":\"great\"}");
 
         $requestB = new GetWeatherRequest(array($pointB), $dateB);
@@ -74,11 +87,11 @@ class GetWeatherTest extends TestCase
 
         //tests
         $this->assertInstanceOf(GetWeatherResponse::class, $responseA);
-        $this->assertEquals("[" . $infoA->getData() . "]", $responseA->getData());
+        $this->assertEquals([$infoA], $responseA->getData());
         $this->assertEquals($infoA, $repository->findById($infoA->getId()));
 
         $this->assertInstanceOf(GetWeatherResponse::class, $responseB);
-        $this->assertEquals("[" . $infoB->getData() . "]", $responseB->getData());
+        $this->assertEquals([$infoB], $responseB->getData());
         $this->assertEquals($infoB, $repository->findById($infoB->getId()));
     }
 
@@ -104,10 +117,22 @@ class GetWeatherTest extends TestCase
 
         //tests
         $this->assertInstanceOf(GetWeatherResponse::class, $response);
-        $this->assertEquals($this->infoArrayToString($infos), $response->getData());
+        $this->assertEquals($infos, $response->getData());
         foreach ($infos as $info) {
             $this->assertEquals($info, $repository->findById($info->getId()));
         }
+    }
+
+    public function testGetPresenter(): void
+    {
+
+        $api = $this->createMock(WeatherApiInterface::class);
+        $repository = new WeatherInfoRepositoryInMemory();
+        $presenter = new PresenterObject();
+
+        $service = new GetWeather($presenter, $api, $repository);
+
+        $this->assertEquals($presenter, $service->getPresenter());
     }
 
     /**
@@ -153,19 +178,5 @@ class GetWeatherTest extends TestCase
             array_push($res, $info);
         }
         return $res;
-    }
-
-    /**
-     * @param array<WeatherInfo> $infoArray
-     */
-    private function infoArrayToString(array $infoArray): string
-    {
-        $new = array_map(['Weather\Tests\Application\GetWeather\GetWeatherTest','infoToDataCallback'], $infoArray);
-        $res = "[" . implode(",", $new) . "]";
-        return $res;
-    }
-    private function infoToDataCallback(WeatherInfo $info): string
-    {
-        return $info->getData();
     }
 }

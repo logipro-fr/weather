@@ -9,12 +9,20 @@
   <coverage/>
   <testsuites>
     <testsuite name="all">
-      <directory suffix="Test.php">tests</directory>
+      <directory suffix="Test.php">tests/unit</directory>
     </testsuite>
   </testsuites>
+  <php>
+    <env name="APP_ENV" value="test" force="true"/>
+    <env name="KERNEL_CLASS" value="Weather\Infrastructure\Shared\AppKernel"/>
+    <env name="DATABASE_URL" value="sqlite:///var/sqlite-unit-test.db"/>
+  </php>
   <source>
     <include>
       <directory suffix=".php">src</directory>
     </include>
+    <exclude>
+      <directory suffix=".php">src/public</directory>
+    </exclude>
   </source>
 </phpunit>

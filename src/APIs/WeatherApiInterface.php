@@ -13,4 +13,6 @@ interface WeatherApiInterface
      * @return array<WeatherInfo>
      */
     public function getFromPoints(array $points, DateTimeImmutable $date): array;
+
+    public function getName(): string;
 }

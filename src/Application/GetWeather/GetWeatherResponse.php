@@ -2,16 +2,25 @@
 
 namespace Weather\Application\GetWeather;
 
-use Weather\Application\Presenter\ResponseInterface;
+use Weather\Application\Presenter\AbstractResponse;
+use Weather\Domain\Model\Weather\WeatherInfo;
 
-class GetWeatherResponse implements ResponseInterface
+class GetWeatherResponse extends AbstractResponse
 {
-    public function __construct(private readonly string $jsonWeather)
+    /** @param array<WeatherInfo> $weatherInfos */
+    public function __construct(private readonly array $weatherInfos)
     {
     }
 
-    public function getData(): string
+    /** @return array<WeatherInfo> */
+    public function getData(): array
     {
-        return $this->jsonWeather;
+        return $this->weatherInfos;
+    }
+
+    /** @return array<WeatherInfo> */
+    public function jsonSerialize(): array
+    {
+        return $this->weatherInfos;
     }
 }

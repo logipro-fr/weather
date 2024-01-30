@@ -23,6 +23,11 @@ class Point
         return $this->longitude;
     }
 
+    public function equals(Point $other): bool
+    {
+        return $this->getLatitude() == $other->getLatitude() &&
+            $this->getLongitude() == $other->getLongitude();
+    }
     public function __toString()
     {
         return strval($this->getLatitude()) . Point::DELIMITER . strval($this->getLongitude());
