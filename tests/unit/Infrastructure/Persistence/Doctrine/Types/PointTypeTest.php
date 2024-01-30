@@ -43,6 +43,6 @@ class PointTypeTest extends TestCase
         $platform = $this->createMock(AbstractPlatform::class);
         $result = (new PointType())->getSQLDeclaration([], $platform);
 
-        $this->assertEquals(Types::STRING, $result);
+        $this->assertEquals(Types::TEXT, $result);
     }
 }

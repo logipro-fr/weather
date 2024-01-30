@@ -38,6 +38,6 @@ class WeatherInfoIdType extends Type
      */
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return Types::STRING;
+        return 'varchar(40)';
     }
 }

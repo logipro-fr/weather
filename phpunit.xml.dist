@@ -9,7 +9,7 @@
   <coverage/>
   <testsuites>
     <testsuite name="all">
-      <directory suffix="Test.php">tests</directory>
+      <directory suffix="Test.php">tests/unit</directory>
     </testsuite>
   </testsuites>
   <php>
@@ -21,5 +21,8 @@
     <include>
       <directory suffix=".php">src</directory>
     </include>
+    <exclude>
+      <directory suffix=".php">src/public</directory>
+    </exclude>
   </source>
 </phpunit>

@@ -34,6 +34,8 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
     {
         $manager = $this->getEntityManager();
         $manager->persist($info);
+        /** @infection-ignore-all */
+        $manager->flush(); 
     }
 
     /**
@@ -45,7 +47,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         if ($info != null) {
             return $info;
         }
-        throw new WeatherInfoNotFoundException("Object WeatherInfo of ID \"" . $id . "\" not found");
+        throw new WeatherInfoNotFoundException("Object WeatherInfo of ID \"" . $id . "\" not found", 404);
     }
 
     /**
@@ -60,7 +62,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         $conditionA = $qb->expr()
             ->eq("w.point", "'" . $point->__toString() . "'");
         $conditionB = $qb->expr()
-            ->eq("w.date", $date->format("'Y-m-d H:i:s.u'"));
+            ->eq("w.date", $date->format("'Y-m-d H:i:s'"));
         if ($historical != null) {
             $conditionC = $qb->expr()
             ->eq("w.isHistorical", $historical);
@@ -75,7 +77,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         $result = $info->getQuery()->getResult();
         if ($result == null) {
             throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
-                $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
+                $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found", 404);
         }
         return $result[0];
     }
@@ -122,6 +124,6 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
             }
         }
         throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
-            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
+            $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found", 404);
     }
 }

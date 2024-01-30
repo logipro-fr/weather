@@ -3,7 +3,9 @@
 namespace Weather\Application\ImportLegacy;
 
 use Safe\DateTimeImmutable;
-use Weather\Application\Presenter\PresenterInterface;
+use Weather\Application\Presenter\AbstractPresenter;
+use Weather\Application\Presenter\RequestInterface;
+use Weather\Application\ServiceInterface;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
@@ -12,15 +14,18 @@ use Weather\Infrastructure\Shared\FileSystemUtils;
 use function Safe\file_get_contents;
 use function Safe\json_decode;
 
-class ImportLegacy
+class ImportLegacy implements ServiceInterface
 {
     public function __construct(
-        private readonly PresenterInterface $presenter,
+        private readonly AbstractPresenter $presenter,
         private readonly WeatherInfoRepositoryInterface $repository
     ) {
     }
 
-    public function execute(ImportLegacyRequest $request): void
+    /**
+     * @param ImportLegacyRequest $request
+     */
+    public function execute(RequestInterface $request): void
     {
         $totalEntries = 0;
         if (is_dir($request->getPath())) {
@@ -49,9 +54,9 @@ class ImportLegacy
 
         foreach ($weatherDataPoints as $coordinatesString => $data) {
             $coordinates = explode(",", $coordinatesString);
-            $lattitude = floatval($coordinates[0]);
+            $latitude = floatval($coordinates[0]);
             $longitude = floatval($coordinates[1]);
-            $point = new Point($lattitude, $longitude);
+            $point = new Point($latitude, $longitude);
 
             /**
              * @var \stdClass $jsonData
@@ -63,5 +68,10 @@ class ImportLegacy
             $this->repository->save(new WeatherInfo($point, $date, $data, false));
         }
         return sizeof($weatherDataPoints);
+    }
+
+    public function getPresenter(): AbstractPresenter
+    {
+        return $this->presenter;
     }
 }

@@ -18,7 +18,12 @@
         "php": ">=8.3",
         "phariscope/safephp": "^1.0",
         "phariscope/event-store-doctrine": "^1.0",
-        "phariscope/doctrine-testing-tools": "^1.1"
+        "phariscope/doctrine-testing-tools": "^1.1",
+        "symfony/console": "^7.0",
+        "symfony/http-foundation": "^7.0",
+        "symfony/orm-pack": "^2.4",
+        "symfony/dotenv": "^7.0",
+        "symfony/browser-kit": "^7.0"
     },
     "require-dev": {
         "infection/extension-installer": "0.1.2",
@@ -38,7 +43,8 @@
     "autoload-dev": {
         "psr-4" : {
             "Weather\\Tests\\" : "tests/unit/",
-            "Weather\\Tests\\Features\\" : "tests/Features/"
+            "Weather\\Tests\\Features\\" : "tests/Features/",
+            "Weather\\Integration\\" : "tests/integration/"
         }
     },
     "config": {

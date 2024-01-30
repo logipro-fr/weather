@@ -4,8 +4,9 @@ namespace Weather\Application\GetWeather;
 
 use Weather\Domain\Model\Weather\Point;
 use Safe\DateTimeImmutable;
+use Weather\Application\Presenter\RequestInterface;
 
-class GetWeatherRequest
+class GetWeatherRequest implements RequestInterface
 {
     /**
      * @param array<Point> $requestedPoints

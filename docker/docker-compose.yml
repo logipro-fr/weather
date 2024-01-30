@@ -61,6 +61,21 @@ services:
     networks:
       - weather-network
 
+  weather-swagger-ui:
+    image: swaggerapi/swagger-ui:v5.10.3
+    container_name: "weather-swagger-ui"
+    restart: always
+    environment:
+      PORT_IPV6: 8080
+      SUPPORTED_SUBMIT_METHODS: "['get', 'post', 'put', 'delete', 'patch']"
+      URLS: "[ \
+        { url: 'http://127.0.0.1:10280/doc.php', name: 'weather localhost' }, \
+        ]"
+    ports:
+      - "127.0.0.1:10202:8080"
+    networks:
+      - weather-network
+
 networks:
   weather-network:
     driver: bridge

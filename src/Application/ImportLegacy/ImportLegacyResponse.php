@@ -2,11 +2,9 @@
 
 namespace Weather\Application\ImportLegacy;
 
-use Weather\Application\Presenter\ResponseInterface;
+use Weather\Application\Presenter\AbstractResponse;
 
-use function Safe\json_encode;
-
-class ImportLegacyResponse implements ResponseInterface
+class ImportLegacyResponse extends AbstractResponse
 {
     public function __construct(private readonly int $amoutSaved)
     {
@@ -17,6 +15,6 @@ class ImportLegacyResponse implements ResponseInterface
         $array = [
             "size" => $this->amoutSaved
         ];
-        return json_encode($array);
+        return $array;
     }
 }

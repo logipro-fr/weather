@@ -2,10 +2,12 @@
 
 namespace Weather\Infrastructure\Persistence\Doctrine\Types;
 
+use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
+use Exception;
 use Safe\DateTimeImmutable;
 
 class SafeDateTimeImmutableType extends Type
@@ -21,7 +23,7 @@ class SafeDateTimeImmutableType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        return $value->format("Y-m-d H:i:s.u");
+        return $value->format($platform->getDateTimeFormatString());
     }
 
     /**
@@ -30,7 +32,11 @@ class SafeDateTimeImmutableType extends Type
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): DateTimeImmutable
     {
-        return new DateTimeImmutable($value);
+        return DateTimeImmutable::createFromFormat(
+            $platform->getDateTimeFormatString(),
+            $value,
+            new DateTimeZone(date_default_timezone_get())
+        );
     }
 
     /**
@@ -38,6 +44,6 @@ class SafeDateTimeImmutableType extends Type
      */
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return Types::DATETIME_IMMUTABLE;
+        return Types::DATETIME_MUTABLE;
     }
 }

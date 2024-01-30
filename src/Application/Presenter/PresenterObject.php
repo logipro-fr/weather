@@ -2,17 +2,20 @@
 
 namespace Weather\Application\Presenter;
 
-class PresenterObject implements PresenterInterface
+class PresenterObject extends AbstractPresenter
 {
-    private ResponseInterface $response;
-
-    public function read(): ResponseInterface
+    public function read(): AbstractResponse
     {
         return $this->response;
     }
 
-    public function write(ResponseInterface $response): void
+    public function write(AbstractResponse $response): void
     {
         $this->response = $response;
+    }
+
+    public function getHeaders(): array
+    {
+        return ["Content-Type" => "text/plain"];
     }
 }

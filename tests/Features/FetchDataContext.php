@@ -3,9 +3,7 @@
 namespace Weather\Tests\Features;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
+use DateTimeZone;
 use PHPUnit\Framework\Assert;
 use Safe\DateTimeImmutable;
 use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPoint;
@@ -92,7 +90,11 @@ class FetchDataContext implements Context
     {
         $coords = explode(",", $arg1);
         $this->in["point"] = new Point(floatval($coords[0]), floatval($coords[1]));
-        $this->in["date"] = DateTimeImmutable::createFromFormat("Y-m-d H:i:s.u", $arg2);
+        $this->in["date"] = DateTimeImmutable::createFromFormat(
+            "Y-m-d H:i:s",
+            $arg2,
+            new DateTimeZone(date_default_timezone_get())
+        );
 
         $this->repository->save(new WeatherInfo($this->in["point"], $this->in["date"], "{}"));
     }

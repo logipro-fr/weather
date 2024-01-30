@@ -3,18 +3,23 @@
 namespace Weather\Application\FetchData\ByDateAndPoint;
 
 use Weather\Application\FetchData\FetchDataResponse;
-use Weather\Application\Presenter\PresenterInterface;
+use Weather\Application\Presenter\AbstractPresenter;
+use Weather\Application\Presenter\RequestInterface;
+use Weather\Application\ServiceInterface;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 
-class FetchDataByDateAndPoint
+class FetchDataByDateAndPoint implements ServiceInterface
 {
     public function __construct(
-        private PresenterInterface $presenter,
+        private AbstractPresenter $presenter,
         private WeatherInfoRepositoryInterface $repository
     ) {
     }
 
-    public function execute(FetchDataByDateAndPointRequest $request): void
+    /**
+     * @param FetchDataByDateAndPointRequest $request
+     */
+    public function execute(RequestInterface $request): void
     {
         if ($request->isExact()) {
             $res = $this->repository->findByDateAndPoint(
@@ -31,5 +36,10 @@ class FetchDataByDateAndPoint
         }
         $response = new FetchDataResponse($res);
         $this->presenter->write($response);
+    }
+
+    public function getPresenter(): AbstractPresenter
+    {
+        return $this->presenter;
     }
 }

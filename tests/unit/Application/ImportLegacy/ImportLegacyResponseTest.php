@@ -15,6 +15,8 @@ class ImportLegacyResponseTest extends TestCase
             "size" => 25
         ];
         $response = new ImportLegacyResponse(25);
-        $this->assertEquals(json_encode($expectedArray), $response->getData());
+        $this->assertEquals($expectedArray, $response->getData());
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals(json_encode($expectedArray), json_encode($response));
     }
 }
