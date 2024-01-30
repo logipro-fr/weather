@@ -43,10 +43,9 @@ class PointTest extends TestCase
         $this->assertFalse($pointD->equals($pointA));
     }
 
-    public function testToString(): void
-    {
-        $point = new Point(1.5, 2.5);
+    public function testToString():void{
+        $point= new Point(12.5,35.486);
 
-        $this->assertEquals("1.5,2.5", $point->__toString());
+        $this->assertEquals("12.5,35.486", $point->__toString());
     }
 }
