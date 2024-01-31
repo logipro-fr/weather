@@ -5,7 +5,7 @@ namespace Weather\Tests\Application\GetWeather;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
-use Weather\APIs\WeatherApiInterface;
+use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\GetWeather\GetWeatherResponse;

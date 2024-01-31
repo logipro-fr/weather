@@ -2,7 +2,7 @@
 
 namespace Weather\Application\GetWeather;
 
-use Weather\APIs\WeatherApiInterface;
+use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Application\Presenter\AbstractPresenter;
 use Weather\Application\Presenter\RequestInterface;
 use Weather\Application\ServiceInterface;

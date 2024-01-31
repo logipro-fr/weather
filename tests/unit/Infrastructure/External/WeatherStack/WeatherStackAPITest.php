@@ -1,12 +1,12 @@
 <?php
 
-namespace Weather\Test\APIs;
+namespace Weather\Test\Infrastructure\External\WeatherStack;
 
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Symfony\Component\HttpClient\HttpClient;
-use Weather\APIs\WeatherStack\WeatherStackAPI;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Infrastructure\External\WeatherStack\WeatherStackAPI;
 
 class WeatherStackAPITest extends TestCase
 {

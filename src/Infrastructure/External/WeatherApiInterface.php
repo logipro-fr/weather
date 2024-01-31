@@ -1,6 +1,6 @@
 <?php
 
-namespace Weather\APIs;
+namespace Weather\Infrastructure\External;
 
 use Safe\DateTimeImmutable;
 use Weather\Domain\Model\Weather\Point;
