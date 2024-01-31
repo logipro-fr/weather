@@ -1,0 +1,84 @@
+[
+    {
+      "request": {
+        "type": "LatLon",
+        "query": "Lat 48.87 and Lon 2.32",
+        "language": "en",
+        "unit": "m"
+      },
+      "location": {
+        "name": "Neuilly-Sur-Seine",
+        "country": "France",
+        "region": "Ile-de-France",
+        "lat": "48.883",
+        "lon": "2.267",
+        "timezone_id": "Europe/Paris",
+        "localtime": "2023-06-21 16:14",
+        "localtime_epoch": 1687364040,
+        "utc_offset": "2.0"
+      },
+      "current": {
+        "observation_time": "02:14 PM",
+        "temperature": 27,
+        "weather_code": 113,
+        "weather_icons": [
+          "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
+        ],
+        "weather_descriptions": [
+          "Sunny"
+        ],
+        "wind_speed": 4,
+        "wind_degree": 309,
+        "wind_dir": "NW",
+        "pressure": 1018,
+        "precip": 0,
+        "humidity": 48,
+        "cloudcover": 0,
+        "feelslike": 27,
+        "uv_index": 7,
+        "visibility": 10,
+        "is_day": "yes"
+      }
+    },
+    {
+      "request": {
+        "type": "LatLon",
+        "query": "Lat 48.86 and Lon 2.31",
+        "language": "en",
+        "unit": "m"
+      },
+      "location": {
+        "name": "Neuilly-Sur-Seine",
+        "country": "France",
+        "region": "Ile-de-France",
+        "lat": "48.883",
+        "lon": "2.267",
+        "timezone_id": "Europe/Paris",
+        "localtime": "2023-06-21 16:14",
+        "localtime_epoch": 1687364040,
+        "utc_offset": "2.0"
+      },
+      "current": {
+        "observation_time": "02:14 PM",
+        "temperature": 27,
+        "weather_code": 113,
+        "weather_icons": [
+          "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
+        ],
+        "weather_descriptions": [
+          "Sunny"
+        ],
+        "wind_speed": 4,
+        "wind_degree": 309,
+        "wind_dir": "NW",
+        "pressure": 1018,
+        "precip": 0,
+        "humidity": 48,
+        "cloudcover": 0,
+        "feelslike": 27,
+        "uv_index": 7,
+        "visibility": 10,
+        "is_day": "yes"
+      }
+    }
+]
