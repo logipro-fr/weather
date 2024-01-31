@@ -67,7 +67,7 @@ class ImportLegacy implements ServiceInterface
 
             $this->repository->save(new WeatherInfo($point, $date, $data, false));
         }
-        return sizeof($weatherDataPoints);
+        return count($weatherDataPoints);
     }
 
     public function getPresenter(): AbstractPresenter

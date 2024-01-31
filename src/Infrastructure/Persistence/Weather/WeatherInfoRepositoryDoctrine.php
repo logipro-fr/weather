@@ -35,7 +35,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         $manager = $this->getEntityManager();
         $manager->persist($info);
         /** @infection-ignore-all */
-        $manager->flush(); 
+        $manager->flush();
     }
 
     /**

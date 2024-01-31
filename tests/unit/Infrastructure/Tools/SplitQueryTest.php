@@ -28,7 +28,7 @@ class SplitQueryTest extends TestCase
         $this->assertEquals(1, count($splited));
         $this->assertEquals("1.23,13.34;2.45,22.12;3.23,33.12", $splited[0]);
     }
-    
+
     public function testQuerySplitedBecauseTooLong(): void
     {
         $query = "1.2345,123.1234;2.2345,222.1234;3.2345,333.1234";

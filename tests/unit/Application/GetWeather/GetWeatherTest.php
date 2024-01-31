@@ -171,10 +171,10 @@ class GetWeatherTest extends TestCase
     private function infoFactory(array $points, array $dates): array
     {
         $res = [];
-        foreach (range(0, sizeof($points) - 1) as $i) {
-            $weatherType = $this::POSSIBLE_WEATHERS[$i % sizeof($this::POSSIBLE_WEATHERS)];
+        foreach (range(0, count($points) - 1) as $i) {
+            $weatherType = $this::POSSIBLE_WEATHERS[$i % count($this::POSSIBLE_WEATHERS)];
             $weatherString = "{\"weather\":\"" . $weatherType . "\"}";
-            $info = new WeatherInfo($points[$i], $dates[$i % sizeof($dates)], $weatherString);
+            $info = new WeatherInfo($points[$i], $dates[$i % count($dates)], $weatherString);
             array_push($res, $info);
         }
         return $res;

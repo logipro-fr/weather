@@ -24,7 +24,7 @@ class GetNewWeatherController extends AbstractController
 
     public function __construct(
         protected WeatherInfoRepositoryInterface $repository,
-        protected WeatherApiInterface $api = new FakeWeatherApi()
+        protected WeatherApiInterface $api
     ) {
     }
 

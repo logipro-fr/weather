@@ -27,13 +27,13 @@ class FakeWeatherApi implements WeatherApiInterface
     private function getFromSingularPoint(Point $point, DateTimeImmutable $date): WeatherInfo
     {
         $data = ["Forecast" =>
-            self::POSSIBLE_WEATHER_SKY[rand(0, sizeof(FakeWeatherApi::POSSIBLE_WEATHER_SKY) - 1)],
+            self::POSSIBLE_WEATHER_SKY[rand(0, count(FakeWeatherApi::POSSIBLE_WEATHER_SKY) - 1)],
         "Temperature" =>
         self::POSSIBLE_WEATHER_TEMPERATURE[
-            rand(0, sizeof(self::POSSIBLE_WEATHER_TEMPERATURE) - 1)],
+            rand(0, count(self::POSSIBLE_WEATHER_TEMPERATURE) - 1)],
         "Humidity" =>
         self::POSSIBLE_WEATHER_HUMIITY[
-            rand(0, sizeof(self::POSSIBLE_WEATHER_HUMIITY) - 1)]
+            rand(0, count(self::POSSIBLE_WEATHER_HUMIITY) - 1)]
         ];
 
         $jsonData = json_encode($data);
