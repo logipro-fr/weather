@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Weather\APIs\WeatherApiInterface;
+use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterJson;

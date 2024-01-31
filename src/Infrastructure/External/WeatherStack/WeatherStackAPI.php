@@ -1,14 +1,15 @@
 <?php
 
-namespace Weather\APIs\WeatherStack;
+namespace Weather\Infrastructure\External\WeatherStack;
 
 use Safe\DateTimeImmutable;
-use Weather\APIs\WeatherApiInterface;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Weather\Infrastructure\External\WeatherApiInterface;
 
 class WeatherStackAPI implements WeatherApiInterface{
+    private const NAME = "WeatherStack";
 
     /**
      * @param array<Point> $points
@@ -24,5 +25,16 @@ class WeatherStackAPI implements WeatherApiInterface{
         $response = HttpClient::create()->request("GET", $url, []);
         print($response->getContent());
         return [];
+    }
+    
+    public function getName(): string{
+        return self::NAME;
+    }
+
+    public static function create(
+        ?string $weatherStackApiKey = null,
+        HttpClientInterface $httpClient = null
+    ): WeatherApiInterface{
+        return new WeatherStackAPI();
     }
 }

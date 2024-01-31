@@ -5,7 +5,7 @@ namespace Weather\Integration\Infrastructure\Api\v1\Symfony;
 use Safe\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Weather\APIs\WeatherApiInterface;
+use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Tests\Features\FakeWeatherApi;

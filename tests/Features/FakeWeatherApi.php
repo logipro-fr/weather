@@ -3,10 +3,11 @@
 namespace Weather\Tests\Features;
 
 use Safe\DateTimeImmutable;
-use Weather\APIs\WeatherApiInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoId;
+use Weather\Infrastructure\External\WeatherApiInterface;
 
 use function Safe\json_encode;
 
@@ -73,5 +74,12 @@ class FakeWeatherApi implements WeatherApiInterface
     public function getName(): string
     {
         return self::NAME;
+    }
+
+    public static function create(
+        ?string $weatherStackApiKey = null,
+        HttpClientInterface $httpClient = null
+    ): WeatherApiInterface {
+        return new FakeWeatherApi();
     }
 }
