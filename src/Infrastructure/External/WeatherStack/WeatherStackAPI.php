@@ -2,10 +2,15 @@
 
 namespace Weather\Infrastructure\External\WeatherStack;
 
+use Exception;
 use Safe\DateTimeImmutable;
+use stdClass;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Weather\Domain\Model\Exceptions\ApiException;
+use Weather\Domain\Model\Exceptions\BaseException;
+use Weather\Domain\Model\Exceptions\WeatherInfoNotFoundException;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Infrastructure\Tools\SplitQuery;
@@ -19,8 +24,22 @@ class WeatherStackAPI implements WeatherApiInterface
     private const CURRENT_BACK_MARGIN = 900;
     private const DATE_FORMAT = "Y-m-d H:i";
 
-    private function __construct(private string $weatherStackApiKey, private HttpClientInterface $httpClient)
-    {
+    private string $weatherStackApiKey;
+    private HttpClientInterface $httpClient;
+
+    public function __construct(
+        ?string $weatherStackApiKey = null,
+        ?HttpClientInterface $httpClient = null
+    ) {
+        $this->weatherStackApiKey = strval(
+            $weatherStackApiKey == null ?
+            getenv('WEATHERSTACK_API') : $weatherStackApiKey
+        );
+        if ($httpClient === null) {
+            $this->httpClient = HttpClient::create();
+        } else {
+            $this->httpClient = $httpClient;
+        }
     }
 
     /**
@@ -58,7 +77,7 @@ class WeatherStackAPI implements WeatherApiInterface
             unset($data->point);
             $newInfo = new WeatherInfo(
                 $point,
-                DateTimeImmutable::createFromFormat("Y-m-d H:i", $data->location->localtime),
+                new DateTimeImmutable(), //DateTimeImmutable::createFromFormat("Y-m-d H:i", $data->location->localtime),
                 json_encode($data),
                 $historical
             );
@@ -70,19 +89,46 @@ class WeatherStackAPI implements WeatherApiInterface
     private function currentQuery(string $query): string
     {
         $url = "https://api.weatherstack.com/current?access_key=$this->weatherStackApiKey&query=$query&units=m";
-        $options = [];
 
-        return $this->httpClient->request('GET', $url, $options)->getContent();
+        $options = [];
+        $response = $this->httpClient->request('GET', $url, $options)->getContent();
+
+        $resObject = json_decode($response);
+        if (isset($resObject->success) && $resObject->success == false){
+            $this->parseErrorAndThrow($resObject);
+        }
+        return $response;
     }
 
     private function historicalQuery(string $query, string $historicalDate): string
     {
+        $historicalDate = urlencode($historicalDate);
         $url = "https://api.weatherstack.com/historical?access_key=$this->weatherStackApiKey&" .
             "query=$query&units=m&historical_date=$historicalDate&hourly=1&interval=1";
-        $options = [];
 
-        return $this->httpClient->request('GET', $url, $options)->getContent();
+        $options = [];
+        $response = $this->httpClient->request('GET', $url, $options)->getContent();
+
+        $resObject = json_decode($response);
+        if (isset($resObject->success) && $resObject->success == false){
+            throw new ApiException($resObject->error->type, $resObject->error->code);
+        }
+        return $response;
     }
+
+    /**
+     * @param object{"success": bool, "error": object}
+     */
+    private function parseErrorAndThrow(stdClass $errorResponse): void{
+        switch ($errorResponse->error->type){
+            case "invalid_access_key":
+                $code = 401;
+                break;
+            default:
+                $code = $errorResponse->error->code;       
+        }
+        throw new ApiException(json_encode($errorResponse->error), $code);
+    } 
 
     /**
      * @param array<Point> $points

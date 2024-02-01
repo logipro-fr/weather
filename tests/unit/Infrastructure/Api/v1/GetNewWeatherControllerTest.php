@@ -18,7 +18,7 @@ class GetNewWeatherControllerTest extends TestCase
 {
     public function testCreate(): void
     {
-        $route = new GetNewWeatherController(new WeatherInfoRepositoryInMemory());
+        $route = new GetNewWeatherController(new WeatherInfoRepositoryInMemory(), new FakeWeatherApi());
         $this->assertInstanceOf(GetNewWeatherController::class, $route);
     }
 

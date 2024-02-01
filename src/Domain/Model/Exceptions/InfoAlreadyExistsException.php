@@ -6,4 +6,5 @@ use Exception;
 
 class InfoAlreadyExistsException extends Exception
 {
+    protected string $type = "existing_info_exception";
 }

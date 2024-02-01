@@ -150,8 +150,8 @@ class GetExistingWeatherControllerTest extends TestCase
             true
         );
         $this->repository->save($info);
-        $target = '{"code":404,"message":"WeatherInfo of point \"2.142,40.531\" ' .
-            'at date 2024-01-01 12:35:00 not found"}';
+        $target = '{"code":404,"type":"weatherinfo_not_found_exception","error":"WeatherInfo of point ' . 
+            '\"2.142,40.531\" at date 2024-01-01 12:35:00 not found"}';
 
         $route = new GetExistingWeatherController($this->repository);
         $response = $route->getWeatherFromApiByDateAndPoint($request);
@@ -178,7 +178,7 @@ class GetExistingWeatherControllerTest extends TestCase
             "{}"
         );
         $this->repository->save($info);
-        $target = '{"code":404,"message":"Historical WeatherInfo of point \"2.142,40.531\"' .
+        $target = '{"code":404,"type":"weatherinfo_not_found_exception","error":"Historical WeatherInfo of point \"2.142,40.531\"' .
             ' at date 2024-01-01 12:35:00 not found"}';
 
         $route = new GetExistingWeatherController($this->repository);
