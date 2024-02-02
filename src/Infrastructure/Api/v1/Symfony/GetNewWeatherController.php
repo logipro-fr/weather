@@ -32,6 +32,7 @@ class GetNewWeatherController extends RequestController
     }
 
     protected function createRequest(InputBag $query): GetWeatherRequest
+    protected function createRequest(InputBag $query): GetWeatherRequest
     {
         $parser = new ArgumentParser();
         if (null === $query->get(self::POINT_ARGUMENT)) {
