@@ -54,7 +54,7 @@ class RequestControllerTest extends TestCase
             new BaseException(
                 "the server refuses to brew coffee because it is, permanently, a teapot.",
                 418,
-                json_decode('{"a":"the server refuses to brew coffee",' . 
+                json_decode('{"a":"the server refuses to brew coffee",' .
                     '"b":"because it is, permanently, a teapot."}')
             )
         );

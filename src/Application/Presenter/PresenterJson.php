@@ -9,7 +9,7 @@ class PresenterJson extends ApiPresenter
     public function read(): string
     {
         return json_encode([
-            "success" => $this->getCode() >=200 && $this->getCode( )< 300,
+            "success" => $this->getCode() >= 200 && $this->getCode() < 300,
             "data" => $this->response,
             "errorCode" => $this->response->getError(),
             "message" => $this->response->getMessage()

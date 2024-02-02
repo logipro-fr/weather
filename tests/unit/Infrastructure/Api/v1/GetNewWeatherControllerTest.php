@@ -36,14 +36,14 @@ class GetNewWeatherControllerTest extends TestCase
 
         $response = $route->execute($request);
 
-        $target = ["success"=>true,"data"=>[new WeatherInfo(
+        $target = ["success" => true,"data" => [new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             $api->getLastReturnFromPoint()->getData(),
             false,
             $api->getLastReturnFromPoint()->getId()
         )
-        ],"errorCode"=>null,"message"=>null];
+        ],"errorCode" => null,"message" => null];
         $this->assertEquals(json_encode($target), $response->getContent());
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals("application/json", $response->headers->get("Content-Type"));
@@ -63,7 +63,7 @@ class GetNewWeatherControllerTest extends TestCase
 
         $response = $route->execute($request);
 
-        $target = ["success"=>true,"data"=>[
+        $target = ["success" => true,"data" => [
             new WeatherInfo(
                 new Point(2.1, 40.531),
                 DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-02 12:30"),
@@ -78,7 +78,7 @@ class GetNewWeatherControllerTest extends TestCase
                 false,
                 $api->getLastReturnFromMultiplePoints()[1]->getId()
             )
-        ],"errorCode"=>null,"message"=>null];
+        ],"errorCode" => null,"message" => null];
         $this->assertEquals(json_encode($target), $response->getContent());
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals("application/json", $response->headers->get("Content-Type"));
@@ -91,7 +91,7 @@ class GetNewWeatherControllerTest extends TestCase
             "date" => "01/02/2024 12"
         ];
 
-        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",'.
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",' .
             '"message":"date format invalid, should look like \"YYYY-MM-DD hh:mm:ss\""}';
 
         $request = new Request($query);
@@ -111,7 +111,7 @@ class GetNewWeatherControllerTest extends TestCase
             "date" => "2024-02-01 12:30"
         ];
 
-        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",' . 
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",' .
             '"message":"point format invalid, should look like \"45.043,3.883;48.867,2.333\""}';
 
         $request = new Request($query);

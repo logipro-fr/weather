@@ -36,12 +36,12 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
 
         $request = new Request($query);
 
-        $target = ["success"=>true,"data"=>new WeatherInfo(
+        $target = ["success" => true,"data" => new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true
-        ),"errorCode"=>null,"message"=>null];
+        ),"errorCode" => null,"message" => null];
         $this->repository->save($target["data"]);
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
@@ -63,12 +63,12 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
 
         $request = new Request($query);
 
-        $target = ["success"=>true,"data"=>new WeatherInfo(
+        $target = ["success" => true,"data" => new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true
-        ),"errorCode"=>null,"message"=>null];
+        ),"errorCode" => null,"message" => null];
         $this->repository->save($target["data"]);
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
@@ -89,12 +89,12 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
 
         $request = new Request($query);
 
-        $target = ["success"=>true,"data"=>new WeatherInfo(
+        $target = ["success" => true,"data" => new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true
-        ),"errorCode"=>null,"message"=>null];
+        ),"errorCode" => null,"message" => null];
         $this->repository->save($target["data"]);
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
@@ -189,7 +189,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             "date" => "2024-02-01 12:30"
         ];
 
-        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",'.
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",' .
             '"message":"point format invalid, should look like \"45.043,3.883\""}';
 
         $request = new Request($query);

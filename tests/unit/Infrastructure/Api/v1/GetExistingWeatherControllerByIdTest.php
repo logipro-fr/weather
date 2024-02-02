@@ -37,13 +37,13 @@ class GetExistingWeatherControllerByIdTest extends TestCase
 
         $request = new Request($query);
 
-        $target = ["success"=>true,"data"=>new WeatherInfo(
+        $target = ["success" => true,"data" => new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true,
             new WeatherInfoId($query["id"])
-        ),"errorCode"=>null,"message"=>null];
+        ),"errorCode" => null,"message" => null];
         $this->repository->save($target["data"]);
 
         $route = new GetExistingWeatherByIdController($this->repository);
