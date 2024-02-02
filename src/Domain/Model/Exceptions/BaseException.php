@@ -12,7 +12,7 @@ class BaseException extends Exception
     public function __construct(
         string $message = "",
         int $code = 0,
-        private mixed $dataString = null,
+        private mixed $data = null,
         ?\Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
@@ -20,7 +20,7 @@ class BaseException extends Exception
 
     public function getData(): mixed
     {
-        return $this->dataString;
+        return $this->data;
     }
 
     public function getType(): string

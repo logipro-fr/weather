@@ -123,7 +123,11 @@ class WeatherStackAPI implements WeatherApiInterface
     private function parseErrorAndThrow(object $errorResponse): void
     {
 
-        throw new ApiException(json_encode($errorResponse->error), self::HTTP_BAD_GATEWAY);
+        throw new ApiException(
+            "an error as occurred on an external API",
+            self::HTTP_BAD_GATEWAY,
+            $errorResponse->error
+        );
     }
 
     /**

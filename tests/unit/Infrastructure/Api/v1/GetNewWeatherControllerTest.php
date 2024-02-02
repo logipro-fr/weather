@@ -2,7 +2,6 @@
 
 namespace Weather\Tests\Infrastructure\Api\v1;
 
-use Weather\Domain\Model\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,6 +1,6 @@
 fetch_data_from_API:
   path:       /api/v1/fetch
-  controller: 'Weather\Infrastructure\Api\v1\Symfony\GetNewWeatherController::getWeatherFromApi'
+  controller: 'Weather\Infrastructure\Api\v1\Symfony\GetNewWeatherController::execute'
 
 get_stored_from_datepoint:
   path:       /api/v1/data/by-date-point
