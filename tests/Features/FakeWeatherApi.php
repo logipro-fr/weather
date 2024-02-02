@@ -3,10 +3,11 @@
 namespace Weather\Tests\Features;
 
 use Safe\DateTimeImmutable;
-use Weather\APIs\WeatherApiInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoId;
+use Weather\Infrastructure\External\WeatherApiInterface;
 
 use function Safe\json_encode;
 
@@ -26,13 +27,13 @@ class FakeWeatherApi implements WeatherApiInterface
     private function getFromSingularPoint(Point $point, DateTimeImmutable $date): WeatherInfo
     {
         $data = ["Forecast" =>
-            self::POSSIBLE_WEATHER_SKY[rand(0, sizeof(FakeWeatherApi::POSSIBLE_WEATHER_SKY) - 1)],
+            self::POSSIBLE_WEATHER_SKY[rand(0, count(FakeWeatherApi::POSSIBLE_WEATHER_SKY) - 1)],
         "Temperature" =>
         self::POSSIBLE_WEATHER_TEMPERATURE[
-            rand(0, sizeof(self::POSSIBLE_WEATHER_TEMPERATURE) - 1)],
+            rand(0, count(self::POSSIBLE_WEATHER_TEMPERATURE) - 1)],
         "Humidity" =>
         self::POSSIBLE_WEATHER_HUMIITY[
-            rand(0, sizeof(self::POSSIBLE_WEATHER_HUMIITY) - 1)]
+            rand(0, count(self::POSSIBLE_WEATHER_HUMIITY) - 1)]
         ];
 
         $jsonData = json_encode($data);
@@ -73,5 +74,12 @@ class FakeWeatherApi implements WeatherApiInterface
     public function getName(): string
     {
         return self::NAME;
+    }
+
+    public static function create(
+        ?string $weatherStackApiKey = null,
+        HttpClientInterface $httpClient = null
+    ): WeatherApiInterface {
+        return new FakeWeatherApi();
     }
 }

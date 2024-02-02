@@ -1,0 +1,61 @@
+{
+    "request": {
+        "type": "City",
+        "query": "Le Puy-En Velay, France",
+        "language": "en",
+        "unit": "m"
+    },
+    "location": {
+        "name": "Le Puy-En Velay",
+        "country": "France",
+        "region": "Auvergne",
+        "lat": "45.033",
+        "lon": "3.883",
+        "timezone_id": "Europe\/Paris",
+        "localtime": "2023-06-22 11:53",
+        "localtime_epoch": 1687434780,
+        "utc_offset": "2.0"
+    },
+    "current": {
+        "observation_time": "09:53 AM",
+        "temperature": 18,
+        "weather_code": 389,
+        "weather_icons": [
+            "https:\/\/cdn.worldweatheronline.com\/images\/wsymbols01_png_64\/wsymbol_0024_thunderstorms.png"
+        ],
+        "weather_descriptions": [
+            "Rain, Thunderstorm In Vicinity"
+        ],
+        "wind_speed": 7,
+        "wind_degree": 200,
+        "wind_dir": "SSW",
+        "pressure": 1019,
+        "precip": 0.1,
+        "humidity": 88,
+        "cloudcover": 75,
+        "feelslike": 18,
+        "uv_index": 4,
+        "visibility": 10,
+        "is_day": "yes"
+    },
+    "historical": {
+        "2023-04-15": {
+            "date": "2023-04-15",
+            "date_epoch": 1681516800,
+            "astro": {
+                "sunrise": "07:01 AM",
+                "sunset": "08:29 PM",
+                "moonrise": "05:09 AM",
+                "moonset": "02:44 PM",
+                "moon_phase": "Waning Crescent",
+                "moon_illumination": 20
+            },
+            "mintemp": 6,
+            "maxtemp": 11,
+            "avgtemp": 8,
+            "totalsnow": 0,
+            "sunhour": 7.9,
+            "uv_index": 2
+        }
+    }
+}

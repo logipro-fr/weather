@@ -1,0 +1,61 @@
+{
+    "request": {
+        "type": "LatLon",
+        "query": "Lat 45.79 and Lon 3.14",
+        "language": "en",
+        "unit": "m"
+    },
+    "location": {
+        "name": "Clermont-Ferrand",
+        "country": "France",
+        "region": "Auvergne",
+        "lat": "45.783",
+        "lon": "3.083",
+        "timezone_id": "Europe\/Paris",
+        "localtime": "2023-06-22 11:45",
+        "localtime_epoch": 1687434300,
+        "utc_offset": "2.0"
+    },
+    "current": {
+        "observation_time": "09:45 AM",
+        "temperature": 22,
+        "weather_code": 116,
+        "weather_icons": [
+            "https:\/\/cdn.worldweatheronline.com\/images\/wsymbols01_png_64\/wsymbol_0002_sunny_intervals.png"
+        ],
+        "weather_descriptions": [
+            "Partly cloudy"
+        ],
+        "wind_speed": 4,
+        "wind_degree": 254,
+        "wind_dir": "WSW",
+        "pressure": 1016,
+        "precip": 0,
+        "humidity": 83,
+        "cloudcover": 75,
+        "feelslike": 25,
+        "uv_index": 5,
+        "visibility": 10,
+        "is_day": "yes"
+    },
+    "historical": {
+        "2023-03-01": {
+            "date": "2023-03-01",
+            "date_epoch": 1677628800,
+            "astro": {
+                "sunrise": "07:27 AM",
+                "sunset": "06:33 PM",
+                "moonrise": "12:21 PM",
+                "moonset": "04:23 AM",
+                "moon_phase": "First Quarter",
+                "moon_illumination": 61
+            },
+            "mintemp": -6,
+            "maxtemp": 9,
+            "avgtemp": -1,
+            "totalsnow": 0,
+            "sunhour": 11.1,
+            "uv_index": 2
+        }
+    }
+}

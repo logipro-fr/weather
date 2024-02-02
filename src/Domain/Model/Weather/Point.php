@@ -2,6 +2,8 @@
 
 namespace Weather\Domain\Model\Weather;
 
+use function SafePHP\strval;
+
 class Point
 {
     private const DELIMITER = ",";
@@ -26,9 +28,8 @@ class Point
         return $this->getLatitude() == $other->getLatitude() &&
             $this->getLongitude() == $other->getLongitude();
     }
-
     public function __toString()
     {
-        return floatval($this->getLatitude()) . Point::DELIMITER . floatval($this->getLongitude());
+        return strval($this->getLatitude()) . Point::DELIMITER . strval($this->getLongitude());
     }
 }

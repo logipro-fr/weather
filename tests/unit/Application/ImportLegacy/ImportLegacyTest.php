@@ -53,7 +53,7 @@ class ImportLegacyTest extends TestCase
             $this->assertFalse($info->isHistorical());
         }
 
-        $expectedResponseString = new ImportLegacyResponse(sizeof($points));
+        $expectedResponseString = new ImportLegacyResponse(count($points));
         $this->assertEquals($expectedResponseString->getData(), $presenter->read()->getData());
     }
 
@@ -76,7 +76,7 @@ class ImportLegacyTest extends TestCase
              */
             $json = json_decode(file_get_contents($file));
             $points = $json->weatherHotPoints;
-            $size += sizeof(get_object_vars($points));
+            $size += count(get_object_vars($points));
         }
 
         $expectedResponseString = new ImportLegacyResponse($size);

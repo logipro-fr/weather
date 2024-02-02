@@ -13,6 +13,7 @@
     </testsuite>
   </testsuites>
   <php>
+    <ini name="memory_limit" value="256M" />
     <env name="APP_ENV" value="test" force="true"/>
     <env name="KERNEL_CLASS" value="Weather\Infrastructure\Shared\AppKernel"/>
     <env name="DATABASE_URL" value="sqlite:///var/sqlite-unit-test.db"/>

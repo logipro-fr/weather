@@ -2,8 +2,7 @@
 
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
-use DateTimeZone;
-use Safe\DateTimeImmutable;
+use Weather\Domain\Model\Exceptions\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,14 +13,17 @@ use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPointRequest;
 use Weather\Application\FetchData\ById\FetchDataById;
 use Weather\Application\FetchData\ById\FetchDataByIdRequest;
 use Weather\Application\Presenter\PresenterJson;
-use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Api\v1\Controller;
-
-use function SafePHP\floatval;
+use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
 class GetExistingWeatherController extends AbstractController
 {
+    private const INVALID_ARGUMENT_CODE = 400;
+    private const IDENTIFIER_ARGUMENT = "id";
+    private const POINT_ARGUMENT = "point";
+    private const DATE_ARGUMENT = "date";
+
     public function __construct(protected WeatherInfoRepositoryInterface $repository)
     {
     }
@@ -30,7 +32,11 @@ class GetExistingWeatherController extends AbstractController
     public function getWeatherFromApiById(Request $request): Response
     {
         $controller = $this->createIDController();
-        $controller->execute($this->createIdRequest($request->query));
+        try {
+            $controller->execute($this->createIdRequest($request->query));
+        } catch (InvalidArgumentException $e) {
+            $controller->writeUnsuccessfulResponse($e);
+        }
         return new Response($controller->readResponse(), $controller->readStatus(), $controller->readHeaders());
     }
 
@@ -38,7 +44,11 @@ class GetExistingWeatherController extends AbstractController
     public function getWeatherFromApiByDateAndPoint(Request $request): Response
     {
         $controller = $this->createDateAndPointController();
-        $controller->execute($this->createDateAndPointRequest($request->query));
+        try {
+            $controller->execute($this->createDateAndPointRequest($request->query));
+        } catch (InvalidArgumentException $e) {
+            $controller->writeUnsuccessfulResponse($e);
+        }
         return new Response($controller->readResponse(), $controller->readStatus(), $controller->readHeaders());
     }
 
@@ -50,8 +60,11 @@ class GetExistingWeatherController extends AbstractController
 
     private function createIdRequest(InputBag $query): FetchDataByIdRequest
     {
+        if (null === $query->get(self::IDENTIFIER_ARGUMENT)) {
+            throw new InvalidArgumentException("no identifier given", self::INVALID_ARGUMENT_CODE);
+        }
         /** @var string id */
-        $id = $query->get("id");
+        $id = $query->get(self::IDENTIFIER_ARGUMENT);
         return new FetchDataByIdRequest($id);
     }
 
@@ -63,31 +76,27 @@ class GetExistingWeatherController extends AbstractController
 
     private function createDateAndPointRequest(InputBag $query): FetchDataByDateAndPointRequest
     {
+        $parser = new ArgumentParser();
+        if (null === $query->get(self::POINT_ARGUMENT, null)) {
+            throw new InvalidArgumentException("no points given", self::INVALID_ARGUMENT_CODE);
+        }
         /** @var string $pointString */
-        $pointString = $query->get("point");
-        $pointArray = explode(",", $pointString);
-        $point = new Point(floatval($pointArray[0]), floatval($pointArray[1]));
+        $pointString = $query->get(self::POINT_ARGUMENT);
+        $point = $parser->stringToPoint($pointString);
+
+        if (null === $query->get(self::DATE_ARGUMENT, null)) {
+            throw new InvalidArgumentException("no date given", self::INVALID_ARGUMENT_CODE);
+        }
         /** @var string $dateString */
-        $dateString = $query->get("date");
-        if ($query->get("historicalOnly") !== null) {
-            /** @var ?bool $historicalOnly */
-            $historicalOnly = $query->get("historicalOnly");
-        } else {
-            /** @var ?bool $historicalOnly */
-            $historicalOnly = null;
-        }
-        if ($query->get("exact") !== null) {
-            /** @var bool $exact */
-            $exact = $query->get("exact");
-        } else {
+        $dateString = $query->get(self::DATE_ARGUMENT);
+        $date = $parser->extractDate($dateString);
+
+        /** @var bool|null $historicalOnly */
+        $historicalOnly = $query->get("historicalOnly", null);
+
         /** @var bool $exact */
-            $exact = false;
-        }
-        $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            $dateString,
-            new DateTimeZone(date_default_timezone_get())
-        );
+        $exact = $query->get("exact", false);
+
         return new FetchDataByDateAndPointRequest($point, $date, $historicalOnly, $exact);
     }
 }
