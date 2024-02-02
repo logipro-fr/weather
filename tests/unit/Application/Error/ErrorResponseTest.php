@@ -33,9 +33,9 @@ class ErrorResponseTest extends TestCase
             "message" => "I'm a teapot and therefore am unable to brew coffee"
         ];
         $response = new ErrorResponse(
-            418, 
-            $expectedArray["message"], 
-            $expectedArray["errorCode"], 
+            418,
+            $expectedArray["message"],
+            $expectedArray["errorCode"],
             $expectedArray["data"]
         );
         $presenter = new PresenterJson();
