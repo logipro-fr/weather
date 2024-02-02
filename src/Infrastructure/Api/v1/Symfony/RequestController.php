@@ -41,16 +41,11 @@ abstract class RequestController extends AbstractController
 
     private function writeUnsuccessfulResponse(BaseException $e): void
     {
-        try {
-            /** @var \stdClass $message */
-            $message = json_decode($e->getMessage());
-        } catch (JsonException) {
-            $message = $e->getMessage();
-        }
         $badResponse = new ErrorResponse(
             $e->getCode(),
-            $message,
-            $e->getType()
+            $e->getMessage(),
+            $e->getType(),
+            $e->getData()
         );
         $this->getPresenter()->write($badResponse);
     }

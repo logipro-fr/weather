@@ -8,7 +8,12 @@ class PresenterJson extends ApiPresenter
 {
     public function read(): string
     {
-        return json_encode($this->response, JSON_UNESCAPED_UNICODE);
+        return json_encode([
+            "success" => $this->getCode() >=200 && $this->getCode( )< 300,
+            "data" => $this->response,
+            "errorCode" => $this->response->getError(),
+            "message" => $this->response->getMessage()
+        ], JSON_UNESCAPED_UNICODE);
     }
 
     public function write(AbstractResponse $response): void

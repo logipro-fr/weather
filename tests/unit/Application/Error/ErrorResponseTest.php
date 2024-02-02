@@ -4,6 +4,7 @@ namespace Weather\Tests\Application\Error;
 
 use PHPUnit\Framework\TestCase;
 use Weather\Application\Error\ErrorResponse;
+use Weather\Application\Presenter\PresenterJson;
 
 use function Safe\json_encode;
 
@@ -12,23 +13,33 @@ class ErrorResponseTest extends TestCase
     public function testResponse(): void
     {
         $expectedArray = [
-            "code" => 418,
-            "type" => "i_m_a_teapot",
-            "error" => "I'm a teapot and therefore am unable to brew coffee"
+            "success" => false,
+            "data" => null,
+            "errorCode" => "i_m_a_teapot",
+            "message" => "I'm a teapot and therefore am unable to brew coffee"
         ];
-        $response = new ErrorResponse($expectedArray["code"], $expectedArray["error"], $expectedArray["type"]);
-        $this->assertEquals($expectedArray, $response->getData());
-        $this->assertEquals(json_encode($expectedArray), json_encode($response));
+        $response = new ErrorResponse(418, $expectedArray["message"], $expectedArray["errorCode"]);
+        $this->assertEquals(null, $response->getData());
+        $presenter = new PresenterJson();
+        $presenter->write($response);
+        $this->assertEquals(json_encode($expectedArray), $presenter->read());
     }
     public function testResponseObject(): void
     {
         $expectedArray = [
-            "code" => 418,
-            "type" => "i_m_a_teapot",
-            "error" => json_decode('{"a":"I\'m a teapot and","b":"therefore am unable to brew coffee"}')
+            "success" => false,
+            "data" => json_decode('{"a":"I\'m a teapot and","b":"therefore am unable to brew coffee"}'),
+            "errorCode" => "i_m_a_teapot",
+            "message" => "I'm a teapot and therefore am unable to brew coffee"
         ];
-        $response = new ErrorResponse($expectedArray["code"], $expectedArray["error"], $expectedArray["type"]);
-        $this->assertEquals($expectedArray, $response->getData());
-        $this->assertEquals(json_encode($expectedArray), json_encode($response));
+        $response = new ErrorResponse(
+            418, 
+            $expectedArray["message"], 
+            $expectedArray["errorCode"], 
+            $expectedArray["data"]
+        );
+        $presenter = new PresenterJson();
+        $presenter->write($response);
+        $this->assertEquals(json_encode($expectedArray), $presenter->read());
     }
 }

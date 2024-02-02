@@ -13,7 +13,7 @@ class PresenterJsonTest extends TestCase
     public function testPresenterReturn(): void
     {
         $response = $this->createMock(AbstractResponse::class);
-        $target = [
+        $target = ["success"=>true,"data"=>[
             "first" => 1,
             "second" => "two",
             "third" => [
@@ -21,8 +21,9 @@ class PresenterJsonTest extends TestCase
                 "b",
                 "c"
             ]
-            ];
-        $response->method("jsonSerialize")->willReturn($target);
+            ],"errorCode"=>null,"message"=>null];
+        $response->method("jsonSerialize")->willReturn($target["data"]);
+        $response->method("getCode")->willReturn(200);
         $presenter = new PresenterJson();
         $presenter->write($response);
 

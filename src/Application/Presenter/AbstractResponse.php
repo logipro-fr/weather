@@ -19,4 +19,14 @@ abstract class AbstractResponse implements JsonSerializable
     {
         return $this->statusCode;
     }
+
+    public function getError(): ?string
+    {
+        return null;
+    }
+
+    public function getMessage(): ?string
+    {
+        return null;
+    }
 }
