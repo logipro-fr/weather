@@ -1,10 +1,9 @@
 <?php
 
-namespace Weather\Infrastructure\Tools;
+namespace Weather\Infrastructure\Shared\Tools;
 
 use DateTimeZone;
 use Safe\DateTimeImmutable;
-use Symfony\Component\HttpFoundation\InputBag;
 use Weather\Domain\Model\Exceptions\InvalidArgumentException;
 use Weather\Domain\Model\Weather\Point;
 

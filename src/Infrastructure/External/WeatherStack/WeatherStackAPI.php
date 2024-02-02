@@ -2,7 +2,6 @@
 
 namespace Weather\Infrastructure\External\WeatherStack;
 
-use Exception;
 use Safe\DateTimeImmutable;
 use stdClass;
 use Weather\Domain\Model\Weather\WeatherInfo;
@@ -11,7 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Weather\Domain\Model\Exceptions\ApiException;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Infrastructure\External\WeatherApiInterface;
-use Weather\Infrastructure\Tools\SplitQuery;
+use Weather\Infrastructure\Shared\Tools\SplitQuery;
 
 use function Safe\json_decode;
 use function Safe\json_encode;

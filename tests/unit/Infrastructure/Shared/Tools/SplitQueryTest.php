@@ -1,8 +1,8 @@
 <?php
 
-namespace Weather\Tests\WeatherStack\Infrastructure\Tools;
+namespace Weather\Tests\WeatherStack\Infrastructure\Shared\Tools;
 
-use Weather\Infrastructure\Tools\SplitQuery;
+use Weather\Infrastructure\Shared\Tools\SplitQuery;
 use PHPUnit\Framework\TestCase;
 
 class SplitQueryTest extends TestCase

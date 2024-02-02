@@ -15,9 +15,7 @@ use Weather\Application\FetchData\ById\FetchDataByIdRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Api\v1\Controller;
-use Weather\Infrastructure\Tools\ArgumentParser;
-
-use function SafePHP\floatval;
+use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
 class GetExistingWeatherController extends AbstractController
 {

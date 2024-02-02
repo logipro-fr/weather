@@ -1,6 +1,6 @@
 <?php
 
-namespace Weather\Tests\Infrastructure\Shared;
+namespace Weather\Tests\Infrastructure\Shared\Tools;
 
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -8,7 +8,7 @@ use org\bovigo\vfs\vfsStreamFile;
 use org\bovigo\vfs\vfsStreamWrapper;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Weather\Infrastructure\Shared\FileSystemUtils;
+use Weather\Infrastructure\Shared\Tools\FileSystemUtils;
 
 class FileSystemUtilsTest extends TestCase
 {

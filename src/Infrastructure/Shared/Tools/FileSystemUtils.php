@@ -1,6 +1,6 @@
 <?php
 
-namespace Weather\Infrastructure\Shared;
+namespace Weather\Infrastructure\Shared\Tools;
 
 use function Safe\scandir;
 

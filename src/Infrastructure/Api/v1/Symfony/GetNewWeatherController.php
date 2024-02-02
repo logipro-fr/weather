@@ -2,9 +2,7 @@
 
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
-use DateTimeZone;
 use Weather\Domain\Model\Exceptions\InvalidArgumentException;
-use Safe\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +12,9 @@ use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterJson;
-use Weather\Domain\Model\Exceptions\BaseException;
-use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Api\v1\Controller;
-use Weather\Infrastructure\Tools\ArgumentParser;
+use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
 use function Safe\preg_match;
 

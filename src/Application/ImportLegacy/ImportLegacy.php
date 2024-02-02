@@ -9,7 +9,7 @@ use Weather\Application\ServiceInterface;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
-use Weather\Infrastructure\Shared\FileSystemUtils;
+use Weather\Infrastructure\Shared\Tools\FileSystemUtils;
 
 use function Safe\file_get_contents;
 use function Safe\json_decode;

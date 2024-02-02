@@ -1,13 +1,12 @@
 <?php
 
-namespace Weather\Tests\WeatherStack\Infrastructure\Tools;
+namespace Weather\Tests\WeatherStack\Infrastructure\Shared\Tools;
 
-use Weather\Infrastructure\Tools\SplitQuery;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Weather\Domain\Model\Exceptions\InvalidArgumentException;
 use Weather\Domain\Model\Weather\Point;
-use Weather\Infrastructure\Tools\ArgumentParser;
+use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
 class ArgumentParserTest extends TestCase
 {

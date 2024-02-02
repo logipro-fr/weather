@@ -1,6 +1,6 @@
 <?php
 
-namespace Weather\Infrastructure\Tools;
+namespace Weather\Infrastructure\Shared\Tools;
 
 class SplitQuery
 {
