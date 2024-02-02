@@ -32,6 +32,7 @@ class GetNewWeatherController extends RequestController
     }
 
     protected function createRequest(InputBag $query): GetWeatherRequest
+    protected function createRequest(InputBag $query): GetWeatherRequest
     {
         $parser = new ArgumentParser();
         if (null === $query->get(self::POINT_ARGUMENT)) {
@@ -44,6 +45,7 @@ class GetNewWeatherController extends RequestController
 
 
         if (null === $query->get(self::DATE_ARGUMENT)) {
+            throw new InvalidArgumentException("no \"date\" given", self::INVALID_ARGUMENT_CODE);
             throw new InvalidArgumentException("no \"date\" given", self::INVALID_ARGUMENT_CODE);
         }
         /** @var string $dateString */
