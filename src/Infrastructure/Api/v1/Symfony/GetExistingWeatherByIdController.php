@@ -3,15 +3,11 @@
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
 use Weather\Domain\Model\Exceptions\InvalidArgumentException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Weather\Application\FetchData\ById\FetchDataById;
 use Weather\Application\FetchData\ById\FetchDataByIdRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
-use Weather\Infrastructure\Api\v1\ServiceController;
 
 class GetExistingWeatherByIdController extends RequestController
 {
