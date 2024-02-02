@@ -1,0 +1,40 @@
+<?php
+
+namespace Weather\Infrastructure\Api\v1\Symfony;
+
+use Weather\Domain\Model\Exceptions\InvalidArgumentException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\InputBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Weather\Application\FetchData\ById\FetchDataById;
+use Weather\Application\FetchData\ById\FetchDataByIdRequest;
+use Weather\Application\Presenter\PresenterJson;
+use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
+use Weather\Infrastructure\Api\v1\Controller;
+
+class GetExistingWeatherByIdController extends BaseController
+{
+    private const INVALID_ARGUMENT_CODE = 400;
+    private const IDENTIFIER_ARGUMENT = "id";
+
+    public function __construct(protected WeatherInfoRepositoryInterface $repository)
+    {
+    }
+
+    protected function createController(): Controller
+    {
+        $presenter = new PresenterJson();
+        return new Controller(new FetchDataById($presenter, $this->repository));
+    }
+
+    protected function createRequest(InputBag $query): FetchDataByIdRequest
+    {
+        if (null === $query->get(self::IDENTIFIER_ARGUMENT)) {
+            throw new InvalidArgumentException("no identifier \"id\" given", self::INVALID_ARGUMENT_CODE);
+        }
+        /** @var string id */
+        $id = $query->get(self::IDENTIFIER_ARGUMENT);
+        return new FetchDataByIdRequest($id);
+    }
+}

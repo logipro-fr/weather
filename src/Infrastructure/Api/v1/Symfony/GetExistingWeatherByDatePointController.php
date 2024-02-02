@@ -3,54 +3,55 @@
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
 use Weather\Domain\Model\Exceptions\InvalidArgumentException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Weather\Infrastructure\External\WeatherApiInterface;
-use Weather\Application\GetWeather\GetWeather;
-use Weather\Application\GetWeather\GetWeatherRequest;
+use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPoint;
+use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPointRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Api\v1\Controller;
 use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
-class GetNewWeatherController extends BaseController
+class GetExistingWeatherByDatePointController extends BaseController
 {
     private const INVALID_ARGUMENT_CODE = 400;
-    private const POINT_ARGUMENT = "points";
+    private const POINT_ARGUMENT = "point";
     private const DATE_ARGUMENT = "date";
 
-    public function __construct(
-        protected WeatherInfoRepositoryInterface $repository,
-        protected WeatherApiInterface $api
-    ) {
+    public function __construct(protected WeatherInfoRepositoryInterface $repository)
+    {
     }
 
     protected function createController(): Controller
     {
         $presenter = new PresenterJson();
-        return new Controller(new GetWeather($presenter, $this->api, $this->repository));
+        return new Controller(new FetchDataByDateAndPoint($presenter, $this->repository));
     }
 
-    protected function createRequest(InputBag $query): GetWeatherRequest
+    protected function createRequest(InputBag $query): FetchDataByDateAndPointRequest
     {
         $parser = new ArgumentParser();
-        if (null === $query->get(self::POINT_ARGUMENT)) {
-            throw new InvalidArgumentException("no points given", self::INVALID_ARGUMENT_CODE);
+        if (null === $query->get(self::POINT_ARGUMENT, null)) {
+            throw new InvalidArgumentException("no \"point\" given", self::INVALID_ARGUMENT_CODE);
         }
         /** @var string $pointString */
         $pointString = $query->get(self::POINT_ARGUMENT);
+        $point = $parser->stringToPoint($pointString);
 
-        $points = $parser->extractPoints($pointString);
-
-
-        if (null === $query->get(self::DATE_ARGUMENT)) {
+        if (null === $query->get(self::DATE_ARGUMENT, null)) {
             throw new InvalidArgumentException("no \"date\" given", self::INVALID_ARGUMENT_CODE);
         }
         /** @var string $dateString */
         $dateString = $query->get(self::DATE_ARGUMENT);
         $date = $parser->extractDate($dateString);
-        return new GetWeatherRequest($points, $date);
+
+        /** @var bool|null $historicalOnly */
+        $historicalOnly = $query->get("historicalOnly", null);
+
+        /** @var bool $exact */
+        $exact = $query->get("exact", false);
+
+        return new FetchDataByDateAndPointRequest($point, $date, $historicalOnly, $exact);
     }
 }

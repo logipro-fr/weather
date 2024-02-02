@@ -34,7 +34,7 @@ class GetNewWeatherControllerTest extends TestCase
 
         $request = new Request($query);
 
-        $response = $route->getWeatherFromApi($request);
+        $response = $route->execute($request);
 
         $target = [new WeatherInfo(
             new Point(2.1, 40.531),
@@ -61,7 +61,7 @@ class GetNewWeatherControllerTest extends TestCase
 
         $request = new Request($query);
 
-        $response = $route->getWeatherFromApi($request);
+        $response = $route->execute($request);
 
         $target = [
             new WeatherInfo(
@@ -97,7 +97,7 @@ class GetNewWeatherControllerTest extends TestCase
         $request = new Request($query);
         $route = new FakeGetNewWeatherController(new FakeWeatherApi());
 
-        $response = $route->getWeatherFromApi($request);
+        $response = $route->execute($request);
 
         $this->assertEquals($target, $response->getContent());
         $this->assertEquals(400, $response->getStatusCode());
@@ -117,7 +117,7 @@ class GetNewWeatherControllerTest extends TestCase
         $request = new Request($query);
         $route = new FakeGetNewWeatherController(new FakeWeatherApi());
 
-        $response = $route->getWeatherFromApi($request);
+        $response = $route->execute($request);
 
         $this->assertEquals($target, $response->getContent());
         $this->assertEquals(400, $response->getStatusCode());
@@ -130,12 +130,12 @@ class GetNewWeatherControllerTest extends TestCase
             "points" => '2.1,40.531;5.652,41.666'
         ];
 
-        $target = '{"code":400,"type":"invalid_argument","error":"no date given"}';
+        $target = '{"code":400,"type":"invalid_argument","error":"no \"date\" given"}';
 
         $request = new Request($query);
         $route = new FakeGetNewWeatherController(new FakeWeatherApi());
 
-        $response = $route->getWeatherFromApi($request);
+        $response = $route->execute($request);
 
         $this->assertEquals($target, $response->getContent());
         $this->assertEquals(400, $response->getStatusCode());
@@ -153,7 +153,7 @@ class GetNewWeatherControllerTest extends TestCase
         $request = new Request($query);
         $route = new FakeGetNewWeatherController(new FakeWeatherApi());
 
-        $response = $route->getWeatherFromApi($request);
+        $response = $route->execute($request);
 
         $this->assertEquals($target, $response->getContent());
         $this->assertEquals(400, $response->getStatusCode());
