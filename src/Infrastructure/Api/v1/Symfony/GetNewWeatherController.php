@@ -45,7 +45,6 @@ class GetNewWeatherController extends RequestController
 
         if (null === $query->get(self::DATE_ARGUMENT)) {
             throw new InvalidArgumentException("no \"date\" given", self::INVALID_ARGUMENT_CODE);
-            throw new InvalidArgumentException("no \"date\" given", self::INVALID_ARGUMENT_CODE);
         }
         /** @var string $dateString */
         $dateString = $query->get(self::DATE_ARGUMENT);
