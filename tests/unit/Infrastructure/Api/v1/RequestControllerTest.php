@@ -34,10 +34,12 @@ class RequestControllerTest extends TestCase
         $response = $controller->execute($request);
 
         $target = [
-            "code" => 418,
-            "type" => "exception",
-            "error" => "the server refuses to brew coffee because it is, permanently, a teapot."
+            "success" => false,
+            "data" => null,
+            "errorCode" => "exception",
+            "message" => "the server refuses to brew coffee because it is, permanently, a teapot."
         ];
+
         assertEquals(json_encode($target), $response->getContent());
     }
 
@@ -49,9 +51,11 @@ class RequestControllerTest extends TestCase
 
         $service->method("getPresenter")->willReturn(new PresenterJson());
         $service->method("execute")->willThrowException(
-            new ApiException(
-                '{"a":"the server refuses to brew coffee","b":"because it is, permanently, a teapot."}',
-                418
+            new BaseException(
+                "the server refuses to brew coffee because it is, permanently, a teapot.",
+                418,
+                json_decode('{"a":"the server refuses to brew coffee",' . 
+                    '"b":"because it is, permanently, a teapot."}')
             )
         );
 
@@ -59,12 +63,13 @@ class RequestControllerTest extends TestCase
         $response = $controller->execute($request);
 
         $target = [
-            "code" => 418,
-            "type" => "API_connectivity_exception",
-            "error" => [
+            "success" => false,
+            "data" => [
                 "a" => "the server refuses to brew coffee",
                 "b" => "because it is, permanently, a teapot."
-            ]
+            ],
+            "errorCode" => "exception",
+            "message" => "the server refuses to brew coffee because it is, permanently, a teapot."
         ];
         assertEquals(json_encode($target), $response->getContent());
     }

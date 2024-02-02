@@ -37,14 +37,14 @@ class GetExistingWeatherControllerByIdTest extends TestCase
 
         $request = new Request($query);
 
-        $target = new WeatherInfo(
+        $target = ["success"=>true,"data"=>new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true,
             new WeatherInfoId($query["id"])
-        );
-        $this->repository->save($target);
+        ),"errorCode"=>null,"message"=>null];
+        $this->repository->save($target["data"][0]);
 
         $route = new GetExistingWeatherByIdController($this->repository);
         $response = $route->execute($request);
@@ -60,7 +60,7 @@ class GetExistingWeatherControllerByIdTest extends TestCase
             "date" => "2024-02-01 12:30"
         ];
 
-        $target = '{"code":400,"type":"invalid_argument","error":"no identifier \"id\" given"}';
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument","message":"no identifier \"id\" given"}';
 
         $request = new Request($query);
         $route = new GetExistingWeatherByIdController(new WeatherInfoRepositoryInMemory());

@@ -36,13 +36,13 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
 
         $request = new Request($query);
 
-        $target = new WeatherInfo(
+        $target = ["success"=>true,"data"=>new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true
-        );
-        $this->repository->save($target);
+        ),"errorCode"=>null,"message"=>null];
+        $this->repository->save($target["data"]);
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
         $response = $route->execute($request);
@@ -63,13 +63,13 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
 
         $request = new Request($query);
 
-        $target = new WeatherInfo(
+        $target = ["success"=>true,"data"=>new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true
-        );
-        $this->repository->save($target);
+        ),"errorCode"=>null,"message"=>null];
+        $this->repository->save($target["data"]);
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
         $response = $route->execute($request);
@@ -89,13 +89,13 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
 
         $request = new Request($query);
 
-        $target = new WeatherInfo(
+        $target = ["success"=>true,"data"=>new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
             true
-        );
-        $this->repository->save($target);
+        ),"errorCode"=>null,"message"=>null];
+        $this->repository->save($target["data"]);
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
         $response = $route->execute($request);
@@ -123,8 +123,8 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             true
         );
         $this->repository->save($info);
-        $target = '{"code":404,"type":"weatherinfo_not_found_exception","error":"WeatherInfo of point ' .
-            '\"2.142,40.531\" at date 2024-01-01 12:35:00 not found"}';
+        $target = '{"success":false,"data":null,"errorCode":"weatherinfo_not_found_exception",' .
+            '"message":"WeatherInfo of point \"2.142,40.531\" at date 2024-01-01 12:35:00 not found"}';
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
         $response = $route->execute($request);
@@ -151,8 +151,9 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             "{}"
         );
         $this->repository->save($info);
-        $target = '{"code":404,"type":"weatherinfo_not_found_exception","error":"Historical WeatherInfo of ' .
-            'point \"2.142,40.531\" at date 2024-01-01 12:35:00 not found"}';
+        $target = '{"success":false,"data":null,"errorCode":"weatherinfo_not_found_exception",' .
+            '"message":"Historical WeatherInfo of point \"2.142,40.531\" ' .
+            'at date 2024-01-01 12:35:00 not found"}';
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
         $response = $route->execute($request);
@@ -169,8 +170,8 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             "date" => "01/02/2024 12"
         ];
 
-        $target = '{"code":400,"type":"invalid_argument","error":"date format invalid, should look like ' .
-            '\"YYYY-MM-DD hh:mm:ss\""}';
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",' .
+            '"message":"date format invalid, should look like \"YYYY-MM-DD hh:mm:ss\""}';
 
         $request = new Request($query);
         $route = new GetExistingWeatherByDatePointController(new WeatherInfoRepositoryInMemory());
@@ -188,8 +189,8 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             "date" => "2024-02-01 12:30"
         ];
 
-        $target = '{"code":400,"type":"invalid_argument","error":"point format invalid, should look like ' .
-            '\"45.043,3.883\""}';
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument",'.
+            '"message":"point format invalid, should look like \"45.043,3.883\""}';
 
         $request = new Request($query);
         $route = new GetExistingWeatherByDatePointController(new WeatherInfoRepositoryInMemory());
@@ -206,7 +207,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             "point" => '2.1,40.531'
         ];
 
-        $target = '{"code":400,"type":"invalid_argument","error":"no \"date\" given"}';
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument","message":"no \"date\" given"}';
 
         $request = new Request($query);
         $route = new GetExistingWeatherByDatePointController(new WeatherInfoRepositoryInMemory());
@@ -223,7 +224,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             "date" => "2024-02-01 12:30"
         ];
 
-        $target = '{"code":400,"type":"invalid_argument","error":"no \"point\" given"}';
+        $target = '{"success":false,"data":null,"errorCode":"invalid_argument","message":"no \"point\" given"}';
 
         $request = new Request($query);
         $route = new GetExistingWeatherByDatePointController(new WeatherInfoRepositoryInMemory());
