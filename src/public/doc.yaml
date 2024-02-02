@@ -18,8 +18,8 @@ paths:
       parameters:
         - in:  query
           name: date
-          date: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
-          description: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
+          date: date, in format "YYYY-MM-DD hh:mm(:ss(.uuuuuu))"
+          description: date, in format "YYYY-MM-DD hh:mm(:ss(.uuuuuu))"
           required: true
           example: "2024-01-01 12:30:00"
           schema:
@@ -139,7 +139,7 @@ components:
           example: 2.333
         date:
           type: string
-          example: 2024-01-01 12:00:00.000000
+          example: 2024-01-01 12:00:00
         historical:
           type: boolean
           example: false
@@ -152,6 +152,9 @@ components:
       type: object
       properties:
         code: 
+          type: integer
+          example: 404
+        type: 
           type: integer
           example: 404
         message:

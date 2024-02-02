@@ -1,6 +1,6 @@
 <?php
 
-namespace Weather\Test\Infrastructure\External\WeatherStack;
+namespace Weather\Tests\Infrastructure\External\WeatherStack;
 
 use Closure;
 use DateInterval;

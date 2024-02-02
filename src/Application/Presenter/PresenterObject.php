@@ -13,9 +13,4 @@ class PresenterObject extends AbstractPresenter
     {
         $this->response = $response;
     }
-
-    public function getHeaders(): array
-    {
-        return ["Content-Type" => "text/plain"];
-    }
 }

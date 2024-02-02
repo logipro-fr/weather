@@ -11,7 +11,7 @@ class HelloWorldControllerTest extends TestCase
     public function testHelloWorld(): void
     {
         $route = new HelloWorldController();
-        $response = $route->helloWorld(new Request());
+        $response = $route->execute(new Request());
 
         /** @var string $str */
         $str = $response->getContent();

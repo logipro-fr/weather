@@ -4,7 +4,7 @@ namespace Weather\Application\Presenter;
 
 use function Safe\json_encode;
 
-class PresenterJson extends AbstractPresenter
+class PresenterJson extends ApiPresenter
 {
     public function read(): string
     {

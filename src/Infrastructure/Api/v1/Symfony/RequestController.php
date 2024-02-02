@@ -1,39 +1,45 @@
 <?php
 
-namespace Weather\Infrastructure\Api\v1;
+namespace Weather\Infrastructure\Api\v1\Symfony;
 
-use Weather\Application\Presenter\AbstractPresenter;
-use Exception;
 use Safe\Exceptions\JsonException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\InputBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Weather\Application\Error\ErrorResponse;
+use Weather\Application\Presenter\AbstractPresenter;
+use Weather\Application\Presenter\ApiPresenter;
 use Weather\Application\Presenter\RequestInterface;
 use Weather\Application\ServiceInterface;
 use Weather\Domain\Model\Exceptions\BaseException;
+use Weather\Domain\Model\Exceptions\InvalidArgumentException;
 
 use function Safe\json_decode;
-use function SafePHP\strval;
 
-class Controller
+abstract class RequestController extends AbstractController
 {
     private const CODE_RANGE_LOW = 100;
-    private const CODE_RANGE_HIGH = 699;
+    private const CODE_RANGE_HIGH = 599;
     private const CODE_UNKNOWN_INTERNAL = 500;
 
-    public function __construct(
-        private ServiceInterface $service
-    ) {
-    }
+    private ServiceInterface $service;
 
-    public function execute(RequestInterface $request): void
+    public function execute(Request $request): Response
     {
+        $this->service = $this->createService();
         try {
-            $this->service->execute($request);
+            $this->service->execute($this->createRequest($request->query));
         } catch (BaseException $e) {
             $this->writeUnsuccessfulResponse($e);
         }
+        return new Response($this->readResponse(), $this->readStatus(), $this->readHeaders());
     }
 
-    public function writeUnsuccessfulResponse(BaseException $e): void
+    abstract protected function createService(): ServiceInterface;
+    abstract protected function createRequest(InputBag $query): RequestInterface;
+
+    private function writeUnsuccessfulResponse(BaseException $e): void
     {
         try {
             /** @var \stdClass $message */
@@ -49,17 +55,19 @@ class Controller
         $this->getPresenter()->write($badResponse);
     }
 
-    private function getPresenter(): AbstractPresenter
+    private function getPresenter(): ApiPresenter
     {
-        return $this->service->getPresenter();
+        /** @var ApiPresenter $presenter */
+        $presenter = $this->service->getPresenter();
+        return $presenter;
     }
 
-    public function readResponse(): string
+    private function readResponse(): string
     {
         return strval($this->getPresenter()->read());
     }
 
-    public function readStatus(): int
+    private function readStatus(): int
     {
         //throw new Exception($this->getPresenter()->getCode(), $this->getPresenter()->getCode());
         $code = $this->getPresenter()->getCode();
@@ -72,7 +80,7 @@ class Controller
     /**
      * @return array<string,int|string>
      */
-    public function readHeaders(): array
+    private function readHeaders(): array
     {
         return $this->getPresenter()->getHeaders();
     }

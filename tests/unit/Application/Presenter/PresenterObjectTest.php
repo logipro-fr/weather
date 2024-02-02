@@ -14,6 +14,5 @@ class PresenterObjectTest extends TestCase
         $presenter = new PresenterObject();
         $presenter->write($expectedResponse);
         $this->assertEquals($expectedResponse, $presenter->read());
-        $this->assertEquals(["Content-Type" => "text/plain"], $presenter->getHeaders());
     }
 }

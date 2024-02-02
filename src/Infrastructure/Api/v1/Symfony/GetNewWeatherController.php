@@ -3,22 +3,17 @@
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
 use Weather\Domain\Model\Exceptions\InvalidArgumentException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
-use Weather\Infrastructure\Api\v1\Controller;
+use Weather\Infrastructure\Api\v1\ServiceController;
 use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
-use function Safe\preg_match;
-
-class GetNewWeatherController extends AbstractController
+// fetch_data_from_API: /api/v1/fetch
+class GetNewWeatherController extends RequestController
 {
     private const INVALID_ARGUMENT_CODE = 400;
     private const POINT_ARGUMENT = "points";
@@ -30,25 +25,13 @@ class GetNewWeatherController extends AbstractController
     ) {
     }
 
-    #[Route('/api/v1/fetch', name: "get new weather", methods: ['GET'])]
-    public function getWeatherFromApi(Request $request): Response
-    {
-        $controller = $this->createController();
-        try {
-            $controller->execute($this->createRequest($request->query));
-        } catch (InvalidArgumentException $e) {
-            $controller->writeUnsuccessfulResponse($e);
-        }
-        return new Response($controller->readResponse(), $controller->readStatus(), $controller->readHeaders());
-    }
-
-    private function createController(): Controller
+    protected function createService(): GetWeather
     {
         $presenter = new PresenterJson();
-        return new Controller(new GetWeather($presenter, $this->api, $this->repository));
+        return new GetWeather($presenter, $this->api, $this->repository);
     }
 
-    private function createRequest(InputBag $query): GetWeatherRequest
+    protected function createRequest(InputBag $query): GetWeatherRequest
     {
         $parser = new ArgumentParser();
         if (null === $query->get(self::POINT_ARGUMENT)) {
@@ -61,7 +44,7 @@ class GetNewWeatherController extends AbstractController
 
 
         if (null === $query->get(self::DATE_ARGUMENT)) {
-            throw new InvalidArgumentException("no date given", self::INVALID_ARGUMENT_CODE);
+            throw new InvalidArgumentException("no \"date\" given", self::INVALID_ARGUMENT_CODE);
         }
         /** @var string $dateString */
         $dateString = $query->get(self::DATE_ARGUMENT);
