@@ -16,10 +16,10 @@ class ErrorResponse extends AbstractResponse
     }
 
     /**
-     * @return array<string,int|string>
+     * @return array<string,int|string|stdClass>
      */
     public function getData(): array
     {
-        return ["code" => $this->statusCode, "type"=> $this->type, "error" => $this->message];
+        return ["code" => $this->statusCode, "type" => $this->type, "error" => $this->message];
     }
 }

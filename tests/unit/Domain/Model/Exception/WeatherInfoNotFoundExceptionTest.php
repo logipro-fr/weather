@@ -10,7 +10,8 @@ class WeatherInfoNotFoundExceptionTest extends BaseExceptionTest
     protected string $exceptionClass;
     protected string $exceptionType;
 
-    public function setUp():void {
+    public function setUp(): void
+    {
         $this->exceptionClass = WeatherInfoNotFoundException::class;
         $this->exceptionType = "weatherinfo_not_found_exception";
     }

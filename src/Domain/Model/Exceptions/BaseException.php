@@ -6,7 +6,7 @@ use Exception;
 
 class BaseException extends Exception
 {
-    protected string $type = "unknown_weather";
+    protected string $type = "exception";
 
     public function getType(): string
     {

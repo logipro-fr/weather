@@ -9,7 +9,8 @@ class ApiExceptionTest extends BaseExceptionTest
     protected string $exceptionClass;
     protected string $exceptionType;
 
-    public function setUp():void {
+    public function setUp(): void
+    {
         $this->exceptionClass = ApiException::class;
         $this->exceptionType = "API_connectivity_exception";
     }

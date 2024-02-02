@@ -10,13 +10,15 @@ class BaseExceptionTest extends TestCase
     protected string $exceptionClass;
     protected string $exceptionType;
 
-    public function setUp():void {
+    public function setUp(): void
+    {
         $this->exceptionClass = BaseException::class;
-        $this->exceptionType = "unknown_weather";
+        $this->exceptionType = "exception";
     }
 
-    public function testCreate(){
-        $error = new ($this->exceptionClass)("no",500);
+    public function testCreate(): void
+    {
+        $error = new ($this->exceptionClass)("no", 500);
         $this->assertInstanceOf(BaseException::class, $error);
         $this->assertEquals($this->exceptionType, $error->getType());
     }

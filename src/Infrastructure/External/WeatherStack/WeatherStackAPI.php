@@ -9,8 +9,6 @@ use Weather\Domain\Model\Weather\WeatherInfo;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Weather\Domain\Model\Exceptions\ApiException;
-use Weather\Domain\Model\Exceptions\BaseException;
-use Weather\Domain\Model\Exceptions\WeatherInfoNotFoundException;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Infrastructure\Tools\SplitQuery;
@@ -23,6 +21,8 @@ class WeatherStackAPI implements WeatherApiInterface
     private const NAME = "WeatherStack";
     private const CURRENT_BACK_MARGIN = 900;
     private const DATE_FORMAT = "Y-m-d H:i";
+    private const HTTP_BAD_GATEWAY = 502;
+    private const POINTS_DELIMITER = ";";
 
     private string $weatherStackApiKey;
     private HttpClientInterface $httpClient;
@@ -93,8 +93,9 @@ class WeatherStackAPI implements WeatherApiInterface
         $options = [];
         $response = $this->httpClient->request('GET', $url, $options)->getContent();
 
+        /** @var object{"success": bool, "error": object{"code": int}} $resObject*/
         $resObject = json_decode($response);
-        if (isset($resObject->success) && $resObject->success == false){
+        if (isset($resObject->success) && $resObject->success == false) {
             $this->parseErrorAndThrow($resObject);
         }
         return $response;
@@ -109,26 +110,22 @@ class WeatherStackAPI implements WeatherApiInterface
         $options = [];
         $response = $this->httpClient->request('GET', $url, $options)->getContent();
 
+        /** @var object{"success": bool, "error": object{"code": int}} $resObject */
         $resObject = json_decode($response);
-        if (isset($resObject->success) && $resObject->success == false){
-            throw new ApiException($resObject->error->type, $resObject->error->code);
+        if (isset($resObject->success) && $resObject->success == false) {
+            $this->parseErrorAndThrow($resObject);
         }
         return $response;
     }
 
     /**
-     * @param object{"success": bool, "error": object}
+     * @param object{"success": bool, "error": object{"code": int}} $errorResponse
      */
-    private function parseErrorAndThrow(stdClass $errorResponse): void{
-        switch ($errorResponse->error->type){
-            case "invalid_access_key":
-                $code = 401;
-                break;
-            default:
-                $code = $errorResponse->error->code;       
-        }
-        throw new ApiException(json_encode($errorResponse->error), $code);
-    } 
+    private function parseErrorAndThrow(object $errorResponse): void
+    {
+
+        throw new ApiException(json_encode($errorResponse->error), self::HTTP_BAD_GATEWAY);
+    }
 
     /**
      * @param array<Point> $points
@@ -136,7 +133,7 @@ class WeatherStackAPI implements WeatherApiInterface
      */
     private function requestBulk(array $points, string $historicalDate, string $request): array
     {
-        $query = implode(";", $points);
+        $query = implode(self::POINTS_DELIMITER, $points);
         $queries = (new SplitQuery())->split($query);
 
         $result = [];

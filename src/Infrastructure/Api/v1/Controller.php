@@ -33,12 +33,12 @@ class Controller
         }
     }
 
-    private function writeUnsuccessfulResponse(BaseException $e): void
+    public function writeUnsuccessfulResponse(BaseException $e): void
     {
         try {
-        $message = json_decode($e->getMessage());
-        }
-        catch (JsonException){
+            /** @var \stdClass $message */
+            $message = json_decode($e->getMessage());
+        } catch (JsonException) {
             $message = $e->getMessage();
         }
         $badResponse = new ErrorResponse(

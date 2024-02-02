@@ -2,11 +2,15 @@
 
 namespace Weather\Test\Infrastructure\External\WeatherStack;
 
+use Closure;
 use DateInterval;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Safe\DateTimeImmutable;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Weather\Domain\Model\Exceptions\ApiException;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Infrastructure\External\WeatherApiInterface;
@@ -32,6 +36,15 @@ class WeatherStackAPITest extends TestCase
     public function testCreate(): void
     {
         $api = WeatherStackApi::create($this->apiKey);
+        $this->assertInstanceOf(WeatherStackApi::class, $api);
+        $reflector = new ReflectionClass(WeatherStackApi::class);
+        $attribute = $reflector->getProperty("weatherStackApiKey");
+        $this->assertEquals($this->apiKey, $attribute->getValue($api));
+    }
+
+    public function testConstruct(): void
+    {
+        $api = new WeatherStackApi($this->apiKey);
         $this->assertInstanceOf(WeatherStackApi::class, $api);
         $reflector = new ReflectionClass(WeatherStackApi::class);
         $attribute = $reflector->getProperty("weatherStackApiKey");
@@ -234,5 +247,50 @@ class WeatherStackAPITest extends TestCase
 
         $this->assertFalse($responseCurrent[0]->isHistorical());
         $this->assertTrue($responseHistory[0]->isHistorical());
+    }
+
+    public function testExternalError(): void
+    {
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(502);
+
+        $closure = Closure::fromCallable(function () {
+            return new MockResponse('{' .
+                '"success": false,' .
+                '"error": {' .
+                    '"code": 101,' .
+                    '"type": "invalid_access_key",' .
+                    '"info": "You have not supplied a valid API Access Key. ' .
+                    '[Technical Support: support@apilayer.com]"' .
+                '}' .
+            '}');
+        });
+
+        $client = new MockHttpClient($closure);
+
+        $api = new WeatherStackAPI("null", $client);
+        $api->getFromPoints([new Point(0, 0)], new DateTimeImmutable());
+    }
+
+    public function testExternalErrorHistorical(): void
+    {
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(502);
+
+        $closure = Closure::fromCallable(function () {
+            return new MockResponse('{' .
+                '"success": false,' .
+                '"error": {' .
+                    '"code": 418,' .
+                    '"type": "I_m_a_teapot",' .
+                    '"info": "I\'m a teapot and therefore cannot brew coffee"' .
+                '}' .
+            '}');
+        });
+
+        $client = new MockHttpClient($closure);
+
+        $api = new WeatherStackAPI("null", $client);
+        $api->getFromPoints([new Point(0, 0)], DateTimeImmutable::createFromFormat("Y", "2020"));
     }
 }

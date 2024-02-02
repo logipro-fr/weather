@@ -9,7 +9,6 @@ use Weather\Infrastructure\External\WeatherStack\WeatherStackAPI;
 
 class WeatherStackAPITest extends TestCase
 {
-
     public function testBrokenCurrent(): void
     {
         $this->expectException(ApiException::class);

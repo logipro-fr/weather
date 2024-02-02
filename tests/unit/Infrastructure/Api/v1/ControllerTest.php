@@ -31,9 +31,9 @@ class ControllerTest extends TestCase
         $controller->execute($this->createMock(RequestInterface::class));
 
         $target = [
-            "code"=>418,
-            "type"=>"unknown_weather",
-            "error"=>"the server refuses to brew coffee because it is, permanently, a teapot."
+            "code" => 418,
+            "type" => "exception",
+            "error" => "the server refuses to brew coffee because it is, permanently, a teapot."
         ];
         assertEquals(json_encode($target), $controller->readResponse());
     }
@@ -47,7 +47,7 @@ class ControllerTest extends TestCase
         $service->method("getPresenter")->willReturn(new PresenterJson());
         $service->method("execute")->willThrowException(
             new ApiException(
-                '{"a":"the server refuses to brew coffee","b":"because it is, permanently, a teapot."}', 
+                '{"a":"the server refuses to brew coffee","b":"because it is, permanently, a teapot."}',
                 418
             )
         );
@@ -56,10 +56,10 @@ class ControllerTest extends TestCase
 
         $target = [
             "code" => 418,
-            "type"=> "API_connectivity_exception",
-            "error"=>[
-                "a"=>"the server refuses to brew coffee",
-                "b"=>"because it is, permanently, a teapot."
+            "type" => "API_connectivity_exception",
+            "error" => [
+                "a" => "the server refuses to brew coffee",
+                "b" => "because it is, permanently, a teapot."
             ]
         ];
         assertEquals(json_encode($target), $controller->readResponse());

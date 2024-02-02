@@ -3,6 +3,7 @@
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
 use DateTimeZone;
+use Weather\Domain\Model\Exceptions\InvalidArgumentException;
 use Safe\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\InputBag;
@@ -13,14 +14,19 @@ use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterJson;
+use Weather\Domain\Model\Exceptions\BaseException;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Api\v1\Controller;
-use Weather\Tests\Features\FakeWeatherApi;
+use Weather\Infrastructure\Tools\ArgumentParser;
+
+use function Safe\preg_match;
 
 class GetNewWeatherController extends AbstractController
 {
-    private const DATE_FORMAT = "Y-m-d H:i:s";
+    private const INVALID_ARGUMENT_CODE = 400;
+    private const POINT_ARGUMENT = "points";
+    private const DATE_ARGUMENT = "date";
 
     public function __construct(
         protected WeatherInfoRepositoryInterface $repository,
@@ -32,7 +38,11 @@ class GetNewWeatherController extends AbstractController
     public function getWeatherFromApi(Request $request): Response
     {
         $controller = $this->createController();
-        $controller->execute($this->createRequest($request->query));
+        try {
+            $controller->execute($this->createRequest($request->query));
+        } catch (InvalidArgumentException $e) {
+            $controller->writeUnsuccessfulResponse($e);
+        }
         return new Response($controller->readResponse(), $controller->readStatus(), $controller->readHeaders());
     }
 
@@ -44,34 +54,22 @@ class GetNewWeatherController extends AbstractController
 
     private function createRequest(InputBag $query): GetWeatherRequest
     {
-        /** @var string $pointString */
-        $pointString = $query->get("points");
-        $points = $this->extractPoints($pointString);
-        /** @var string $dateString */
-        $dateString = $query->get("date");
-        $date = DateTimeImmutable::createFromFormat(
-            self::DATE_FORMAT,
-            $dateString,
-            new DateTimeZone(date_default_timezone_get())
-        );
-        return new GetWeatherRequest($points, $date);
-    }
-
-    /**
-     * @return array<Point>
-     */
-    private function extractPoints(string $pointsString): array
-    {
-        $res = [];
-        foreach (explode(";", $pointsString) as $point) {
-            array_push($res, $this->stringToPoint($point));
+        $parser = new ArgumentParser();
+        if (null === $query->get(self::POINT_ARGUMENT)) {
+            throw new InvalidArgumentException("no points given", self::INVALID_ARGUMENT_CODE);
         }
-        return $res;
-    }
+        /** @var string $pointString */
+        $pointString = $query->get(self::POINT_ARGUMENT);
 
-    private function stringToPoint(string $value): Point
-    {
-        $value = explode(",", $value);
-        return new Point(floatval($value[0]), floatval($value[1]));
+        $points = $parser->extractPoints($pointString);
+
+
+        if (null === $query->get(self::DATE_ARGUMENT)) {
+            throw new InvalidArgumentException("no date given", self::INVALID_ARGUMENT_CODE);
+        }
+        /** @var string $dateString */
+        $dateString = $query->get(self::DATE_ARGUMENT);
+        $date = $parser->extractDate($dateString);
+        return new GetWeatherRequest($points, $date);
     }
 }
