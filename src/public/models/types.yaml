@@ -1,0 +1,12 @@
+DateTime:
+  type: string
+  example: "2024-01-01 12:30"
+  pattern: ^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2}(\.\d{1,6})?)?$
+
+Point:
+  type: string
+  example: 48.867,2.333
+
+Id:
+  type: string
+  example: weather_db6e3f314cd5134de351a135fb315a35

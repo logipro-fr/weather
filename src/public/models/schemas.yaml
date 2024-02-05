@@ -1,0 +1,63 @@
+WeatherInfoSchema:
+  type: object
+  properties:
+    id:
+      type: string
+      example: weather_db6e3f314cd5134de351a135fb315a35
+    latitude:
+      type: float
+      example: 48.867
+    longitude:
+      type: float
+      example: 2.333
+    date:
+      $ref: '../models/types.yaml#/DateTime'
+      example: "2024-01-01 12:30:00"
+    historical:
+      type: boolean
+      example: false
+    result:
+      type: object
+      example: {weather: good, temperature: 0.4}
+      description: the result of the API query
+  
+    
+HelloSchema:
+  type: object
+  properties: 
+    Hello:
+      type: string
+      example: World!
+  
+BaseBadResponseSchema:
+  allOf:
+    - $ref: '#/BaseResponseSchema'
+    - type: object
+      properties:
+        success:
+          example: false
+        data:
+          example: {}
+  
+BaseGoodResponseSchema:
+  allOf:
+    - $ref: '#/BaseResponseSchema'
+    - type: object
+      properties:
+        success:
+          example: true
+        errorCode:
+          example: ""
+        message:
+          example: ""
+
+BaseResponseSchema:
+  properties:
+    success:
+      type: boolean
+    data:
+      type: object
+    errorCode:
+      type: string
+    message:
+      type: string
