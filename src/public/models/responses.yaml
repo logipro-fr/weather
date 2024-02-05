@@ -1,0 +1,68 @@
+MultiWeatherResponse:
+  description: OK
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '../models/schemas.yaml#/BaseGoodResponseSchema'
+          - type: object
+            properties:
+              data: 
+                type: array
+                items:
+                  $ref: "../models/schemas.yaml#/WeatherInfoSchema"
+                minItems: 1
+
+SingleWeatherResponse:
+  description: OK
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '../models/schemas.yaml#/BaseGoodResponseSchema'
+          - type: object
+            properties:
+              data: 
+                $ref: "../models/schemas.yaml#/WeatherInfoSchema"
+
+CommonMalformedErrorResponse:
+  description: Bad Request
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '../models/schemas.yaml#/BaseBadResponseSchema'
+          - type: object
+            properties:
+              errorCode: 
+                example: "invalid_argument"
+              message:
+                example: date format invalid, should look like "YYYY-MM-DD hh:mm:ss"
+
+CommonNotFoundErrorResponse:
+  description: Not Found
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '../models/schemas.yaml#/BaseBadResponseSchema'
+          - type: object
+            properties:
+              errorCode: 
+                example: "weatherinfo_not_found_exception"
+              message:
+                example: WeatherInfo of point "48.867,2.333" at date 2024-01-01 12:30:00 not found
+
+ExternalErrorResponse:
+  description: Bad Gateway
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '../models/schemas.yaml#/BaseBadResponseSchema'
+          - type: object
+            properties:
+              errorCode: 
+                example: "API_connectivity_exception"
+              message:
+                example: an error as occurred on an external API

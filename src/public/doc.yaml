@@ -14,31 +14,18 @@ paths:
         - Weather
       summary: Return weather from outside API
       description: >-
-        Fetches the weather based on point(s) and a date.
+        Fetches the weather from an API based on point(s) and a date.
       parameters:
-        - in:  query
-          name: date
-          date: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
-          description: date, in format "YYYY-MM-DD hh:mm:ss.uuuuuu"
-          required: true
-          example: "2024-01-01 12:30:00"
-          schema:
-            type: string
-        - in:  query
-          name: points
-          points: point as "[lat],[lon]", separated by ";"
-          description: point as "[lat],[lon]", separated by ";"
-          required: true
-          example: 48.867,2.333
-          schema:
-            type: string
+        - $ref: "#/components/parameters/DateTimeParam"
+        - $ref: "#/components/parameters/PointsParam"
       responses:
         "200":
-          description: Weather data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Weather"
+          $ref: '#components/responses/MultiWeather'
+        "400":
+          $ref: '#components/responses/CommonMalformed'
+        "502":
+          $ref: '#components/responses/ExternalError'
+
 
   /api/v1/data/by-id:
     get:
@@ -48,27 +35,12 @@ paths:
       description: >-
         Searches database for the weather based on it's ID.
       parameters:
-        - in:  query
-          name: id
-          date: id of the corresponding weather
-          description: identifier of the corresponding weather
-          required: true
-          example: "weather_db6e3f314cd5134de351a135fb315a35"
-          schema:
-            type: string
+        - $ref: "#/components/parameters/IdParam"
       responses:
         "200":
-          description: Weather data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/WeatherInfo"
+          $ref: '#components/responses/SingleWeather'
         "404":
-          description: Weather data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/NotFound"
+          $ref: '#components/responses/CommonNotFound'
 
   /api/v1/data/by-date-point:
     get:
@@ -78,35 +50,17 @@ paths:
       description: >-
         Searches database for the weather based on it's date and point.
       parameters:
-        - in:  query
-          name: point
-          date: point researched
-          description: point for which we want to know the weather
-          required: true
-          example: "48.867,2.333"
-          schema:
-            type: string
-        - in:  query
-          name: date
-          date: date researched
-          description: date for which we want to know the weather
-          required: true
-          example: "2024-01-01 12:00:00"
-          schema:
-            type: string
+        - $ref: "#/components/parameters/PointParam"
+        - $ref: "#/components/parameters/DateTimeParam"
+        - $ref: "#/components/parameters/HistoricalParam"
+        - $ref: "#/components/parameters/ExactParam"
       responses:
         "200":
-          description: Weather data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/WeatherInfo"
+          $ref: '#components/responses/SingleWeather'
+        "400":
+          $ref: '#components/responses/CommonMalformed'
         "404":
-          description: Weather data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/NotFound"
+          $ref: '#components/responses/CommonNotFound'
 
   /api/v1/hello:
     get:
@@ -125,47 +79,46 @@ paths:
 
 components:
   schemas:
+    BaseResponse:
+      $ref: '../models/schemas.yaml#/BaseResponseSchema'
+
     WeatherInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          example: weather_db6e3f314cd5134de351a135fb315a35
-        latitude:
-          type: float
-          example: 41.867
-        longitude:
-          type: float
-          example: 2.333
-        date:
-          type: string
-          example: 2024-01-01 12:00:00.000000
-        historical:
-          type: boolean
-          example: false
-        result:
-          type: object
-          example: {weather: good, temperature: 0.4}
-          description: the result of the API query
+      $ref: '../models/schemas.yaml#/WeatherInfoSchema'
 
-    NotFound:
-      type: object
-      properties:
-        code: 
-          type: integer
-          example: 404
-        message:
-          type: string
-          example: "Object WeatherInfo of ID \"weather_db6e3f314cd5134de351a135fb315a35\" not found"
-
-    Weather:
-      type: array
-      items:
-        $ref: "#/components/schemas/WeatherInfo"
-    
     Hello:
-      type: object
-      properties: 
-        Hello:
-          type: string
-          example: World!
+      $ref: '../models/schemas.yaml#/HelloSchema'
+  
+  parameters:
+    DateTimeParam:
+      $ref: '../models/parameters.yaml#/DateTimeParam'
+      
+    PointParam:
+      $ref: '../models/parameters.yaml#/PointParam'
+
+    PointsParam:
+      $ref: '../models/parameters.yaml#/PointsParam'
+
+    IdParam:
+      $ref: '../models/parameters.yaml#/IdParam'
+
+    HistoricalParam:
+      $ref: '../models/parameters.yaml#/HistoricalParam'
+
+    ExactParam:
+      $ref: '../models/parameters.yaml#/ExactParam'
+
+  responses:
+    MultiWeather:
+      $ref: '../models/responses.yaml#/MultiWeatherResponse'
+
+    SingleWeather:
+      $ref: '../models/responses.yaml#/SingleWeatherResponse'
+
+    ExternalError:
+      $ref: '../models/responses.yaml#/ExternalErrorResponse'
+      
+    CommonMalformed:
+      $ref: '../models/responses.yaml#/CommonMalformedErrorResponse'
+    
+    CommonNotFound:
+      $ref: '../models/responses.yaml#/CommonNotFoundErrorResponse'

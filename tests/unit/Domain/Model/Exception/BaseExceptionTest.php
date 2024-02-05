@@ -18,8 +18,9 @@ class BaseExceptionTest extends TestCase
 
     public function testCreate(): void
     {
-        $error = new ($this->exceptionClass)("no", 500);
+        $error = new ($this->exceptionClass)("no");
         $this->assertInstanceOf(BaseException::class, $error);
         $this->assertEquals($this->exceptionType, $error->getType());
+        $this->assertEquals(0, $error->getCode());
     }
 }

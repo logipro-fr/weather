@@ -2,24 +2,32 @@
 
 namespace Weather\Application\Error;
 
-use stdClass;
+use JsonSerializable;
 use Weather\Application\Presenter\AbstractResponse;
 
 class ErrorResponse extends AbstractResponse
 {
     public function __construct(
         int $errorCode,
-        private string|stdClass $message,
-        private string $type
+        private string $message,
+        private string $type,
+        private mixed $data = null
     ) {
         $this->statusCode = $errorCode;
     }
 
-    /**
-     * @return array<string,int|string|stdClass>
-     */
-    public function getData(): array
+    public function getData(): mixed
     {
-        return ["code" => $this->statusCode, "type" => $this->type, "error" => $this->message];
+        return $this->data;
+    }
+
+    public function getError(): ?string
+    {
+        return $this->type;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
     }
 }

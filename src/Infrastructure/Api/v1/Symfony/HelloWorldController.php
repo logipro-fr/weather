@@ -5,7 +5,6 @@ namespace Weather\Infrastructure\Api\v1\Symfony;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 use function Safe\json_encode;
 
@@ -22,8 +21,8 @@ class HelloWorldController extends AbstractController
             "currently designed by Yuko Yamaguchi, and owned by the Japanese company Sanrio. (source: wikipedia)",
         "there is a bug in this code!!!\",\"there really\":\"isn't\""
     ];
-    #[Route('/api/v1/hello', name: "hello world", methods: ['GET'])]
-    public function helloWorld(Request $request): Response
+
+    public function execute(Request $request): Response
     {
         $res = ["Hello" => self::ARRAY[array_rand(self::ARRAY)]];
         return new Response(json_encode($res), 200, ["Content-Type" => "application/json"]);

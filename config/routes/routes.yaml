@@ -1,3 +1,15 @@
-controllers:
-  resource: ../../src/Infrastructure/Api/v1/
-  type: attribute
+fetch_data_from_API:
+  path:       /api/v1/fetch
+  controller: 'Weather\Infrastructure\Api\v1\Symfony\GetNewWeatherController::execute'
+
+get_stored_from_datepoint:
+  path:       /api/v1/data/by-date-point
+  controller: 'Weather\Infrastructure\Api\v1\Symfony\GetExistingWeatherByDatePointController::execute'
+
+get_stored_from_id:
+  path:       /api/v1/data/by-id
+  controller: 'Weather\Infrastructure\Api\v1\Symfony\GetExistingWeatherByIdController::execute'
+
+hello:
+  path:       /api/v1/hello
+  controller: 'Weather\Infrastructure\Api\v1\Symfony\HelloWorldController::execute'

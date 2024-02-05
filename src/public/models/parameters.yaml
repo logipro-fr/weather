@@ -1,0 +1,64 @@
+DateTimeParam:
+  in:  query
+  name: date
+  date: date, in format "YYYY-MM-DD hh:mm(:ss(.uuuuuu))"
+  description: date, in format "YYYY-MM-DD hh:mm(:ss(.uuuuuu))"
+  required: true
+  example: "2024-01-01 12:30"
+  schema:
+    $ref: '../models/types.yaml#/DateTime'
+
+PointParam:
+  in:  query
+  name: point
+  points: point as "[lat],[lon]"
+  description: point as "[lat],[lon]"
+  required: true
+  example: 48.867,2.333
+  schema:
+    $ref: '../models/types.yaml#/Point'
+
+PointsParam:
+  in:  query
+  name: points
+  points: points as "[lat],[lon]", separated by ";"
+  description: point as "[lat],[lon]", separated by ";"
+  required: true
+  example: 48.867,2.333;48.8605,2.3376
+  schema:
+    type: string
+    example: 48.867,2.333;48.8605,2.3376
+
+IdParam:
+  in:  query
+  name: id
+  id: identifier of the corresponding weather
+  description: identifier of the corresponding weather
+  required: true
+  example: "weather_db6e3f314cd5134de351a135fb315a35"
+  schema:
+    type: string
+    example: "weather_db6e3f314cd5134de351a135fb315a35"
+
+HistoricalParam:
+  in: query
+  name: historicalOnly
+  historicalOnly: If the value is historical, null if it does not matter
+  description: If the value is historical, null if it does not matter
+  default: null
+  example: false
+  schema:
+    type: bool
+    example: false
+
+
+ExactParam:
+  in: query
+  name: exact
+  exact: If the search should be exact (true) or near (false)
+  description: If the search should be exact (true) or near (false)
+  default: false
+  example: false
+  schema:
+    type: bool
+    example: false
