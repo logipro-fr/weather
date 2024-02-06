@@ -13,6 +13,7 @@ use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoId;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
+use Weather\Infrastructure\Persistence\Doctrine\Types\SafeDateTimeImmutableType;
 
 /**
  * @extends EntityRepository<WeatherInfo>
@@ -62,7 +63,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         $conditionA = $qb->expr()
             ->eq("w.point", "'" . $point->__toString() . "'");
         $conditionB = $qb->expr()
-            ->eq("w.date", $date->format("'Y-m-d H:i:s'"));
+            ->eq("w.date", $date->format("'" . SafeDateTimeImmutableType::FORMAT . "'"));
         if ($historical != null) {
             $conditionC = $qb->expr()
             ->eq("w.isHistorical", $historical);
@@ -77,7 +78,7 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         $result = $info->getQuery()->getResult();
         if ($result == null) {
             throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
-                $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found", 404);
+                $point . "\" at date " . $date->format(SafeDateTimeImmutableType::FORMAT) . " not found", 404);
         }
         return $result[0];
     }
@@ -100,8 +101,8 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
         $conditionA = $qb->expr()
             ->between(
                 "w.date",
-                $before->format("'Y-m-d H:i:s'"),
-                $after->format("'Y-m-d H:i:s'")
+                $before->format("'Y-m-d H:i:s.u'"),
+                $after->format("'Y-m-d H:i:s.u'")
             );
 
         if ($historical != null) {
@@ -124,6 +125,6 @@ class WeatherInfoRepositoryDoctrine extends EntityRepository implements WeatherI
             }
         }
         throw new WeatherInfoNotFoundException(($historical ? "Historical " : "") . "WeatherInfo of point \"" .
-            $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found", 404);
+            $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found", 404);
     }
 }

@@ -25,8 +25,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     {
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
@@ -41,13 +41,13 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $pointa = new Point(0, 0);
         $pointb = new Point(0, 0);
         $datea = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $dateb = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 13:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 13:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $infoa = new WeatherInfo($pointa, $datea, "{\"weather\":\"great\"}");
@@ -63,8 +63,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     {
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
@@ -89,8 +89,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     {
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $infoa = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
@@ -111,8 +111,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     {
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
@@ -127,8 +127,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     {
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", true);
@@ -143,8 +143,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
     {
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
@@ -161,19 +161,19 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $pointA = new Point(0, 0);
         $dateA = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $pointB = new Point(1, 1);
         $dateB = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:50:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
 
         $this->expectExceptionMessage("WeatherInfo of point \"" .
-        $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s") . " not found");
+        $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
         $this->expectExceptionCode(404);
 
         $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
@@ -187,13 +187,13 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $pointA = new Point(0.123, 4.621);
         $pointB = new Point(0.124, 4.620);
         $dateA = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $dateB = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:10:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:10:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
@@ -209,13 +209,13 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $pointA = new Point(0.123, 4.621);
         $pointB = new Point(0.124, 4.620);
         $dateA = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $dateB = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:10:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:10:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", true);
@@ -232,19 +232,19 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $pointA = new Point(0, 0);
         $dateA = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
         $pointB = new Point(1, 1);
         $dateB = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:50:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:50:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
 
         $this->expectExceptionMessage("WeatherInfo of point \"" .
-        $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s") . " not found");
+        $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
         $this->expectExceptionCode(404);
 
         $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
@@ -259,13 +259,13 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
 
         $this->expectExceptionMessage("Historical WeatherInfo of point \"" .
-        $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found");
+        $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
         $this->expectExceptionCode(404);
 
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
@@ -280,13 +280,13 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
 
         $point = new Point(0, 0);
         $date = DateTimeImmutable::createFromFormat(
-            "Y-m-d H:i:s",
-            "2024-01-01 12:00:01",
+            "Y-m-d H:i:s.u",
+            "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
 
         $this->expectExceptionMessage("Historical WeatherInfo of point \"" .
-        $point . "\" at date " . $date->format("Y-m-d H:i:s") . " not found");
+        $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
 
         $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
         $this->repository->save($info);

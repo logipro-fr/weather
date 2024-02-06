@@ -7,11 +7,12 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use Exception;
 use Safe\DateTimeImmutable;
 
 class SafeDateTimeImmutableType extends Type
 {
+    public const FORMAT = "Y-m-d H:i:s.u";
+
     public function getName(): string
     {
         return "safe_datetime_immutable";
@@ -23,7 +24,7 @@ class SafeDateTimeImmutableType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        return $value->format($platform->getDateTimeFormatString());
+        return $value->format(self::FORMAT);
     }
 
     /**
@@ -33,7 +34,7 @@ class SafeDateTimeImmutableType extends Type
     public function convertToPHPValue($value, AbstractPlatform $platform): DateTimeImmutable
     {
         return DateTimeImmutable::createFromFormat(
-            $platform->getDateTimeFormatString(),
+            self::FORMAT,
             $value,
             new DateTimeZone(date_default_timezone_get())
         );
@@ -44,6 +45,6 @@ class SafeDateTimeImmutableType extends Type
      */
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return Types::DATETIME_MUTABLE;
+        return Types::DATETIME_MUTABLE . "(6)";
     }
 }

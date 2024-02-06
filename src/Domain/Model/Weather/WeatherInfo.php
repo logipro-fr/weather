@@ -77,7 +77,7 @@ class WeatherInfo implements JsonSerializable
             "id" => $this->getId(),
             "latitude" => $this->getPoint()->getLatitude(),
             "longitude" => $this->getPoint()->getLongitude(),
-            "date" => $this->getDate()->format("Y-m-d H:i:s"),
+            "date" => $this->getDate()->format("Y-m-d H:i:s.u"),
             "historical" => $this->isHistorical(),
             "result" => json_decode($this->getData())
         ];
