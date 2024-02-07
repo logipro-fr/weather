@@ -14,6 +14,7 @@ git clone git@github.com:logipro-fr/weather.git
 
 * docker
 * git
+* bash shell
 
 
 ## Unit test

@@ -25,7 +25,7 @@ class ImportLegacyControllerTest extends TestCase
     {
         $this->assertInstanceOf(LegacyFileController::class, $this->route);
     }
-    
+
     public function testExecute(): void
     {
 
@@ -34,7 +34,7 @@ class ImportLegacyControllerTest extends TestCase
         ];
         $request = new Request($query);
 
-        $target = ["success" => true,"data" => ["size"=>2500],"errorCode" => null,"message" => null];
+        $target = ["success" => true,"data" => ["size" => 2500],"errorCode" => null,"message" => null];
 
         $response = $this->route->execute($request);
 
