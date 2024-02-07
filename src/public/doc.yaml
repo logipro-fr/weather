@@ -62,6 +62,17 @@ paths:
         "404":
           $ref: '#components/responses/CommonNotFound'
 
+  /api/v1/legacy/file:
+    get:
+      tags:
+        - Legacy
+      summary: Fetches legacy data from files
+      description: >-
+        Fetches legacy data from files
+      responses:
+        "200":
+          $ref: "#/components/responses/LegacyImport"  
+
   /api/v1/hello:
     get:
       tags:
@@ -113,6 +124,9 @@ components:
 
     SingleWeather:
       $ref: '../models/responses.yaml#/SingleWeatherResponse'
+
+    LegacyImport:
+      $ref: '../models/responses.yaml#/LegacyImportResponse'
 
     ExternalError:
       $ref: '../models/responses.yaml#/ExternalErrorResponse'

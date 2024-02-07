@@ -20,14 +20,20 @@ WeatherInfoSchema:
       type: object
       example: {weather: good, temperature: 0.4}
       description: the result of the API query
-  
-    
+
 HelloSchema:
   type: object
   properties: 
     Hello:
       type: string
       example: World!
+
+LegacyImportSchema:
+  type: object
+  properties: 
+    size:
+      type: int
+      example: 2500
   
 BaseBadResponseSchema:
   allOf:
@@ -36,8 +42,6 @@ BaseBadResponseSchema:
       properties:
         success:
           example: false
-        data:
-          example: {}
   
 BaseGoodResponseSchema:
   allOf:
@@ -52,6 +56,7 @@ BaseGoodResponseSchema:
           example: ""
 
 BaseResponseSchema:
+  type: object
   properties:
     success:
       type: boolean

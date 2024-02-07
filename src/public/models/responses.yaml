@@ -25,6 +25,18 @@ SingleWeatherResponse:
               data: 
                 $ref: "../models/schemas.yaml#/WeatherInfoSchema"
 
+LegacyImportResponse:
+  description: OK
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: '../models/schemas.yaml#/BaseGoodResponseSchema'
+          - type: object
+            properties:
+              data: 
+                $ref: "../models/schemas.yaml#/LegacyImportSchema"
+
 CommonMalformedErrorResponse:
   description: Bad Request
   content:

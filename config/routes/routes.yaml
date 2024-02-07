@@ -13,3 +13,7 @@ get_stored_from_id:
 hello:
   path:       /api/v1/hello
   controller: 'Weather\Infrastructure\Api\v1\Symfony\HelloWorldController::execute'
+
+import_legacy_file:
+  path:       /api/v1/legacy/file
+  controller: 'Weather\Infrastructure\Api\v1\Symfony\LegacyFileController::execute"
