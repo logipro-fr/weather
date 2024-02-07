@@ -124,7 +124,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
         );
         $this->repository->save($info);
         $target = '{"success":false,"data":null,"errorCode":"weatherinfo_not_found_exception",' .
-            '"message":"WeatherInfo of point \"2.142,40.531\" at date 2024-01-01 12:35:00 not found"}';
+            '"message":"WeatherInfo of point \"2.142,40.531\" at date 2024-01-01 12:35:00.000000 not found"}';
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
         $response = $route->execute($request);
@@ -153,7 +153,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
         $this->repository->save($info);
         $target = '{"success":false,"data":null,"errorCode":"weatherinfo_not_found_exception",' .
             '"message":"Historical WeatherInfo of point \"2.142,40.531\" ' .
-            'at date 2024-01-01 12:35:00 not found"}';
+            'at date 2024-01-01 12:35:00.000000 not found"}';
 
         $route = new GetExistingWeatherByDatePointController($this->repository);
         $response = $route->execute($request);

@@ -123,7 +123,7 @@ class WeatherInfoTest extends TestCase
             "id" => $info->getId(),
             "latitude" => $point->getLatitude(),
             "longitude" => $point->getLongitude(),
-            "date" => $date->format("Y-m-d H:i:s"),
+            "date" => $date->format("Y-m-d H:i:s.u"),
             "historical" => $historical,
             "result" => json_decode($result)
         ];

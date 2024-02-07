@@ -17,9 +17,9 @@ class SafeDateTimeImmutableTypeTest extends TestCase
 
     public function testConvertToDatabaseValue(): void
     {
-        $date = new DateTimeImmutable("2024-01-01 13:55:59");
+        $date = new DateTimeImmutable("2024-01-01 13:55:59.012345");
         $platform = $this->createMock(AbstractPlatform::class);
-        $platform->method("getDateTimeFormatString")->willReturn("Y-m-d H:i:s");
+        $platform->method("getDateTimeFormatString")->willReturn("Y-m-d H:i:s.u");
 
         $result = (new SafeDateTimeImmutableType())->convertToDatabaseValue($date, $platform);
 
@@ -29,14 +29,13 @@ class SafeDateTimeImmutableTypeTest extends TestCase
 
     public function testConvertToPHPValue(): void
     {
-        $date = "2024-01-01 00:00:10";
+        $date = "2024-01-01 00:00:10.010101";
         $platform = $this->createMock(AbstractPlatform::class);
-        $platform->method("getDateTimeFormatString")->willReturn("Y-m-d H:i:s");
 
         $result = (new SafeDateTimeImmutableType())->convertToPHPValue($date, $platform);
 
         $this->assertInstanceOf(DateTimeImmutable::class, $result);
-        $this->assertEquals($date, $result->format("Y-m-d H:i:s"));
+        $this->assertEquals($date, $result->format("Y-m-d H:i:s.u"));
     }
 
     public function testGetSQLDeclaration(): void
@@ -44,6 +43,6 @@ class SafeDateTimeImmutableTypeTest extends TestCase
         $platform = $this->createMock(AbstractPlatform::class);
         $result = (new SafeDateTimeImmutableType())->getSQLDeclaration([], $platform);
 
-        $this->assertEquals(Types::DATETIME_MUTABLE, $result);
+        $this->assertEquals(Types::DATETIME_MUTABLE . "(6)", $result);
     }
 }
