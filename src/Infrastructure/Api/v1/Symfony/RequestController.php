@@ -22,6 +22,7 @@ abstract class RequestController extends AbstractController
     private const CODE_RANGE_LOW = 100;
     private const CODE_RANGE_HIGH = 599;
     private const CODE_UNKNOWN_INTERNAL = 500;
+    protected const INVALID_ARGUMENT_CODE = 400;
 
     private ServiceInterface $service;
 

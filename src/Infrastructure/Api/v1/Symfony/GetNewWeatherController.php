@@ -9,13 +9,11 @@ use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
-use Weather\Infrastructure\Api\v1\ServiceController;
 use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
 // fetch_data_from_API: /api/v1/fetch
 class GetNewWeatherController extends RequestController
 {
-    private const INVALID_ARGUMENT_CODE = 400;
     private const POINT_ARGUMENT = "points";
     private const DATE_ARGUMENT = "date";
 

@@ -11,7 +11,6 @@ use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 
 class GetExistingWeatherByIdController extends RequestController
 {
-    private const INVALID_ARGUMENT_CODE = 400;
     private const IDENTIFIER_ARGUMENT = "id";
 
     public function __construct(protected WeatherInfoRepositoryInterface $repository)

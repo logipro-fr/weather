@@ -13,7 +13,6 @@ use Weather\Infrastructure\Shared\Tools\ArgumentParser;
 
 class GetExistingWeatherByDatePointController extends RequestController
 {
-    private const INVALID_ARGUMENT_CODE = 400;
     private const POINT_ARGUMENT = "point";
     private const DATE_ARGUMENT = "date";
 
