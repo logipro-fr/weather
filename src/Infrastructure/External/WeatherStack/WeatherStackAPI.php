@@ -47,8 +47,6 @@ class WeatherStackAPI implements WeatherApiInterface
      */
     public function getFromPoints(array $points, DateTimeImmutable $date): array
     {
-        $historicalDate = $date->format("Y-m-d");
-
         $type = 'currentQuery';
         $past = $date->getTimestamp() < (new DateTimeImmutable())->getTimestamp() - self::CURRENT_BACK_MARGIN;
         if ($past) {

@@ -4,8 +4,8 @@ namespace Weather\Tests\Features;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
-use Weather\Application\ImportLegacy\ImportLegacy;
-use Weather\Application\ImportLegacy\ImportLegacyRequest;
+use Weather\Application\ImportLegacy\ImportLegacyFile;
+use Weather\Application\ImportLegacy\ImportLegacyFileRequest;
 use Weather\Application\Presenter\PresenterObject;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
@@ -16,10 +16,10 @@ use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
 class LegacyImportContext implements Context
 {
     private string $source;
-    private ImportLegacy $service;
+    private ImportLegacyFile $service;
     private WeatherInfoRepositoryInterface $repository;
     private PresenterObject $presenter;
-    private ImportLegacyRequest $request;
+    private ImportLegacyFileRequest $request;
     /**
      * Initializes context.
      *
@@ -31,7 +31,7 @@ class LegacyImportContext implements Context
     {
         $this->presenter = new PresenterObject();
         $this->repository = new WeatherInfoRepositoryInMemory();
-        $this->service = new ImportLegacy($this->presenter, $this->repository);
+        $this->service = new ImportLegacyFile($this->presenter, $this->repository);
     }
 
     /**
@@ -47,7 +47,7 @@ class LegacyImportContext implements Context
      */
     public function theUserRequestToHaveItImported(): void
     {
-        $this->request = new ImportLegacyRequest($this->source);
+        $this->request = new ImportLegacyFileRequest($this->source);
     }
 
     /**

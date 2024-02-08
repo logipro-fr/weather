@@ -15,7 +15,7 @@ use Weather\Infrastructure\Shared\Tools\FileSystemUtils;
 use function Safe\file_get_contents;
 use function Safe\json_decode;
 
-class ImportLegacy implements ServiceInterface
+class ImportLegacyFile implements ServiceInterface
 {
     public function __construct(
         private readonly AbstractPresenter $presenter,
@@ -24,7 +24,7 @@ class ImportLegacy implements ServiceInterface
     }
 
     /**
-     * @param ImportLegacyRequest $request
+     * @param ImportLegacyFileRequest $request
      */
     public function execute(RequestInterface $request): void
     {
@@ -58,6 +58,7 @@ class ImportLegacy implements ServiceInterface
             $latitude = floatval($coordinates[0]);
             $longitude = floatval($coordinates[1]);
             $point = new Point($latitude, $longitude);
+            $source = Source::WEATHERSTACK;
 
             /**
              * @var \stdClass $jsonData
@@ -66,7 +67,7 @@ class ImportLegacy implements ServiceInterface
             $jsonData = json_decode($data);
             $date = new DateTimeImmutable($jsonData->location->localtime);
 
-            $this->repository->save(new WeatherInfo($point, $date, $data, Source::DEBUG, false));
+            $this->repository->save(new WeatherInfo($point, $date, $data, $source, false));
         }
         return count($weatherDataPoints);
     }
