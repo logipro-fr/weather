@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Infrastructure\Api\v1\Symfony\GetNewWeatherController;
 use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
@@ -39,6 +40,7 @@ class GetNewWeatherControllerTest extends TestCase
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             $api->getLastReturnFromPoint()->getData(),
+            Source::DEBUG,
             false,
             $api->getLastReturnFromPoint()->getId()
         )
@@ -67,6 +69,7 @@ class GetNewWeatherControllerTest extends TestCase
                 new Point(2.1, 40.531),
                 DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-02 12:30"),
                 $api->getLastReturnFromMultiplePoints()[0]->getData(),
+                Source::DEBUG,
                 false,
                 $api->getLastReturnFromMultiplePoints()[0]->getId()
             ),
@@ -74,6 +77,7 @@ class GetNewWeatherControllerTest extends TestCase
                 new Point(5.652, 41.666),
                 DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-02 12:30"),
                 $api->getLastReturnFromMultiplePoints()[1]->getData(),
+                Source::DEBUG,
                 false,
                 $api->getLastReturnFromMultiplePoints()[1]->getId()
             )

@@ -5,6 +5,7 @@ doctrine:
       weather_info_id: Weather\Infrastructure\Persistence\Doctrine\Types\WeatherInfoIdType
       safe_datetime_immutable: Weather\Infrastructure\Persistence\Doctrine\Types\SafeDateTimeImmutableType
       point: Weather\Infrastructure\Persistence\Doctrine\Types\PointType
+      source: Weather\Infrastructure\Persistence\Doctrine\Types\SourceType
   orm:
     auto_generate_proxy_classes: true
     enable_lazy_ghost_objects: true

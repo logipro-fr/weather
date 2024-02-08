@@ -12,6 +12,7 @@ use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Weather\Domain\Model\Exceptions\ApiException;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Infrastructure\External\WeatherStack\WeatherStackAPI;
@@ -225,7 +226,7 @@ class WeatherStackAPITest extends TestCase
 
     public function testGetName(): void
     {
-        $this->assertEquals("WeatherStack", $this->api->getName());
+        $this->assertEquals(Source::WEATHERSTACK, $this->api->getName());
     }
 
     /**

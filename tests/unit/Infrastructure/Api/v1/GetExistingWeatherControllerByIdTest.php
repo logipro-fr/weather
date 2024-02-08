@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoId;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
@@ -41,6 +42,7 @@ class GetExistingWeatherControllerByIdTest extends TestCase
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
+            Source::DEBUG,
             true,
             new WeatherInfoId($query["id"])
         ),"errorCode" => null,"message" => null];

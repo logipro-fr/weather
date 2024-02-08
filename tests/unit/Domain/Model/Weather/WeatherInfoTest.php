@@ -8,6 +8,7 @@ use Safe\DateTimeImmutable;
 use Weather\Domain\Model\Event\WeatherInfoCreated;
 use Weather\Domain\Model\Weather\WeatherInfoId;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Tests\Domain\TestSubscriber;
 
@@ -18,8 +19,8 @@ class WeatherInfoTest extends TestCase
         $point = new Point(0, 0);
         $createdDate = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
-        $info = new WeatherInfo($point, $createdDate, $data);
-        $info2 = new WeatherInfo($point, $createdDate, $data, true);
+        $info = new WeatherInfo($point, $createdDate, $data, Source::DEBUG);
+        $info2 = new WeatherInfo($point, $createdDate, $data, Source::DEBUG, true);
 
         $this->assertEquals($point, $info->getPoint());
         $this->assertEquals($createdDate, $info->getDate());
@@ -38,7 +39,7 @@ class WeatherInfoTest extends TestCase
         $point = new Point(0, 0);
         $createdDate = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
-        $info = new WeatherInfo($point, $createdDate, $data);
+        $info = new WeatherInfo($point, $createdDate, $data, Source::DEBUG);
 
         EventPublisher::instance()->distribute();
         $event = $spy->domainEvent;
@@ -52,7 +53,7 @@ class WeatherInfoTest extends TestCase
         $pointA = new Point(0.01, 0.05);
         $dateA = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
-        $info = new WeatherInfo($pointA, $dateA, $data);
+        $info = new WeatherInfo($pointA, $dateA, $data, Source::DEBUG);
 
         $pointB = new Point(0.01 + 0.05, 0.0);
         $dateB = new DateTimeImmutable("2020-01-01 12:30");
@@ -65,7 +66,7 @@ class WeatherInfoTest extends TestCase
         $pointA = new Point(1.01, 0.05);
         $dateA = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
-        $info = new WeatherInfo($pointA, $dateA, $data);
+        $info = new WeatherInfo($pointA, $dateA, $data, Source::DEBUG);
 
         $pointB = new Point(0.008, 0.053);
         $dateB = new DateTimeImmutable("2020-01-01 12:15");
@@ -78,7 +79,7 @@ class WeatherInfoTest extends TestCase
         $pointA = new Point(0.01, -1.05);
         $dateA = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
-        $info = new WeatherInfo($pointA, $dateA, $data);
+        $info = new WeatherInfo($pointA, $dateA, $data, Source::DEBUG);
 
         $pointB = new Point(0.008, 0.053);
         $dateB = new DateTimeImmutable("2020-01-01 12:15");
@@ -91,7 +92,7 @@ class WeatherInfoTest extends TestCase
         $pointA = new Point(0.01, 0.05);
         $dateA = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
-        $info = new WeatherInfo($pointA, $dateA, $data);
+        $info = new WeatherInfo($pointA, $dateA, $data, Source::DEBUG);
 
         $pointB = new Point(0.008, 0.053);
         $dateB = new DateTimeImmutable("2020-01-01 13:00");
@@ -104,7 +105,7 @@ class WeatherInfoTest extends TestCase
         $pointA = new Point(0.01, 0.05);
         $dateA = new DateTimeImmutable("2020-01-01 12:00");
         $data = "{}";
-        $info = new WeatherInfo($pointA, $dateA, $data);
+        $info = new WeatherInfo($pointA, $dateA, $data, Source::DEBUG);
 
         $pointB = new Point(0.01, 0.05);
         $dateB = new DateTimeImmutable("2020-01-01 12:00");
@@ -118,16 +119,39 @@ class WeatherInfoTest extends TestCase
         $date = new DateTimeImmutable("2020-01-01 13:00");
         $historical = true;
         $result = '{"this":"is","ok!":5}';
-        $info = new WeatherInfo($point, $date, $result, $historical);
+        $source = Source::DEBUG;
+        $info = new WeatherInfo($point, $date, $result, $source, $historical);
         $target = [
-            "id" => $info->getId(),
-            "latitude" => $point->getLatitude(),
-            "longitude" => $point->getLongitude(),
-            "date" => $date->format("Y-m-d H:i:s.u"),
-            "historical" => $historical,
-            "result" => json_decode($result)
+            "id"            => $info->getId(),
+            "latitude"      => $point->getLatitude(),
+            "longitude"     => $point->getLongitude(),
+            "date"          => $date->format("Y-m-d H:i:s.u"),
+            "historical"    => $historical,
+            "source"        => Source::DEBUG,
+            "result"        => json_decode($result)
         ];
 
         $this->assertEquals($target, $info->jsonSerialize());
+    }
+
+    public function testSource(): void
+    {
+        $point = new Point(1.256, 5.156);
+        $date = new DateTimeImmutable("2020-01-01 13:00");
+        $historical = true;
+        $result = '{"this":"is","ok!":5}';
+        $source = Source::DEBUG;
+        $info = new WeatherInfo($point, $date, $result, $source, $historical);
+        $target = [
+            "id"            => $info->getId(),
+            "latitude"      => $point->getLatitude(),
+            "longitude"     => $point->getLongitude(),
+            "date"          => $date->format("Y-m-d H:i:s.u"),
+            "historical"    => $historical,
+            "source"        => Source::DEBUG,
+            "result"        => json_decode($result)
+        ];
+
+        $this->assertEquals($source, $info->getSource());
     }
 }

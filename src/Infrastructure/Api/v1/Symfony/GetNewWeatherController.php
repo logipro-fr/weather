@@ -10,6 +10,7 @@ use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Shared\Tools\ArgumentParser;
+use Weather\Tests\Features\FakeWeatherApi;
 
 // fetch_data_from_API: /api/v1/fetch
 class GetNewWeatherController extends RequestController
@@ -21,6 +22,7 @@ class GetNewWeatherController extends RequestController
         protected WeatherInfoRepositoryInterface $repository,
         protected WeatherApiInterface $api
     ) {
+        $this->api = new FakeWeatherApi();
     }
 
     protected function createService(): GetWeather

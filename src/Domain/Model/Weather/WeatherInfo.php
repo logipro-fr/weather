@@ -20,6 +20,7 @@ class WeatherInfo implements JsonSerializable
         private readonly Point $point,
         private readonly DateTimeImmutable $date,
         private readonly string $data,
+        private readonly Source $source,
         private readonly bool $isHistorical = false,
         private readonly WeatherInfoId $identifier = new WeatherInfoId()
     ) {
@@ -68,6 +69,11 @@ class WeatherInfo implements JsonSerializable
         return abs($this->date->getTimestamp() - $date->getTimestamp()) <= WeatherInfo::ACCEPTABLE_TIME_DIFF;
     }
 
+    public function getSource(): Source
+    {
+        return $this->source;
+    }
+
     /**
      * @return array<string,mixed>
      */
@@ -79,6 +85,7 @@ class WeatherInfo implements JsonSerializable
             "longitude" => $this->getPoint()->getLongitude(),
             "date" => $this->getDate()->format("Y-m-d H:i:s.u"),
             "historical" => $this->isHistorical(),
+            "source" => $this->getSource(),
             "result" => json_decode($this->getData())
         ];
     }
