@@ -133,4 +133,25 @@ class WeatherInfoTest extends TestCase
 
         $this->assertEquals($target, $info->jsonSerialize());
     }
+
+    public function testSource(): void
+    {
+        $point = new Point(1.256, 5.156);
+        $date = new DateTimeImmutable("2020-01-01 13:00");
+        $historical = true;
+        $result = '{"this":"is","ok!":5}';
+        $source = Source::DEBUG;
+        $info = new WeatherInfo($point, $date, $result, $source, $historical);
+        $target = [
+            "id"            => $info->getId(),
+            "latitude"      => $point->getLatitude(),
+            "longitude"     => $point->getLongitude(),
+            "date"          => $date->format("Y-m-d H:i:s.u"),
+            "historical"    => $historical,
+            "source"        => Source::DEBUG,
+            "result"        => json_decode($result)
+        ];
+
+        $this->assertEquals($source, $info->getSource());
+    }
 }

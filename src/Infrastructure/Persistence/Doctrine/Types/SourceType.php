@@ -12,7 +12,7 @@ class SourceType extends Type
 {
     public function getName(): string
     {
-        return "point";
+        return "source";
     }
 
     /**
@@ -21,7 +21,7 @@ class SourceType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        return strtoupper($value->getName());
+        return $value->getName();
     }
 
     /**
