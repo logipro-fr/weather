@@ -9,6 +9,7 @@ use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPointRequest;
 use Weather\Application\FetchData\ByDateAndPoint\FetchDataByDateAndPoint;
 use Weather\Application\Presenter\PresenterObject;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
@@ -26,7 +27,7 @@ class FetchDataByDateAndPointTest extends TestCase
             "2024-01-01 01",
             new DateTimeZone(date_default_timezone_get())
         );
-        $this->info = new WeatherInfo(new Point(41.867, 2.333), $date, "{\"weather\":\"good\"}");
+        $this->info = new WeatherInfo(new Point(41.867, 2.333), $date, "{\"weather\":\"good\"}", Source::DEBUG);
         $this->repository->save($this->info);
     }
 

@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Weather\Domain\Model\Exceptions\WeatherInfoNotFoundException;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoId;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
@@ -29,7 +30,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
 
         $this->repository->save($info);
         $info_returned = $this->repository->findById($info->getId());
@@ -50,8 +51,8 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 13:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $infoa = new WeatherInfo($pointa, $datea, "{\"weather\":\"great\"}");
-        $infob = new WeatherInfo($pointb, $dateb, "{\"weather\":\"bad\"}");
+        $infoa = new WeatherInfo($pointa, $datea, "{\"weather\":\"great\"}", Source::DEBUG);
+        $infob = new WeatherInfo($pointb, $dateb, "{\"weather\":\"bad\"}", Source::DEBUG);
 
         $this->repository->save($infoa);
         $this->repository->save($infob);
@@ -67,7 +68,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
 
         $returned = $this->repository->findById($info->getId());
@@ -93,10 +94,10 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $infoa = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
-        $infob = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
-        $infoc = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
-        $infod = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $infoa = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
+        $infob = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
+        $infoc = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
+        $infod = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($infoa);
         $this->repository->save($infob);
         $this->repository->save($infoc);
@@ -115,7 +116,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
 
         $returned = $this->repository->findByDateAndPoint($point, $date);
@@ -131,7 +132,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", true);
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG, true);
         $this->repository->save($info);
 
         $returned = $this->repository->findByDateAndPoint($point, $date, true);
@@ -147,7 +148,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:00:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
 
         $returned = $this->repository->findByDateAndPoint($point, $date);
@@ -176,7 +177,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
         $this->expectExceptionCode(404);
 
-        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
 
         $this->repository->findByDateAndPoint($pointB, $dateB);
@@ -196,7 +197,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:10:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
 
         $returned = $this->repository->findCloseByDateAndPoint($pointB, $dateB);
@@ -218,7 +219,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
             "2024-01-01 12:10:01.012345",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", true);
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", Source::DEBUG, true);
         $this->repository->save($info);
 
         $returned = $this->repository->findCloseByDateAndPoint($pointB, $dateB, true);
@@ -247,7 +248,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $pointB . "\" at date " . $dateB->format("Y-m-d H:i:s.u") . " not found");
         $this->expectExceptionCode(404);
 
-        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
 
         $this->repository->findCloseByDateAndPoint($pointB, $dateB);
@@ -268,7 +269,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
         $this->expectExceptionCode(404);
 
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
 
         $this->repository->findCloseByDateAndPoint($point, $date, true);
@@ -288,7 +289,7 @@ class WeatherInfoRepositoryInMemoryTest extends TestCase
         $this->expectExceptionMessage("Historical WeatherInfo of point \"" .
         $point . "\" at date " . $date->format("Y-m-d H:i:s.u") . " not found");
 
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
         $this->repository->save($info);
         $this->expectExceptionCode(404);
 

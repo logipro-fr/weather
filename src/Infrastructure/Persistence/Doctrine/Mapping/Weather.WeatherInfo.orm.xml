@@ -13,6 +13,7 @@
         <field name="point" type="point" column="point"/>
         <field name="date" type="safe_datetime_immutable" column="date"/>
         <field name="data" type="text" column="data"/>
+        <field name="source" type="source" column="source"/>
         <field name="isHistorical" type="boolean" column="is_historical"/>
     </entity>
 </doctrine-mapping>

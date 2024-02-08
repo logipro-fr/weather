@@ -9,6 +9,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Weather\Domain\Model\Exceptions\ApiException;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Infrastructure\External\WeatherApiInterface;
 use Weather\Infrastructure\Shared\Tools\SplitQuery;
 
@@ -17,7 +18,6 @@ use function Safe\json_encode;
 
 class WeatherStackAPI implements WeatherApiInterface
 {
-    private const NAME = "WeatherStack";
     private const CURRENT_BACK_MARGIN = 900;
     private const DATE_FORMAT = "Y-m-d H:i";
     private const HTTP_BAD_GATEWAY = 502;
@@ -78,6 +78,7 @@ class WeatherStackAPI implements WeatherApiInterface
                 $point,
                 new DateTimeImmutable(), //DateTimeImmutable::createFromFormat("Y-m-d H:i", $data->location->localtime),
                 json_encode($data),
+                $this->getName(),
                 $historical
             );
             array_push($infos, $newInfo);
@@ -151,9 +152,9 @@ class WeatherStackAPI implements WeatherApiInterface
         return $result;
     }
 
-    public function getName(): string
+    public function getName(): Source
     {
-        return self::NAME;
+        return Source::WEATHERSTACK;
     }
 
     public static function create(

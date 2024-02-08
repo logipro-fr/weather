@@ -11,6 +11,7 @@ use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\GetWeather\GetWeatherResponse;
 use Weather\Application\Presenter\PresenterObject;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
 
@@ -25,7 +26,7 @@ class GetWeatherTest extends TestCase
             "2024-01-02 12:00:00",
             new DateTimeZone(date_default_timezone_get())
         );
-        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}");
+        $info = new WeatherInfo($point, $date, "{\"weather\":\"great\"}", Source::DEBUG);
 
         $api = $this->createMock(WeatherApiInterface::class);
         $api->method("getFromPoints")->willReturn([$info]);
@@ -56,7 +57,7 @@ class GetWeatherTest extends TestCase
             "2024-01-02 12:00:00",
             new DateTimeZone(date_default_timezone_get())
         );
-        $infoA = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}");
+        $infoA = new WeatherInfo($pointA, $dateA, "{\"weather\":\"great\"}", Source::DEBUG);
 
         $requestA = new GetWeatherRequest(array($pointA), $dateA);
 
@@ -66,7 +67,7 @@ class GetWeatherTest extends TestCase
             "2024-01-02 13:00:00",
             new DateTimeZone(date_default_timezone_get())
         );
-        $infoB = new WeatherInfo($pointB, $dateB, "{\"weather\":\"great\"}");
+        $infoB = new WeatherInfo($pointB, $dateB, "{\"weather\":\"great\"}", Source::DEBUG);
 
         $requestB = new GetWeatherRequest(array($pointB), $dateB);
 
@@ -174,7 +175,7 @@ class GetWeatherTest extends TestCase
         foreach (range(0, count($points) - 1) as $i) {
             $weatherType = $this::POSSIBLE_WEATHERS[$i % count($this::POSSIBLE_WEATHERS)];
             $weatherString = "{\"weather\":\"" . $weatherType . "\"}";
-            $info = new WeatherInfo($points[$i], $dates[$i % count($dates)], $weatherString);
+            $info = new WeatherInfo($points[$i], $dates[$i % count($dates)], $weatherString, Source::DEBUG);
             array_push($res, $info);
         }
         return $res;

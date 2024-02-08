@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Api\v1\Symfony\GetExistingWeatherByDatePointController;
@@ -40,6 +41,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
+            Source::DEBUG,
             true
         ),"errorCode" => null,"message" => null];
         $this->repository->save($target["data"]);
@@ -67,6 +69,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
+            Source::DEBUG,
             true
         ),"errorCode" => null,"message" => null];
         $this->repository->save($target["data"]);
@@ -93,6 +96,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
+            Source::DEBUG,
             true
         ),"errorCode" => null,"message" => null];
         $this->repository->save($target["data"]);
@@ -120,6 +124,7 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
             "{}",
+            Source::DEBUG,
             true
         );
         $this->repository->save($info);
@@ -148,7 +153,8 @@ class GetExistingWeatherControllerByDatePointTest extends TestCase
         $info = new WeatherInfo(
             new Point(2.1, 40.531),
             DateTimeImmutable::createFromFormat("Y-m-d H:i", "2024-01-01 12:30"),
-            "{}"
+            "{}",
+            Source::DEBUG
         );
         $this->repository->save($info);
         $target = '{"success":false,"data":null,"errorCode":"weatherinfo_not_found_exception",' .

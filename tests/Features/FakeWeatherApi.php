@@ -5,6 +5,7 @@ namespace Weather\Tests\Features;
 use Safe\DateTimeImmutable;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoId;
 use Weather\Infrastructure\External\WeatherApiInterface;
@@ -16,7 +17,6 @@ class FakeWeatherApi implements WeatherApiInterface
     private const POSSIBLE_WEATHER_TEMPERATURE = [-2,5,10,20,12];
     private const POSSIBLE_WEATHER_SKY = ["Clear", "Cloudy", "Rainfall", "Thunderstorm"];
     private const POSSIBLE_WEATHER_HUMIITY = [12,25,1,8,7,4];
-    private const NAME = "fake API for tests";
 
     /**
      * @var array<WeatherInfo> $lastMultipleReturn
@@ -38,7 +38,7 @@ class FakeWeatherApi implements WeatherApiInterface
 
         $jsonData = json_encode($data);
 
-        $res = new WeatherInfo($point, $date, $jsonData, false, new WeatherInfoId());
+        $res = new WeatherInfo($point, $date, $jsonData, $this->getName(), false, new WeatherInfoId());
 
         $this->lastReturn = $res;
         return $res;
@@ -71,9 +71,9 @@ class FakeWeatherApi implements WeatherApiInterface
         return $this->lastReturn;
     }
 
-    public function getName(): string
+    public function getName(): Source
     {
-        return self::NAME;
+        return Source::DEBUG;
     }
 
     public static function create(
