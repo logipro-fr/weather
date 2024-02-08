@@ -16,6 +16,15 @@ WeatherInfoSchema:
     historical:
       type: boolean
       example: false
+    source:
+      type: object
+      properties:
+        name:
+          type: string
+          example: WeatherStack
+        url:
+          type: string
+          example: https://api.weatherstack.com/
     result:
       type: object
       example: {weather: good, temperature: 0.4}
