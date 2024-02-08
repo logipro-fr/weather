@@ -20,7 +20,7 @@ enum Source : string implements JsonSerializable
             case (self::WEATHERSTACK):
                 return "https://api.weatherstack.com/";
             default:
-                return "debug";
+                return "http://example.com/";
         }
     }
 
