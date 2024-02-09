@@ -3,11 +3,13 @@
 namespace Weather\Application\ImportLegacy;
 
 use PDO;
+use PDOException;
 use PDOStatement;
 use Safe\DateTimeImmutable;
 use Weather\Application\Presenter\AbstractPresenter;
 use Weather\Application\Presenter\RequestInterface;
 use Weather\Application\ServiceInterface;
+use Weather\Domain\Model\Exceptions\DatabaseErrorException;
 use Weather\Domain\Model\Weather\Point;
 use Weather\Domain\Model\Weather\Source;
 use Weather\Domain\Model\Weather\WeatherInfo;
@@ -16,7 +18,10 @@ use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 
 class ImportLegacySQL implements ServiceInterface
 {
+    private const PDO_ERROR_CODE = 500;
+
     private PDO $pdo;
+    
     public function __construct(
         private readonly AbstractPresenter $presenter,
         private readonly WeatherInfoRepositoryInterface $repository
@@ -28,7 +33,12 @@ class ImportLegacySQL implements ServiceInterface
      */
     public function execute(RequestInterface $request): void
     {
+        try{
         $this->pdo = new PDO($request->getDB(), $request->getUser(), $request->getPwd());
+        }
+        catch (PDOException $e){
+            throw new DatabaseErrorException($e->getMessage(), self::PDO_ERROR_CODE);
+        }
         /** @infection-ignore-all */
         $this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
         $query = $this->pdo->query("SELECT * FROM " . $request->getTable());

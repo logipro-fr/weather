@@ -10,6 +10,7 @@ use Weather\Application\GetWeather\GetWeather;
 use Weather\Application\GetWeather\GetWeatherRequest;
 use Weather\Application\Presenter\PresenterObject;
 use Weather\Domain\Model\Weather\Point;
+use Weather\Domain\Model\Weather\WeatherInfo;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
 
@@ -80,6 +81,8 @@ class CurrentWeatherContext implements Context
 
         $response = $this->presenter->read();
 
-        Assert::assertIsString($response->getData());
+        /** @var array<WeatherInfo> $infos */
+        $infos = $response->getData();
+        Assert::assertIsString($infos[0]->getData());
     }
 }

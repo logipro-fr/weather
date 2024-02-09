@@ -13,6 +13,6 @@ Feature: Import data from legacy repository
 
 
     Scenario: Import from database
-        Given there is data contained in a "database"
+        Given there is data contained in a database "mysql:host=weather-mariadb:3306;dbname=weather" and table "currentweathers"
         When the user request to have it extracted
-        Then the data should be imported in the new repository 
+        Then the database should be imported in the new repository 
