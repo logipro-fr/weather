@@ -3,10 +3,12 @@
 namespace Weather\Tests\Features;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
-use Weather\Application\ImportLegacy\ImportLegacy;
-use Weather\Application\ImportLegacy\ImportLegacyRequest;
+use Weather\Application\ImportLegacy\ImportLegacyFile;
+use Weather\Application\ImportLegacy\ImportLegacyFileRequest;
+use Weather\Application\ImportLegacy\ImportLegacySQL;
+use Weather\Application\ImportLegacy\ImportLegacySQLRequest;
 use Weather\Application\Presenter\PresenterObject;
+use Weather\Application\Presenter\RequestInterface;
 use Weather\Domain\Model\Weather\WeatherInfoRepositoryInterface;
 use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
 
@@ -16,10 +18,13 @@ use Weather\Infrastructure\Persistence\Weather\WeatherInfoRepositoryInMemory;
 class LegacyImportContext implements Context
 {
     private string $source;
-    private ImportLegacy $service;
+    private string $db;
+    private string $table;
+    private ImportLegacyFile $serviceFile;
+    private ImportLegacySQL $serviceSql;
     private WeatherInfoRepositoryInterface $repository;
     private PresenterObject $presenter;
-    private ImportLegacyRequest $request;
+    private RequestInterface $request;
     /**
      * Initializes context.
      *
@@ -31,7 +36,8 @@ class LegacyImportContext implements Context
     {
         $this->presenter = new PresenterObject();
         $this->repository = new WeatherInfoRepositoryInMemory();
-        $this->service = new ImportLegacy($this->presenter, $this->repository);
+        $this->serviceFile = new ImportLegacyFile($this->presenter, $this->repository);
+        $this->serviceSql = new ImportLegacySQL($this->presenter, $this->repository);
     }
 
     /**
@@ -47,7 +53,7 @@ class LegacyImportContext implements Context
      */
     public function theUserRequestToHaveItImported(): void
     {
-        $this->request = new ImportLegacyRequest($this->source);
+        $this->request = new ImportLegacyFileRequest($this->source);
     }
 
     /**
@@ -55,15 +61,16 @@ class LegacyImportContext implements Context
      */
     public function theDataShouldBeImportedInTheNewRepository(): void
     {
-        $this->service->execute($this->request);
+        $this->serviceFile->execute($this->request);
     }
 
     /**
-     * @Given there is data contained in a :database
+     * @Given there is data contained in a database :database and table :table
      */
-    public function thereIsDataContainedInADatabase(): void
+    public function thereIsDataContainedInADatabase(string $arg1, string $arg2): void
     {
-        throw new PendingException();
+        $this->db = $arg1;
+        $this->table = $arg2;
     }
 
     /**
@@ -71,6 +78,14 @@ class LegacyImportContext implements Context
      */
     public function theUserRequestToHaveItExtracted(): void
     {
-        throw new PendingException();
+        $this->request = new ImportLegacySQLRequest($this->db, $this->table, "weather", "weather");
+    }
+
+    /**
+     * @Then the database should be imported in the new repository
+     */
+    public function theDatabaseShouldBeImportedInTheNewRepository(): void
+    {
+        $this->serviceSql->execute($this->request);
     }
 }

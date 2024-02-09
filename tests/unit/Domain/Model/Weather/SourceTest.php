@@ -22,5 +22,14 @@ class SourceTest extends TestCase
         $source = Source::DEBUG;
 
         $this->assertEquals('{"name":"debug","url":"http:\/\/example.com\/"}', json_encode($source));
+        $sourceWS = Source::WEATHERSTACK;
+
+        $this->assertEquals('{"name":"WeatherStack","url":"https:\/\/api.weatherstack.com\/"}', json_encode($sourceWS));
+    }
+    public function testCreateFromName(): void
+    {
+        foreach (Source::cases() as $source) {
+            $this->assertEquals($source, Source::createFromName($source->getName()));
+        }
     }
 }

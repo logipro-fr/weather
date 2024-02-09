@@ -69,6 +69,24 @@ paths:
       summary: Fetches legacy data from files
       description: >-
         Fetches legacy data from files
+      parameters:
+        - $ref: "#/components/parameters/PathParam"
+      responses:
+        "200":
+          $ref: "#/components/responses/LegacyImport"  
+
+  /api/v1/legacy/database:
+    get:
+      tags:
+        - Legacy
+      summary: Fetches legacy data from database
+      description: >-
+        Fetches legacy data from files
+      parameters:
+        - $ref: "#/components/parameters/DatabaseParam"
+        - $ref: "#/components/parameters/TableParam"
+        - $ref: "#/components/parameters/UserParam"
+        - $ref: "#/components/parameters/PasswordParam"
       responses:
         "200":
           $ref: "#/components/responses/LegacyImport"  
@@ -117,6 +135,21 @@ components:
 
     ExactParam:
       $ref: '../models/parameters.yaml#/ExactParam'
+
+    PathParam:
+      $ref: '../models/parameters.yaml#/PathParam'
+
+    DatabaseParam:
+      $ref: '../models/parameters.yaml#/DatabaseParam'
+
+    TableParam:
+      $ref: '../models/parameters.yaml#/TableParam'
+
+    UserParam:
+      $ref: '../models/parameters.yaml#/UserParam'
+
+    PasswordParam:
+      $ref: '../models/parameters.yaml#/PasswordParam'
 
   responses:
     MultiWeather:

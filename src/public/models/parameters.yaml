@@ -51,7 +51,6 @@ HistoricalParam:
     type: bool
     example: false
 
-
 ExactParam:
   in: query
   name: exact
@@ -62,3 +61,51 @@ ExactParam:
   schema:
     type: bool
     example: false
+
+PathParam:
+  in: query
+  name: path
+  path: the path of the file or directory
+  description: the path of the file or directory
+  required: true
+  schema:
+    type: string
+    example: "/home/Downloads/weathers.json"
+
+DatabaseParam:
+  in: query
+  name: db
+  db: the database to import from
+  description: the database to import from
+  required: true
+  schema:
+    type: string
+    example: "mysql:host=localhost:8080;dbname=weather"
+
+TableParam:
+  in: query
+  name: table
+  db: the table to import from
+  description: the table to import from
+  required: true
+  schema:
+    type: string
+    example: "weather"
+
+UserParam:
+  in: query
+  name: table
+  table: The user to log in as
+  description: The user to log in as
+  schema:
+    type: string
+    example: "user"
+
+PasswordParam:
+  in: query
+  name: pwd
+  pwd: the login password
+  description: the login password
+  default: ""
+  schema:
+    type: string

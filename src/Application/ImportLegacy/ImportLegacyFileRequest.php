@@ -4,7 +4,7 @@ namespace Weather\Application\ImportLegacy;
 
 use Weather\Application\Presenter\RequestInterface;
 
-class ImportLegacyRequest implements RequestInterface
+class ImportLegacyFileRequest implements RequestInterface
 {
     public function __construct(private readonly string $path)
     {

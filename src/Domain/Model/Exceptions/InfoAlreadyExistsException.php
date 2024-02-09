@@ -2,9 +2,7 @@
 
 namespace Weather\Domain\Model\Exceptions;
 
-use Exception;
-
-class InfoAlreadyExistsException extends Exception
+class InfoAlreadyExistsException extends BaseException
 {
     protected string $type = "existing_info_exception";
 }

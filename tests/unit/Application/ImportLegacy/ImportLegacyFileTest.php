@@ -4,8 +4,8 @@ namespace Weather\Tests\Application\ImportLegacy;
 
 use PHPUnit\Framework\TestCase;
 use Safe\DateTimeImmutable;
-use Weather\Application\ImportLegacy\ImportLegacy;
-use Weather\Application\ImportLegacy\ImportLegacyRequest;
+use Weather\Application\ImportLegacy\ImportLegacyFile;
+use Weather\Application\ImportLegacy\ImportLegacyFileRequest;
 use Weather\Application\ImportLegacy\ImportLegacyResponse;
 use Weather\Application\Presenter\PresenterObject;
 use Weather\Domain\Model\Weather\Point;
@@ -15,15 +15,15 @@ use function Safe\file_get_contents;
 use function Safe\json_decode;
 use function Safe\scandir;
 
-class ImportLegacyTest extends TestCase
+class ImportLegacyFileTest extends TestCase
 {
     public function testExecuteOnFile(): void
     {
         $filePath = "tests/Features/data/2024/01/02/2024-01-02-11-08.json";
-        $request = new ImportLegacyRequest($filePath);
+        $request = new ImportLegacyFileRequest($filePath);
         $presenter = new PresenterObject();
         $repository = new WeatherInfoRepositoryInMemory();
-        $service = new ImportLegacy($presenter, $repository);
+        $service = new ImportLegacyFile($presenter, $repository);
 
         /**
          * @var \stdClass $json
@@ -61,10 +61,10 @@ class ImportLegacyTest extends TestCase
     {
         $filePath = "tests/Features/data/";
 
-        $request = new ImportLegacyRequest($filePath);
+        $request = new ImportLegacyFileRequest($filePath);
         $presenter = new PresenterObject();
         $repository = new WeatherInfoRepositoryInMemory();
-        $service = new ImportLegacy($presenter, $repository);
+        $service = new ImportLegacyFile($presenter, $repository);
 
         $service->execute($request);
 
@@ -89,7 +89,7 @@ class ImportLegacyTest extends TestCase
         $repository = new WeatherInfoRepositoryInMemory();
         $presenter = new PresenterObject();
 
-        $service = new ImportLegacy($presenter, $repository);
+        $service = new ImportLegacyFile($presenter, $repository);
 
         $this->assertEquals($presenter, $service->getPresenter());
     }

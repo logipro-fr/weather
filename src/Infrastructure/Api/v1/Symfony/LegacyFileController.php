@@ -3,8 +3,8 @@
 namespace Weather\Infrastructure\Api\v1\Symfony;
 
 use Symfony\Component\HttpFoundation\InputBag;
-use Weather\Application\ImportLegacy\ImportLegacy;
-use Weather\Application\ImportLegacy\ImportLegacyRequest;
+use Weather\Application\ImportLegacy\ImportLegacyFile;
+use Weather\Application\ImportLegacy\ImportLegacyFileRequest;
 use Weather\Application\Presenter\PresenterJson;
 use Weather\Application\Presenter\RequestInterface;
 use Weather\Application\ServiceInterface;
@@ -21,7 +21,7 @@ class LegacyFileController extends RequestController
 
     protected function createService(): ServiceInterface
     {
-        return new ImportLegacy(new PresenterJson(), $this->repository);
+        return new ImportLegacyFile(new PresenterJson(), $this->repository);
     }
 
     protected function createRequest(InputBag $query): RequestInterface
@@ -38,6 +38,6 @@ class LegacyFileController extends RequestController
                 self::INVALID_ARGUMENT_CODE
             );
         }
-        return new ImportLegacyRequest($path);
+        return new ImportLegacyFileRequest($path);
     }
 }
