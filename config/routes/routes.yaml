@@ -17,3 +17,7 @@ hello:
 import_legacy_file:
   path:       /api/v1/legacy/file
   controller: 'Weather\Infrastructure\Api\v1\Symfony\LegacyFileController::execute'
+
+import_legacy_database:
+  path:       /api/v1/legacy/database
+  controller: 'Weather\Infrastructure\Api\v1\Symfony\LegacySqlController::execute'
