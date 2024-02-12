@@ -94,8 +94,8 @@ TableParam:
 
 UserParam:
   in: query
-  name: table
-  table: The user to log in as
+  name: user
+  user: The user to log in as
   description: The user to log in as
   schema:
     type: string
