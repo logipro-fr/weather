@@ -112,7 +112,7 @@ class ImportLegacySQLControllerTest extends TestCase
         $request = new Request($query);
 
         $response = $this->route->execute($request);
-        
+
         $this->assertEquals($target, $response->getContent());
         $this->assertEquals(500, $response->getStatusCode());
         $this->assertEquals("application/json", $response->headers->get("Content-Type"));

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d55e4e1852c2d102ed9c9ef35849d63b",
+    "content-hash": "932e3b63e7b5a6241bf4bc06f237fed6",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -278,16 +278,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.8.1",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "c9ea252cdce4da324ede3d6c5913dd89f769afd2"
+                "reference": "a19a1d05ca211f41089dffcc387733a6875196cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c9ea252cdce4da324ede3d6c5913dd89f769afd2",
-                "reference": "c9ea252cdce4da324ede3d6c5913dd89f769afd2",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a19a1d05ca211f41089dffcc387733a6875196cb",
+                "reference": "a19a1d05ca211f41089dffcc387733a6875196cb",
                 "shasum": ""
             },
             "require": {
@@ -371,7 +371,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.8.1"
+                "source": "https://github.com/doctrine/dbal/tree/3.8.2"
             },
             "funding": [
                 {
@@ -387,7 +387,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-03T17:33:49+00:00"
+            "time": "2024-02-12T18:36:36+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -438,16 +438,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.11.1",
+            "version": "2.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "4089f1424b724786c062aea50aae5f773449b94b"
+                "reference": "492725310ae9a1b5b20d6ae09fb5ae6404616e68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/4089f1424b724786c062aea50aae5f773449b94b",
-                "reference": "4089f1424b724786c062aea50aae5f773449b94b",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/492725310ae9a1b5b20d6ae09fb5ae6404616e68",
+                "reference": "492725310ae9a1b5b20d6ae09fb5ae6404616e68",
                 "shasum": ""
             },
             "require": {
@@ -468,18 +468,18 @@
             },
             "conflict": {
                 "doctrine/annotations": ">=3.0",
-                "doctrine/orm": "<2.14 || >=4.0",
+                "doctrine/orm": "<2.17 || >=4.0",
                 "twig/twig": "<1.34 || >=2.0 <2.4"
             },
             "require-dev": {
                 "doctrine/annotations": "^1 || ^2",
                 "doctrine/coding-standard": "^12",
                 "doctrine/deprecations": "^1.0",
-                "doctrine/orm": "^2.14 || ^3.0",
+                "doctrine/orm": "^2.17 || ^3.0",
                 "friendsofphp/proxy-manager-lts": "^1.0",
-                "phpunit/phpunit": "^9.5.26 || ^10.0",
+                "phpunit/phpunit": "^9.5.26",
                 "psalm/plugin-phpunit": "^0.18.4",
-                "psalm/plugin-symfony": "^4",
+                "psalm/plugin-symfony": "^5",
                 "psr/log": "^1.1.4 || ^2.0 || ^3.0",
                 "symfony/phpunit-bridge": "^6.1 || ^7.0",
                 "symfony/property-info": "^5.4 || ^6.0 || ^7.0",
@@ -492,7 +492,7 @@
                 "symfony/web-profiler-bundle": "^5.4 || ^6.0 || ^7.0",
                 "symfony/yaml": "^5.4 || ^6.0 || ^7.0",
                 "twig/twig": "^1.34 || ^2.12 || ^3.0",
-                "vimeo/psalm": "^4.30"
+                "vimeo/psalm": "^5.15"
             },
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle.",
@@ -537,7 +537,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.11.1"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.11.3"
             },
             "funding": [
                 {
@@ -553,7 +553,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-15T20:01:50+00:00"
+            "time": "2024-02-10T20:56:20+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -1394,66 +1394,6 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.8.1"
             },
             "time": "2023-05-10T11:58:31+00:00"
-        },
-        {
-            "name": "phariscope/doctrine-testing-tools",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phariscope/doctrine-testing-tools.git",
-                "reference": "1c4d7b592cdba04ddae18569fbfba6bcca8e4f00"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phariscope/doctrine-testing-tools/zipball/1c4d7b592cdba04ddae18569fbfba6bcca8e4f00",
-                "reference": "1c4d7b592cdba04ddae18569fbfba6bcca8e4f00",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/doctrine-bundle": "^2.11",
-                "doctrine/orm": "^2.17",
-                "php": ">=8.1",
-                "symfony/dotenv": "^7.0",
-                "symfony/framework-bundle": "^7.0",
-                "symfony/http-kernel": "^7.0",
-                "symfony/runtime": "^7.0",
-                "symfony/yaml": "^7.0"
-            },
-            "require-dev": {
-                "infection/extension-installer": "0.1.2",
-                "infection/infection": "^0.27",
-                "phpstan/phpdoc-parser": "^1.20",
-                "phpstan/phpstan": "1.10.15",
-                "phpunit/phpunit": "^10",
-                "squizlabs/php_codesniffer": "3.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DoctrineTestingTools\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alban Bernard",
-                    "email": "alban.leandre.bernard@gmail.com"
-                }
-            ],
-            "description": "A PHP component to test Doctrine Repositories",
-            "keywords": [
-                "doctrine",
-                "test",
-                "unit"
-            ],
-            "support": {
-                "issues": "https://github.com/phariscope/doctrine-testing-tools/issues",
-                "source": "https://github.com/phariscope/doctrine-testing-tools/tree/v1.1.1"
-            },
-            "time": "2024-01-22T09:00:56+00:00"
         },
         {
             "name": "phariscope/event",
@@ -3557,19 +3497,20 @@
         },
         {
             "name": "symfony/orm-pack",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/orm-pack.git",
-                "reference": "554688738193b2f3b13d4b2b02ca9fdf3c6713b4"
+                "reference": "9d8729016b3a8b0db854c028d15c2dcf4d19b1b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/554688738193b2f3b13d4b2b02ca9fdf3c6713b4",
-                "reference": "554688738193b2f3b13d4b2b02ca9fdf3c6713b4",
+                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/9d8729016b3a8b0db854c028d15c2dcf4d19b1b4",
+                "reference": "9d8729016b3a8b0db854c028d15c2dcf4d19b1b4",
                 "shasum": ""
             },
             "require": {
+                "doctrine/dbal": "^3",
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/doctrine-migrations-bundle": "*",
                 "doctrine/orm": "*"
@@ -3585,7 +3526,7 @@
             "description": "A pack for the Doctrine ORM",
             "support": {
                 "issues": "https://github.com/symfony/orm-pack/issues",
-                "source": "https://github.com/symfony/orm-pack/tree/v2.4.0"
+                "source": "https://github.com/symfony/orm-pack/tree/v2.4.1"
             },
             "funding": [
                 {
@@ -3601,7 +3542,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-21T09:15:31+00:00"
+            "time": "2024-02-13T17:58:44+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -4233,85 +4174,6 @@
             "time": "2024-01-30T13:55:15+00:00"
         },
         {
-            "name": "symfony/runtime",
-            "version": "v7.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/runtime.git",
-                "reference": "ef2c2fd4b40fb8cd22221154399ad8888e81cdb5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/runtime/zipball/ef2c2fd4b40fb8cd22221154399ad8888e81cdb5",
-                "reference": "ef2c2fd4b40fb8cd22221154399ad8888e81cdb5",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0|^2.0",
-                "php": ">=8.2"
-            },
-            "conflict": {
-                "symfony/dotenv": "<6.4"
-            },
-            "require-dev": {
-                "composer/composer": "^2.6",
-                "symfony/console": "^6.4|^7.0",
-                "symfony/dotenv": "^6.4|^7.0",
-                "symfony/http-foundation": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Symfony\\Component\\Runtime\\Internal\\ComposerPlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Runtime\\": "",
-                    "Symfony\\Runtime\\Symfony\\Component\\": "Internal/"
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Enables decoupling PHP applications from global state",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "runtime"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/runtime/tree/v7.0.3"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-01-23T15:02:46+00:00"
-        },
-        {
             "name": "symfony/serializer",
             "version": "v6.4.3",
             "source": {
@@ -4795,77 +4657,6 @@
                 }
             ],
             "time": "2024-01-23T15:02:46+00:00"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v7.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "2d4fca631c00700597e9442a0b2451ce234513d3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/2d4fca631c00700597e9442a0b2451ce234513d3",
-                "reference": "2d4fca631c00700597e9442a0b2451ce234513d3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2",
-                "symfony/polyfill-ctype": "^1.8"
-            },
-            "conflict": {
-                "symfony/console": "<6.4"
-            },
-            "require-dev": {
-                "symfony/console": "^6.4|^7.0"
-            },
-            "bin": [
-                "Resources/bin/yaml-lint"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Loads and dumps YAML files",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/yaml/tree/v7.0.3"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-01-23T15:02:46+00:00"
         }
     ],
     "packages-dev": [
@@ -5298,16 +5089,16 @@
         },
         {
             "name": "fidry/cpu-core-counter",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theofidry/cpu-core-counter.git",
-                "reference": "85193c0b0cb5c47894b5eaec906e946f054e7077"
+                "reference": "f92996c4d5c1a696a6a970e20f7c4216200fcc42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theofidry/cpu-core-counter/zipball/85193c0b0cb5c47894b5eaec906e946f054e7077",
-                "reference": "85193c0b0cb5c47894b5eaec906e946f054e7077",
+                "url": "https://api.github.com/repos/theofidry/cpu-core-counter/zipball/f92996c4d5c1a696a6a970e20f7c4216200fcc42",
+                "reference": "f92996c4d5c1a696a6a970e20f7c4216200fcc42",
                 "shasum": ""
             },
             "require": {
@@ -5347,7 +5138,7 @@
             ],
             "support": {
                 "issues": "https://github.com/theofidry/cpu-core-counter/issues",
-                "source": "https://github.com/theofidry/cpu-core-counter/tree/1.0.0"
+                "source": "https://github.com/theofidry/cpu-core-counter/tree/1.1.0"
             },
             "funding": [
                 {
@@ -5355,7 +5146,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-09-17T21:38:23+00:00"
+            "time": "2024-02-07T09:43:46+00:00"
         },
         {
             "name": "infection/abstract-testframework-adapter",
@@ -6090,6 +5881,66 @@
                 "source": "https://github.com/phar-io/version/tree/3.2.1"
             },
             "time": "2022-02-21T01:04:05+00:00"
+        },
+        {
+            "name": "phariscope/doctrine-testing-tools",
+            "version": "v1.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phariscope/doctrine-testing-tools.git",
+                "reference": "0cce25f9ae185b66756767d9180f5904b79fbd92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phariscope/doctrine-testing-tools/zipball/0cce25f9ae185b66756767d9180f5904b79fbd92",
+                "reference": "0cce25f9ae185b66756767d9180f5904b79fbd92",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "^2",
+                "doctrine/orm": "^2",
+                "php": ">=8.1",
+                "symfony/dotenv": "^6|^7.0",
+                "symfony/framework-bundle": "^6|^7.0",
+                "symfony/http-kernel": "^6|^7.0",
+                "symfony/runtime": "^6|^7.0",
+                "symfony/yaml": "^6|^7.0"
+            },
+            "require-dev": {
+                "infection/extension-installer": "0.1.2",
+                "infection/infection": "^0.27",
+                "phpstan/phpdoc-parser": "^1.20",
+                "phpstan/phpstan": "1.10.15",
+                "phpunit/phpunit": "^10",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DoctrineTestingTools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alban Bernard",
+                    "email": "alban.leandre.bernard@gmail.com"
+                }
+            ],
+            "description": "A PHP component to test Doctrine Repositories",
+            "keywords": [
+                "doctrine",
+                "test",
+                "unit"
+            ],
+            "support": {
+                "issues": "https://github.com/phariscope/doctrine-testing-tools/issues",
+                "source": "https://github.com/phariscope/doctrine-testing-tools/tree/v1.3.4"
+            },
+            "time": "2024-02-15T18:14:20+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -7808,6 +7659,85 @@
             "time": "2024-01-23T15:02:46+00:00"
         },
         {
+            "name": "symfony/runtime",
+            "version": "v7.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/runtime.git",
+                "reference": "ef2c2fd4b40fb8cd22221154399ad8888e81cdb5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/runtime/zipball/ef2c2fd4b40fb8cd22221154399ad8888e81cdb5",
+                "reference": "ef2c2fd4b40fb8cd22221154399ad8888e81cdb5",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0|^2.0",
+                "php": ">=8.2"
+            },
+            "conflict": {
+                "symfony/dotenv": "<6.4"
+            },
+            "require-dev": {
+                "composer/composer": "^2.6",
+                "symfony/console": "^6.4|^7.0",
+                "symfony/dotenv": "^6.4|^7.0",
+                "symfony/http-foundation": "^6.4|^7.0",
+                "symfony/http-kernel": "^6.4|^7.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Symfony\\Component\\Runtime\\Internal\\ComposerPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Runtime\\": "",
+                    "Symfony\\Runtime\\Symfony\\Component\\": "Internal/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Enables decoupling PHP applications from global state",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "runtime"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/runtime/tree/v7.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-01-23T15:02:46+00:00"
+        },
+        {
             "name": "symfony/translation",
             "version": "v7.0.3",
             "source": {
@@ -7978,6 +7908,77 @@
                 }
             ],
             "time": "2023-12-26T14:02:43+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v7.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "2d4fca631c00700597e9442a0b2451ce234513d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/2d4fca631c00700597e9442a0b2451ce234513d3",
+                "reference": "2d4fca631c00700597e9442a0b2451ce234513d3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "conflict": {
+                "symfony/console": "<6.4"
+            },
+            "require-dev": {
+                "symfony/console": "^6.4|^7.0"
+            },
+            "bin": [
+                "Resources/bin/yaml-lint"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Loads and dumps YAML files",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/yaml/tree/v7.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-01-23T15:02:46+00:00"
         },
         {
             "name": "thecodingmachine/safe",

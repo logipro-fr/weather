@@ -21,7 +21,7 @@ class ImportLegacySQL implements ServiceInterface
     private const PDO_ERROR_CODE = 500;
 
     private PDO $pdo;
-    
+
     public function __construct(
         private readonly AbstractPresenter $presenter,
         private readonly WeatherInfoRepositoryInterface $repository
@@ -33,10 +33,9 @@ class ImportLegacySQL implements ServiceInterface
      */
     public function execute(RequestInterface $request): void
     {
-        try{
-        $this->pdo = new PDO($request->getDB(), $request->getUser(), $request->getPwd());
-        }
-        catch (PDOException $e){
+        try {
+            $this->pdo = new PDO($request->getDB(), $request->getUser(), $request->getPwd());
+        } catch (PDOException $e) {
             throw new DatabaseErrorException($e->getMessage(), self::PDO_ERROR_CODE);
         }
         /** @infection-ignore-all */
