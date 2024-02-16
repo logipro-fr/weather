@@ -61,7 +61,9 @@ class LegacyImportContext implements Context
      */
     public function theDataShouldBeImportedInTheNewRepository(): void
     {
-        $this->serviceFile->execute($this->request);
+        /** @var ImportLegacyFileRequest $request */
+        $request = $this->request;
+        $this->serviceFile->execute($request);
     }
 
     /**
@@ -86,6 +88,8 @@ class LegacyImportContext implements Context
      */
     public function theDatabaseShouldBeImportedInTheNewRepository(): void
     {
-        $this->serviceSql->execute($this->request);
+        /** @var ImportLegacySQLRequest $request*/
+        $request = $this->request;
+        $this->serviceSql->execute($request);
     }
 }
