@@ -78,6 +78,7 @@ services:
 
 networks:
   weather-network:
+    name: weather-network
     driver: bridge
     enable_ipv6: true
     ipam:
