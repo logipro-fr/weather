@@ -8,3 +8,5 @@ fi
 docker build -t weather-php:latest docker/php
 
 bin/composer install
+
+bin/console doctrine:schema:create

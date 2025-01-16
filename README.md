@@ -5,7 +5,7 @@ Weather mutualisation service.
 # Install
 
 ```console
-git clone git@github.com:logipro-fr/weather.git
+git clone https://github.com/logipro-fr/weather.git
 ```
 
 # To Contribute to Weather
