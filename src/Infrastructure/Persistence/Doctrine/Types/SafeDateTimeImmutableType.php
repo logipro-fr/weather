@@ -20,7 +20,6 @@ class SafeDateTimeImmutableType extends Type
 
     /**
      * @param DateTimeImmutable $value
-     * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
@@ -29,7 +28,6 @@ class SafeDateTimeImmutableType extends Type
 
     /**
      * @param string $value
-     * @throws ConversionException
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): DateTimeImmutable
     {

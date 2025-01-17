@@ -49,6 +49,7 @@ class FileSystemUtils
     private static function getDirectoryContents(string $directoryPath): array
     {
         $directoryPath = self::addSeparator($directoryPath);
+        /** @var array<string> $entries */
         $entries = scandir($directoryPath);
         $entries = array_diff(
             $entries,

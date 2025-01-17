@@ -15,7 +15,7 @@ class FakeGenerator
 
     public function __construct()
     {
-        /** @var array<int,\stdClass> */
+        /** @var array<int,\stdClass&object{request:\stdClass&object{query:string,gps:object{on_Latitude:float,on_Longitude:float}&\stdClass},location:object{lat:string,lon:string}}> $hotpoints */
         $hotpoints = json_decode((string)file_get_contents(__DIR__ . '/resources/query/bulk-2500-gps.json'));
         foreach ($hotpoints as $wsPoint) {
             $key = $wsPoint->request->gps->on_Latitude . "," . $wsPoint->request->gps->on_Longitude;
@@ -25,8 +25,8 @@ class FakeGenerator
             if (!isset($this->stations[$keyStation])) {
                 $wsPoint->request->query = sprintf(
                     "Lat %s and Lon %s",
-                    round($wsPoint->location->lat, 2),
-                    round($wsPoint->location->lon, 2)
+                    round(floatval($wsPoint->location->lat), 2),
+                    round(floatval($wsPoint->location->lon), 2)
                 );
                 $wsPoint->request->gps->on_Latitude = $wsPoint->location->lat;
                 $wsPoint->request->gps->on_Longitude = $wsPoint->location->lon;
@@ -93,6 +93,7 @@ class FakeGenerator
     {
         $jsonWithoutGPS = json_decode($jsonWithGps);
         if ($jsonWithoutGPS instanceof \stdClass) {
+            /** @var \stdClass&object{request:\stdClass} $jsonWithoutGPS */
             unset($jsonWithoutGPS->request->gps);
         }
         return (string)json_encode($jsonWithoutGPS, JSON_PRETTY_PRINT);

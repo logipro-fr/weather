@@ -45,10 +45,12 @@ class ImportLegacySQL implements ServiceInterface
         $size = 0;
         /** @var PDOStatement $query */
         while ($row = $query->fetch()) {
-            /** @var array<string,float|string> $row */
-            $this->addItem($row);
-            $size += 1;
-            unset($row);
+            if (is_array($row)) {
+                /** @var array<string,float|string> $row */
+                $this->addItem($row);
+                $size += 1;
+                unset($row);
+            }
         }
         $this->presenter->write(new ImportLegacyResponse($size));
     }

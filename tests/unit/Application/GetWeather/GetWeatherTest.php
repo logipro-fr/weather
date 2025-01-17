@@ -162,7 +162,8 @@ class GetWeatherTest extends TestCase
         return $res;
     }
 
-    private const POSSIBLE_WEATHERS = ["great", "mid", "bad", "it's raining menu"];
+    /** @var array<int,string> POSSIBLE_WEATHERS */
+    private const POSSIBLE_WEATHERS = ["great", "mid", "bad", "it's raining men"];
 
     /**
      * @param array<Point> $points
