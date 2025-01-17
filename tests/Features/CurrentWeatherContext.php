@@ -83,6 +83,6 @@ class CurrentWeatherContext implements Context
 
         /** @var array<WeatherInfo> $infos */
         $infos = $response->getData();
-        Assert::assertIsString($infos[0]->getData());
+        Assert::assertGreaterThan(1, strlen($infos[0]->getData()));
     }
 }

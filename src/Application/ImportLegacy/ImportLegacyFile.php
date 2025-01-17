@@ -42,9 +42,7 @@ class ImportLegacyFile implements ServiceInterface
     private function saveFile(string $filePath): int
     {
         /**
-         * @var \stdClass $json
-         * @property \stdClass $weatherHotPoints
-         * @property string $report->requestedAt->date
+         * @var object{report:object{requestedAt:object{date:string}},weatherHotPoints:object} $json
          */
         $json = json_decode(file_get_contents($filePath));
 
@@ -60,10 +58,7 @@ class ImportLegacyFile implements ServiceInterface
             $point = new Point($latitude, $longitude);
             $source = Source::WEATHERSTACK;
 
-            /**
-             * @var \stdClass $jsonData
-             * @property string $location->localtime
-             */
+            /** @var object{location:object{localtime:string}} $jsonData */
             $jsonData = json_decode($data);
             $date = new DateTimeImmutable($jsonData->location->localtime);
 

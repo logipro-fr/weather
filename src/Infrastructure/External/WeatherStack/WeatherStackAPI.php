@@ -138,13 +138,17 @@ class WeatherStackAPI implements WeatherApiInterface
         $query = implode(self::POINTS_DELIMITER, $points);
         $queries = (new SplitQuery())->split($query);
 
+        /** @var array<\stdClass> $result */
         $result = [];
         foreach ($queries as $subQuery) {
+            /** @var string $jsonContent */
             $jsonContent = $this->$request($subQuery, $historicalDate);
+            /** @var \stdClass|array<mixed> $content */
             $content = json_decode($jsonContent);
             if (!is_array($content)) {
                 $content = [$content];
             }
+            /** @var array<\stdClass> $result */
             $result = array_merge($result, $content);
         }
         return $result;

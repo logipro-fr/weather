@@ -25,10 +25,7 @@ class ImportLegacyFileTest extends TestCase
         $repository = new WeatherInfoRepositoryInMemory();
         $service = new ImportLegacyFile($presenter, $repository);
 
-        /**
-         * @var \stdClass $json
-         * @property \stdClass $weatherHotPoints
-         */
+        /** @var object{weatherHotPoints:\stdClass} $json */
         $json = json_decode(file_get_contents($filePath));
         $service->execute($request);
 
@@ -37,11 +34,7 @@ class ImportLegacyFileTest extends TestCase
         $points = get_object_vars($json->weatherHotPoints);
 
         foreach (array_slice($points, 256, $lengthToTest) as $coordinates => $data) {
-            /**
-             * @var \stdClass $dataObject
-             * @property \stdClass $location
-             * @property string $location->localtime
-             */
+            /** @var object{location:object{localtime:string}} $dataObject */
             $dataObject = json_decode($data);
             $coordinates = explode(",", $coordinates);
             $latitude = floatval($coordinates[0]);
@@ -70,10 +63,7 @@ class ImportLegacyFileTest extends TestCase
 
         $size = 0;
         foreach ($this->getSubFilesRecursively($filePath) as $file) {
-            /**
-             * @var \stdclass $json
-             * @property \stdClass $weatherHotPoints
-             */
+            /** @var object{weatherHotPoints:\stdClass} $json */
             $json = json_decode(file_get_contents($file));
             $points = $json->weatherHotPoints;
             $size += count(get_object_vars($points));
@@ -100,6 +90,7 @@ class ImportLegacyFileTest extends TestCase
     private function getSubFilesRecursively(string $dirPath): array
     {
         $files = [];
+        /** @var array<string> $entries */
         $entries = scandir($dirPath);
         $entries = array_diff($entries, [".", ".."]);
         foreach ($entries as $entry) {

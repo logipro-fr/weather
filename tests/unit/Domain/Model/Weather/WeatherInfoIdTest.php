@@ -10,7 +10,6 @@ class WeatherInfoIdTest extends TestCase
     public function testCreate(): void
     {
         $id = new WeatherInfoId();
-        $this->assertIsString($id->getId());
         $this->assertTrue(str_starts_with($id->getId(), WeatherInfoId::PREFIX_NAME));
         $this->assertEquals(40, strlen($id->getId()));
     }
